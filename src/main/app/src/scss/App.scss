@@ -1,8 +1,58 @@
 @import 'bootstrap/dist/css/bootstrap';
+.md-48{
+	font-size: 48px;
+	font-display: block;
+}
+.spicy-enter {
+	opacity: .01;
+	transform: scaleX(0) translateY(30px);
+}
+
+.spicy-enter.spicy-enter-active {
+	opacity: 1;
+	transform: scaleX(1) translateY(0);
+	transition: all 500ms ease-in-out;
+}
+
+.spicy-leave {
+	opacity: 1;
+	transform: scaleX(1) translateY(0);
+}
+
+.spicy-leave-active {
+	opacity: 01;
+	transform: scaleX(0) translateY(100px);
+	transition: all 300ms ease-in-out
+}
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.fade-leave {
+  opacity: 1;
+}
+
+.fade-leave.fade-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+body{
+  background-color:#383b3f;
+}
 .App {
   text-align: center;
 }
 
+.slide-fade .show {
+  transition: all 0.4s ease-in;
+  opacity: 1;
+}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;

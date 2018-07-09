@@ -32,27 +32,31 @@ public class AuthService {
 //	@CrossOrigin(origins = "http://localhost:3000")
 	public String authenticate() throws UnsupportedEncodingException{
 		
-//		Request token;
+//		Variables;
 		String client_id = "8bc5b5b1681a42a98a5d62d03d59686c"; // Your client id
 		String client_secret = "4336477226a54bb7bb0bc3ffd97aa5d9"; // Your secret
 		String key = Base64.getEncoder().encodeToString((client_id+":"+client_secret).getBytes("utf-8"));
 		String url = "https://accounts.spotify.com/api/token";
-		System.out.println(key);
+
+//		Construct a RestTemplate
 		RestTemplate restTemplate = new RestTemplate();
+
+//		Initialize headers
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Basic "+key);
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		
-		
+//		Initialize Body
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 		map.add("grant_type", "client_credentials");
-		final HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(map ,
-		        headers);
-		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-		ResponseEntity<String> token = restTemplate.exchange(url, HttpMethod.POST, entity, String.class );
+		final HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 		
-		String a = token.getBody();
-		System.out.println(token.getBody());
-		return a;
+//		Convert Strings to JSON
+		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+		
+//		Actual Post Request with all the above parameters
+		ResponseEntity<String> token = restTemplate.exchange(url, HttpMethod.POST, entity, String.class );
+				
+		return token.getBody();
 	}
 }
