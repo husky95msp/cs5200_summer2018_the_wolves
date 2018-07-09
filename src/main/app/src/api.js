@@ -1,10 +1,10 @@
 import store from './store';
-import $ from 'jquery';
+// import $ from 'jquery';
 import request from 'request'; // "Request" library
 class TheServer {
-
+  
   getSongsByArtist(token, key){
-    var token = token;
+
     var options = {
       url: 'https://api.spotify.com/v1/search?q='+key+'&type=track',
       headers: {
@@ -22,7 +22,7 @@ class TheServer {
   }
   authenticate(){
 
-  fetch('http://localhost:8080/authenticate')
+  fetch('/api/authenticate')
       .then(response => response.json())
       .then(dat => {
         store.dispatch({

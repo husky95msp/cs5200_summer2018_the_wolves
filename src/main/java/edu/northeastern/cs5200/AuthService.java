@@ -28,8 +28,8 @@ import org.springframework.web.client.RestTemplate;
 public class AuthService {
 	
 	
-	@GetMapping("/authenticate")
-	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping("api/authenticate")
+//	@CrossOrigin(origins = "http://localhost:3000")
 	public String authenticate() throws UnsupportedEncodingException{
 		
 //		Request token;

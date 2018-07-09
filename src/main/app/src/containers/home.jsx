@@ -25,7 +25,7 @@ function SongList(props){
             Popularity: {song.popularity}
           </div>
           <span class="badge badge-pill">
-            <img src={song.album.images[0].url} className="rounded-circle" width='150px' height='150px'></img>
+            <img alt="cover" src={song.album.images[0].url} className="rounded-circle" width='150px' height='150px'></img>
           </span>
         </li>
       )}
@@ -39,7 +39,7 @@ class Home extends React.Component{
     super(props);
     this.update = this.update.bind(this);
     this.search = this.search.bind(this);
-    console.log(props);
+  
   }
   search(token, key){
     api.getSongsByArtist(token, key);

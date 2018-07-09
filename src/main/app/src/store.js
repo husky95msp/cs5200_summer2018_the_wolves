@@ -18,7 +18,6 @@ function token(state = null, action) {
 }
 function songs(state = null, action) {
 
-  console.log(action.data);
   switch(action.type) {
     case 'GET_SONGS':
     // console.log([...action.data]);
