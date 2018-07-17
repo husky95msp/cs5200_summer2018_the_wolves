@@ -2,7 +2,7 @@ import { createStore, combineReducers } from 'redux';
 import deepFreeze from 'deep-freeze';
 import {loadState} from 'containers/localStorage';
 
- const persistedState = loadState();
+const persistedState = loadState();
 
 
 
@@ -45,27 +45,38 @@ function test(state=empty_search, action) {
   }
 }
 
-  let empty_navbar={
-    collapse: false
+let empty_navbar={
+  collapse: false
+}
+function navBar(state=empty_navbar, action) {
+
+  switch(action.type) {
+
+    case 'TOGGLE_NAV' :
+    return Object.assign({}, state, {collapse: !state.collapse});
+
+    default:
+    return state;
   }
-  function navBar(state=empty_navbar, action) {
 
-    switch(action.type) {
+}
+function tog(state=false, action) {
 
-      case 'TOGGLE_NAV' :
-      return Object.assign({}, state, {collapse: !state.collapse});
+  switch(action.type) {
 
-      default:
-      return state;
-    }
+    case 'TOGGLE_LOGIN_POPPER' :
+    return !state;
+    default:
+    return false;
+  }
 }
 
-function root_reducer(state0 = persistedState, action) {
-  let reducer = combineReducers({test, songs, token, navBar});
-  let state1 = reducer(state0, action);
-  console.log("ReduxState", state1);
-  return deepFreeze(state1);
-};
+  function root_reducer(state0 = persistedState, action) {
+    let reducer = combineReducers({test, songs, token, navBar, tog});
+    let state1 = reducer(state0, action);
+    console.log("ReduxState", state1);
+    return deepFreeze(state1);
+  };
 
-let store = createStore(root_reducer);
-export default store;
+  let store = createStore(root_reducer);
+  export default store;

@@ -24,7 +24,7 @@ class Routes extends React.Component{
         <div>
           <NavBar/>
 
-          <Route path="/search" render={()=> <Home/>}/>
+          <Route path="/" render={()=> <Home/>}/>
         </div>
       </Router>
     );

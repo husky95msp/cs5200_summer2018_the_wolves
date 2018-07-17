@@ -77,3 +77,53 @@ body{
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.rating-box{
+	background-color: grey;
+	height: 1.2em;
+	width: 200px;
+}
+.star-ctr {
+    display: inline-block;
+    position: relative;
+}
+
+.star-ctr ul {
+    list-style: none outside none;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.star-fg {
+    top: 0;
+    position: absolute;
+}
+
+.star-ctr li {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.star-ctr a > span {
+    font-size: 3em;
+}
+
+.star-bg a > span {
+    color: silver
+}
+
+.star-fg a > span {
+    color: yellow;
+}
+
+.active{
+	color: white;
+	transition: all 0.3s;
+}
+.login-icon:hover{
+	// color: hsl(0, 0%, 55%);
+}

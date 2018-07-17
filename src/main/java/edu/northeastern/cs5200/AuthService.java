@@ -2,7 +2,7 @@ package edu.northeastern.cs5200;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
-import java.util.List;
+
 
 
 
@@ -26,6 +26,11 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class AuthService {
+
+	@GetMapping("/")
+	public String helloWorld() {
+		return "Hello World";
+	}
 	
 	
 	@GetMapping("api/authenticate")
@@ -43,6 +48,7 @@ public class AuthService {
 
 //		Initialize headers
 		HttpHeaders headers = new HttpHeaders();
+
 		headers.add("Authorization", "Basic "+key);
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		

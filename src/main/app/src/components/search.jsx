@@ -61,7 +61,7 @@ class Home extends React.Component{
   render(){
     return(
       <div>
-        <h1 className="text-center text-white">Search Songs by artist</h1>
+        <h1 className="text-center text-white">Search Songs</h1>
         <div className = "container">
 
           <div className="input-group mb-3">
