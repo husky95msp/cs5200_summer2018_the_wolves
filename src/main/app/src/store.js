@@ -27,6 +27,18 @@ function songs(state = null, action) {
     return action.data;
     case 'SEARCH_CLEAR' :
     return null;
+    case 'LIKE_SONG':
+    let tempState = JSON.parse(JSON.stringify(state));
+    let likes = null;
+    let key = null;
+    state.tracks.items.map((song,index)=>{
+      if (song.id === action.data) {
+        likes = song.like; key = index;
+      }
+      return null;
+    });
+    tempState.tracks.items[key].like = !likes
+    return tempState;
     default:
     return state;
   }

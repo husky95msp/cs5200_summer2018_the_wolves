@@ -1,129 +1,238 @@
 @import 'bootstrap/dist/css/bootstrap';
-.md-48{
-	font-size: 48px;
-	font-display: block;
-}
-.spicy-enter {
-	opacity: .01;
-	transform: scaleX(0) translateY(30px);
-}
-
-.spicy-enter.spicy-enter-active {
-	opacity: 1;
-	transform: scaleX(1) translateY(0);
-	transition: all 500ms ease-in-out;
-}
-
-.spicy-leave {
-	opacity: 1;
-	transform: scaleX(1) translateY(0);
-}
-
-.spicy-leave-active {
-	opacity: 01;
-	transform: scaleX(0) translateY(100px);
-	transition: all 300ms ease-in-out
-}
-.fade-enter {
-  opacity: 0.01;
-}
-
-.fade-enter.fade-enter-active {
-  opacity: 1;
-  transition: opacity 500ms ease-in;
-}
-
-.fade-leave {
-  opacity: 1;
-}
-
-.fade-leave.fade-leave-active {
-  opacity: 0.01;
-  transition: opacity 300ms ease-in;
-}
-
 body{
-  background-color:#383b3f;
-}
-.App {
-  text-align: center;
-}
+	overflow-y: scroll !important;
+	padding-top: 77px;
+	padding-right:0px !important;
 
-.slide-fade .show {
-  transition: all 0.4s ease-in;
-  opacity: 1;
 }
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
+img {
+	max-height: 100%;
+	max-width:100%;}
+//////////////////////////////////////////
+// track
+.track-tile{
+	display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
+	justify-content: space-between;
 
-.App-title {
-  font-size: 1.5em;
 }
+	.track-poster{
+		max-width: 100px;
+		flex-grow: 1;
+	}
 
-.App-intro {
-  font-size: large;
-}
+	.track-info{
+		padding-left: 4px;
+		flex-grow: 2;
+		display: flex;
+		align-items: stretch;
+		justify-content: flex-start;
+		flex-direction: column;
+	}
+	.like-btn{
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+		cursor: pointer;
 
-.rating-box{
-	background-color: grey;
-	height: 1.2em;
-	width: 200px;
-}
-.star-ctr {
-    display: inline-block;
-    position: relative;
-}
+	}
 
-.star-ctr ul {
-    list-style: none outside none;
-    overflow: hidden;
-    white-space: nowrap;
-    padding: 0 !important;
-    margin: 0 !important;
-}
+	//////////////////////////////////////
+	.fade-enter {
+		opacity: 0.01;
+	}
 
-.star-fg {
-    top: 0;
-    position: absolute;
-}
+	.fade-enter.fade-enter-active {
+		opacity: 1;
+		transition: opacity 500ms ease-in;
+	}
 
-.star-ctr li {
-    display: inline-block;
-    vertical-align: middle;
-    padding: 0 !important;
-    margin: 0 !important;
-}
+	.fade-leave {
+		opacity: 1;
+	}
 
-.star-ctr a > span {
-    font-size: 3em;
-}
+	.fade-leave.fade-leave-active {
+		opacity: 0.01;
+		transition: opacity 300ms ease-in;
+	}
 
-.star-bg a > span {
-    color: silver
-}
+	body{
+		background-color:#383b3f;
+	}
+	.App {
+		text-align: center;
+	}
 
-.star-fg a > span {
-    color: yellow;
-}
+	.slide-fade .show {
+		transition: all 0.4s ease-in;
+		opacity: 1;
+	}
+	.App-logo {
+		animation: App-logo-spin infinite 20s linear;
+		height: 80px;
+	}
 
-.active{
-	color: white;
-	transition: all 0.3s;
+	.App-header {
+		background-color: #222;
+		height: 150px;
+		padding: 20px;
+		color: white;
+	}
+
+	.App-title {
+		font-size: 1.5em;
+	}
+
+	.App-intro {
+		font-size: large;
+	}
+
+	@keyframes App-logo-spin {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
+	}
+
+	.rating-box{
+		background-color: grey;
+		height: 1.2em;
+		width: 200px;
+	}
+	.star-ctr {
+		display: inline-block;
+		position: relative;
+	}
+
+	.star-ctr ul {
+		list-style: none outside none;
+		overflow: hidden;
+		white-space: nowrap;
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+
+	.star-fg {
+		top: 0;
+		position: absolute;
+	}
+
+	.star-ctr li {
+		display: inline-block;
+		vertical-align: middle;
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+
+	.star-ctr a > span {
+		font-size: 3em;
+	}
+
+	.star-bg a > span {
+		color: silver
+	}
+
+	.star-fg a > span {
+		color: yellow;
+	}
+
+	.active{
+		color: white;
+		transition: all 0.3s;
+	}
+	.login-icon:hover{
+		// color: hsl(0, 0%, 55%);
+		cursor: pointer;
+	}
+	.login-icon{
+		font-size: 48px;
+		font-display: block;
+
+	}
+	.search-icon{
+		display: none;
+	}
+	.login-label{
+		display: none;
+	}
+	@media screen and (max-width: 767px) {
+		.Popover1{
+			display: flex;
+			flex-direction: row;
+			align-items: stretch;
+		}
+		.login-icon{
+			font-size: 24px;
+			align-self:center;
+			vertical-align:text-bottom;
+			padding-right: 2px;
+		}
+		.search-icon{
+			font-size: 24px;
+			align-self:center;
+			vertical-align:text-bottom;
+			padding-right: 2px;
+			display: inline;
+
+		}
+		.login-label{
+			display:inline-flex;
+
+
+		}
 }
-.login-icon:hover{
-	// color: hsl(0, 0%, 55%);
-}
+	.like-btn{
+		cursor: pointer;
+
+	}
+	.popover{
+		transition: opacity 0.1s ease-in;
+		background-color:rgba(0, 0, 0, 1.0);
+		max-width: 900px;
+		width: auto;
+
+	}
+	.form-control{
+		background-color: inherit;
+
+		border-radius: 0px;
+	}
+	.btn{
+		border: 1px solid white;
+		border-radius: 0px;
+
+	}
+	.btn:focus{
+
+
+		box-shadow: 0px 0px white;
+		border-radius: 0px;
+
+	}
+	.form-control:focus{
+		background-color: inherit;
+		box-shadow: 0px 0px red;
+
+		border: 1px solid black;
+
+		border-radius: 0px;
+	}
+	.popover-header{
+		background-color: inherit;
+		color: white;
+		border-bottom: 0px;
+		text-align: center;
+		font-size: 1.2rem;
+	}
+	.like-active{
+		transform: rotate(70deg);
+		font-size: 32px;
+		color:blue;
+
+		transition: all 0.3s;
+	}
+	.material-icons{
+
+		transition: all 0.3s;
+
+	}

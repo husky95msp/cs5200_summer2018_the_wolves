@@ -1,24 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // import $ from 'jquery';
-import Ratings from 'ratings';
+// import {Button} from 'reactstrap';
+// import Ratings from 'ratings';
+import {Link} from 'react-router-dom';
+
 
 
 
 function Song(props){
 
-  return(<li className="show slide-fade list-group-item d-flex mb-1 justify-content-between align-items-center" key={props.song.id}>
-  <div>
-    <h5>{props.song.name}</h5><hr/>
-    Popularity: {props.song.popularity} <br/>
-    Album: {props.song.album.name} <br/>
-    Rating: <Ratings/>
-</div>
-<span className="badge badge-pill">
-  <img alt="cover" src={props.song.album.images[0].url} className="rounded-circle" width='150px' height='150px'></img>
-</span>
-</li>);
 
-}
+  return(
+    <li className="show slide-fade list-group-item track-tile mb-1" key={props.song.id}>
+      <div className="d-flex justify-content-left flex-row flex-nowrap">
+        <div className="track-poster ">
+          <img alt="cover" src={props.song.album.images[0].url} className="rounded-circle align-self-center"/>
+        </div>
 
-export default connect((state)=> state)(Song);
+        <div className="track-info">
+          <Link to={"/tracks/"+props.song.id}>
+        <h5 className="track-name">{props.song.name}</h5>
+</Link>
+          <div className="track-popularity">Popularity: {props.song.popularity}</div>
+          <div className="track-album">Album: {props.song.album.name}</div>
+        </div>
+      </div>
+      <div onClick={()=>props.dispatch({type: 'LIKE_SONG', data: props.song.id})} className="like-btn">
+        {props.song.like?  <i className="material-icons like-active" >star</i> : <i className="material-icons " >star_border</i>}
+      </div>
+    </li>);
+
+  }
+
+  export default connect((state)=> state)(Song);

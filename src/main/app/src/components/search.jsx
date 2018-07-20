@@ -5,30 +5,11 @@ import $ from 'jquery';
 import api from 'api.js';
 import Song from 'trackTile';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import SongList from 'song_list';
 
 
 
-function SongList(props){
-  if (props.songs != null){
 
-    return(<div className = "container">
-    <h2 className="text-white">Songs matching {props.artist}</h2>
-    <ul className="list-group">
-      <ReactCSSTransitionGroup
-      transitionName="fade"
-      transitionEnterTimeout={500}
-      transitionLeaveTimeout={300}>
-
-      {props.songs.tracks.items.map((song) =>
-        <Song key = {song.id} song = {song}/>
-
-    )}
-  </ReactCSSTransitionGroup>
-  </ul>
-</div>);
-}
-return null;
-}
 class Home extends React.Component{
   constructor(props){
     super(props);
