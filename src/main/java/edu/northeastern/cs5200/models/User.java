@@ -1,6 +1,11 @@
 package edu.northeastern.cs5200.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User {
@@ -11,6 +16,19 @@ public class User {
 	private String username;
 	private String password;
 	private String email;
+	
+	@ManyToMany(mappedBy = "followee", fetch = FetchType.LAZY)
+	List<User> follows;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "Follows",
+	joinColumns = @JoinColumn(name = "follower_id", referencedColumnName = "id" ),
+	inverseJoinColumns = @JoinColumn(name = "followee_id", referencedColumnName = "id"))
+	@JsonIgnore
+	List<User> followee;
+	
+	List<Track> liked_tracks = new ArrayList<Track>();
+	
 	public int getId() {
 		return id;
 	}
