@@ -8,6 +8,7 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class User {
 	
 	@Id
@@ -17,52 +18,23 @@ public class User {
 	private String password;
 	private String email;
 	
+	@OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
+	private List<Playlist> playlists;
+	
 	@ManyToMany(mappedBy = "followee", fetch = FetchType.LAZY)
-	List<User> follows;
+	private List<User> follows;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "Follows",
 	joinColumns = @JoinColumn(name = "follower_id", referencedColumnName = "id" ),
 	inverseJoinColumns = @JoinColumn(name = "followee_id", referencedColumnName = "id"))
 	@JsonIgnore
-	List<User> followee;
+	 private List<User> followee;
 	
-	List<Track> liked_tracks = new ArrayList<Track>();
+	@ManyToMany(mappedBy = "likes", fetch = FetchType.LAZY)
+	private List<Track> likedTracks;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public User(int id, String username, String password, String email) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.email = email;
-	}
-	public User() {
-		super();
-	}
 	
+	 
 	
 }
