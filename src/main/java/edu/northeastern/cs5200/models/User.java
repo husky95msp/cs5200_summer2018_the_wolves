@@ -33,6 +33,87 @@ public class User {
 	
 	@ManyToMany(mappedBy = "likes", fetch = FetchType.LAZY)
 	private List<Track> likedTracks;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<Playlist> getPlaylists() {
+		return playlists;
+	}
+
+	public void setPlaylists(List<Playlist> playlists) {
+		this.playlists = playlists;
+	}
+
+	public List<User> getFollows() {
+		return follows;
+	}
+
+	public void setFollows(List<User> follows) {
+		this.follows = follows;
+	}
+
+	public List<User> getFollowee() {
+		return followee;
+	}
+
+	public void setFollowee(List<User> followee) {
+		this.followee = followee;
+	}
+
+	public List<Track> getLikedTracks() {
+		return likedTracks;
+	}
+
+	public void setLikedTracks(List<Track> likedTracks) {
+		this.likedTracks = likedTracks;
+	}
+
+	public User( String username, String password, String email, List<Playlist> playlists, List<User> follows,
+			List<User> followee, List<Track> likedTracks) {
+		super();
+		
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.playlists = playlists;
+		this.follows = follows;
+		this.followee = followee;
+		this.likedTracks = likedTracks;
+	}
+
+	public User() {
+		super();
+	}
 	
 	
 	 

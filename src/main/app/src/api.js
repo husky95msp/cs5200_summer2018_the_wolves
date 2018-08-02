@@ -3,6 +3,27 @@ import store from './store';
 import request from 'request'; // "Request" library
 class TheServer {
 
+  authenticateUser(username, password){
+
+    fetch('/api/user/authenticate',{
+      headers: {
+     'Content-Type': 'application/json'
+   },
+      method: 'post',
+      body: JSON.stringify({'username': username, 'password': password})
+    })
+        .then(response => response.json())
+        .then(dat => {
+          console.log(dat);
+          // store.dispatch({
+          //   type: 'TOKEN',
+          //   data: dat.access_token,
+          // });
+
+        });
+
+  }
+
   getSongsByArtist(token, key){
 
     var options = {
@@ -23,6 +44,8 @@ class TheServer {
       });
     });
   }
+
+
   getSongById(token, key){
 
     var options = {
@@ -34,7 +57,7 @@ class TheServer {
     };
     request.get(options, function(error, response, body) {
       if(parseInt(response.statusCode) === 200){
-        
+
         return body;
       }
       else{

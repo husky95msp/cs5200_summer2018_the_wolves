@@ -1,17 +1,30 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Modal, ModalHeader, ModalBody, Form, FormGroup, Input, Button} from 'reactstrap';
+import api from 'api.js';
+import $ from 'jquery';
 
 function LoginForm(props){
+  function update(ev) {
+    let tgt = $(ev.target);
+
+    let data = {};
+    data[tgt.attr('name')] = tgt.val();
+
+    props.props.dispatch({
+      type: 'UPDATE_LOGIN_FORM',
+      data: data,
+    });
+  }
   return(
     <Form>
       <FormGroup>
-        <Input type="email" name="email" id="exampleEmail" placeholder="Email" bsSize="sm" />
+        <Input type="text" name="username" id="username" placeholder="User Name" bsSize="sm" onChange={update} />
       </FormGroup>
       <FormGroup>
-        <Input type="password" name="password" id="examplePassword" placeholder="Password" bsSize="sm" />
+        <Input type="password" name="password" id="examplePassword" placeholder="Password" bsSize="sm" onChange={update}/>
       </FormGroup>
-      <Button onClick={()=>{console.log("log")} } className="btn-info btn-sm btn-block ">Login</Button>
+      <Button onClick={()=>{api.authenticateUser(props.props.login.username, props.props.login.password)} } className="btn-info btn-sm btn-block ">Login</Button>
     </Form>
   );
 }
@@ -23,10 +36,10 @@ function Login(props){
   return(
 
     <div>
-        <Modal isOpen={props.tog} toggle={toggle_login_popper} className="" backdrop={false}>
+        <Modal isOpen={props.tog} className="" backdrop={false}>
           <ModalHeader toggle={toggle_login_popper} >Login</ModalHeader>
           <ModalBody>
-            <LoginForm/>
+            <LoginForm props = {props}/>
           </ModalBody>
 
         </Modal>

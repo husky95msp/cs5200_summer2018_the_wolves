@@ -72,6 +72,20 @@ function navBar(state=empty_navbar, action) {
   }
 
 }
+
+let empty_login={
+  username: "",
+  password: ""
+}
+function login(state=empty_login, action){
+  switch(action.type) {
+
+    case 'UPDATE_LOGIN_FORM' :
+    return Object.assign({}, state, action.data);
+    default:
+    return state;
+  }
+}
 function tog(state=false, action) {
 
   switch(action.type) {
@@ -79,12 +93,12 @@ function tog(state=false, action) {
     case 'TOGGLE_LOGIN_POPPER' :
     return !state;
     default:
-    return false;
+    return state;
   }
 }
 
   function root_reducer(state0 = persistedState, action) {
-    let reducer = combineReducers({test, songs, token, navBar, tog});
+    let reducer = combineReducers({test, songs, token, navBar, tog, login});
     let state1 = reducer(state0, action);
     console.log("ReduxState", state1);
     return deepFreeze(state1);
