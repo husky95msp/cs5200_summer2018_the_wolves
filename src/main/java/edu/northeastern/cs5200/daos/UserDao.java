@@ -31,6 +31,10 @@ public class UserDao {
         return userRepository.findAll();
     }
     
+    public Optional<User> findUserById(int id){
+    	return userRepository.findById(id);
+    }
+    
     public Iterable<User> findByUserName(String username){
     	return userRepository.findByUserName(username);
     }
