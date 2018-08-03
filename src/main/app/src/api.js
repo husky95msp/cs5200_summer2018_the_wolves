@@ -17,7 +17,7 @@ class TheServer {
           if(dat.status === 200){
             store.dispatch({
               type: 'LOGIN_SUCCESS',
-              data: dat.body,
+              data: dat.user,
             });
           }
 

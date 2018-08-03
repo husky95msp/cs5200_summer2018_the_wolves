@@ -28,15 +28,17 @@ function NavBar(props) {
             </NavItem>
 
             <NavItem>
-
-              <div id="Popover1" onClick={toggle_login_popper} className="nav-link pt-0 pb-0">
-                <i className="material-icons login-icon">account_circle</i>
-
-
+                {props.session?   <NavLink to="/profile" exact = {true} activeClassName="active" className="nav-link">
+                <div>Hi! {props.session.username}</div></NavLink>:
+                  <div>
+                    <div id="Popover1" onClick={toggle_login_popper} className="nav-link pt-0 pb-0">
+                   <i className="material-icons login-icon">account_circle</i>
+                   </div>
                 <div className="login-label"> Login</div>
-              </div>
-              <Login/>
 
+                <Login/>
+            </div>
+}
             </NavItem>
           </Nav>
         </Collapse>

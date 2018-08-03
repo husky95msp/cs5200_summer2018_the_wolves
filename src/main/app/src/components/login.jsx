@@ -21,14 +21,14 @@ function LoginForm(props){
   return(
     <Form>
       <FormGroup>
-        <Input type="text" name="username" id="username" value = {props.props.login.username} placeholder="User Name" bsSize="sm" onChange={update} />
-        <div className={"error "+ (props.props.login.label == 404? "show": "")}>No such username!</div>
+        <Input type="text" name="username" id="username" value = {props.props.loginForm.username} placeholder="User Name" bsSize="sm" onChange={update} />
+        <div className={"error "+ (props.props.loginForm.label == 404? "show": "")}>No such username!</div>
     </FormGroup>
       <FormGroup>
-        <Input type="password" name="password" id="examplePassword" value = {props.props.login.password} placeholder="Password" bsSize="sm" onChange={update}/>
-        <div className={"error "+ (props.props.login.label == 401? "show": "")}>Invalid Password!</div>
+        <Input type="password" name="password" id="examplePassword" value = {props.props.loginForm.password} placeholder="Password" bsSize="sm" onChange={update}/>
+        <div className={"error "+ (props.props.loginForm.label == 401? "show": "")}>Invalid Password!</div>
     </FormGroup>
-      <Button onClick={()=>{api.authenticateUser(props.props.login.username, props.props.login.password)} } className="btn-info btn-sm btn-block ">Login</Button>
+      <Button onClick={()=>{api.authenticateUser(props.props.loginForm.username, props.props.loginForm.password)} } className="btn-info btn-sm btn-block ">Login</Button>
     </Form>
   );
 }
@@ -44,6 +44,7 @@ function Login(props){
           <ModalHeader toggle={toggle_login_popper} >Login</ModalHeader>
           <ModalBody>
             <LoginForm props = {props}/>
+
           </ModalBody>
 
         </Modal>

@@ -78,7 +78,7 @@ let empty_login={
   password: "",
   label: 200,
 }
-function login(state=empty_login, action){
+function loginForm(state=empty_login, action){
   switch(action.type) {
 
     case 'UPDATE_LOGIN_FORM' :
@@ -101,9 +101,18 @@ function tog(state=false, action) {
     return state;
   }
 }
+function session(state=null, action){
+  switch (action.type) {
+    case 'LOGIN_SUCCESS':
+      return action.data;
+      break;
+    default:
+      return state;
+  }
+}
 
   function root_reducer(state0 = persistedState, action) {
-    let reducer = combineReducers({test, songs, token, navBar, tog, login});
+    let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session});
     let state1 = reducer(state0, action);
     console.log("ReduxState", state1);
     return deepFreeze(state1);

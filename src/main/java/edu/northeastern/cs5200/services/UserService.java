@@ -35,7 +35,7 @@ public class UserService {
 		List<User> users = (List<User>) userDao.findByUserName(user.getUsername());
 							
 			if (users.size() != 0) {
-				if (users.get(0).checkPassword(user.getPassword())) {
+				if (users.get(0).getPassword().equals(user.getPassword())) {
 					response.put("status", 200);
 					response.put("user", users.get(0));
 					return response;
