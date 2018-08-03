@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import edu.northeastern.cs5200.models.Album;
 import edu.northeastern.cs5200.models.Artist;
 import edu.northeastern.cs5200.models.Track;
-import edu.northeastern.cs5200.models.User;
 import edu.northeastern.cs5200.repositories.ArtistRepository;
 
 @Component

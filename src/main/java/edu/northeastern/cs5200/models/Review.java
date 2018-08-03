@@ -18,11 +18,20 @@ public class Review {
 		super();
 	}
 
-	public Review(String review, int rating, Reviewer reviewer) {
+	public Track getTrack() {
+		return track;
+	}
+
+	public void setTrack(Track track) {
+		this.track = track;
+	}
+
+	public Review(String review, int rating, Reviewer reviewer, Track track) {
 		super();
 		this.review = review;
 		this.rating = rating;
 		this.reviewer = reviewer;
+		this.track = track;
 	}
 
 	public int getId() {
@@ -62,5 +71,13 @@ public class Review {
 	@ManyToOne
 	private Reviewer reviewer;
 	
-
+	@ManyToOne
+	private Track track;
+	
+	public void set(Review r) {
+		this.setRating(r.getRating());
+		this.setReview(r.getReview());
+		this.setReviewer(r.getReviewer());
+		this.setTrack(r.getTrack());
+	}
 }
