@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,6 +21,9 @@ public class Track {
 	
 	@Id
 	private String spotify_id;
+	private String title;
+	private String album_name;
+	private String uri;
 	private String track_data;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -41,6 +45,9 @@ public class Track {
 	
 	@ManyToOne
 	private Artist artist;
+	
+	@OneToMany(mappedBy = "track", fetch = FetchType.LAZY)
+	private List<Review> reviews;
 	
 	public String getSpotify_id() {
 		return spotify_id;

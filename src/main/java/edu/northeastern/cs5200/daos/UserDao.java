@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import edu.northeastern.cs5200.models.Playlist;
@@ -21,7 +20,6 @@ public class UserDao {
     //CREATE
 
     public User createUser(User user) {
-//    	System.out.println(user.getPassword());
         return userRepository.save(user);
     }
 
@@ -84,4 +82,32 @@ public class UserDao {
 		return userRepository.save(temp);
     }
     
+    public void addTrackToLikedTracks(int user_id, Track t) {
+    	Optional<User> opt = userRepository.findById(user_id);
+    	if(opt.isPresent()) {
+    		List<Track> user_tracks = opt.get().getLikedTracks();
+    		user_tracks.add(t);
+    		opt.get().setLikedTracks(user_tracks);
+    		
+    		updateUser(user_id, opt.get());
+    	}
+    }
+    
+    public void addFollowerFollowee(int id1, int id2) {
+    	Optional<User> u1 = userRepository.findById(id1);
+    	Optional<User> u2 = userRepository.findById(id2);
+    	
+    	if(u1.isPresent() && u2.isPresent()) {
+    		List<User> u1_followees = u1.get().getFollowee();
+    		u1_followees.add(u2.get());
+    		u1.get().setFollowee(u1_followees);
+    		
+    		List<User> u2_followers = u2.get().getFollows();
+    		u2_followers.add(u1.get());
+    		u2.get().setFollows(u2_followers);
+    		
+    		updateUser(id1, u1.get());
+    		updateUser(id2, u2.get());
+    	}
+    }
 }

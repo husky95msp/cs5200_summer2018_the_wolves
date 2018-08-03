@@ -62,5 +62,8 @@ public class Review {
 	@ManyToOne
 	private Reviewer reviewer;
 	
+	@ManyToOne
+	private Track track;
+	
 
 }
