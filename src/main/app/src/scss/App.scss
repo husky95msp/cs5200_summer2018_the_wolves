@@ -8,6 +8,19 @@ body{
 img {
 	max-height: 100%;
 	max-width:100%;}
+.error{
+	color: red;
+	font-size: 0px;
+	transition: all 0.2s ease;
+	// opacity: 0;
+}
+
+.error.show{
+	// opacity: 1;
+	font-size: 14px;
+	transition: all 0.2s ease;
+}
+
 //////////////////////////////////////////
 // track
 .track-tile{

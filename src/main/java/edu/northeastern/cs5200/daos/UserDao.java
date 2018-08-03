@@ -1,6 +1,7 @@
 package edu.northeastern.cs5200.daos;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import edu.northeastern.cs5200.models.User;
@@ -15,6 +16,7 @@ public class UserDao {
     //CREATE
 
     public User createUser(User user) {
+//    	System.out.println(user.getPassword());
         return userRepository.save(user);
     }
 
@@ -24,8 +26,8 @@ public class UserDao {
         return userRepository.findAll();
     }
     
-    public Iterable<User> findByUserNamePassword(String username, String password){
-    	return userRepository.findUserNameAndPassword(username, password);
+    public Iterable<User> findByUserName(String username){
+    	return userRepository.findByUserName(username);
     }
     
 }

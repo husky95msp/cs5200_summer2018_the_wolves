@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 import Login from 'login';
 function NavBar(props) {
   let toggle_login_popper = ()=>{
-    console.log("popoverclicked")
+
     props.dispatch({type: 'TOGGLE_LOGIN_POPPER'});
   };
 
@@ -31,6 +31,7 @@ function NavBar(props) {
 
               <div id="Popover1" onClick={toggle_login_popper} className="nav-link pt-0 pb-0">
                 <i className="material-icons login-icon">account_circle</i>
+
 
                 <div className="login-label"> Login</div>
               </div>

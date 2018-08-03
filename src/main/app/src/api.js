@@ -14,11 +14,17 @@ class TheServer {
     })
         .then(response => response.json())
         .then(dat => {
-          console.log(dat);
-          // store.dispatch({
-          //   type: 'TOKEN',
-          //   data: dat.access_token,
-          // });
+          if(dat.status === 200){
+            store.dispatch({
+              type: 'LOGIN_SUCCESS',
+              data: dat.body,
+            });
+          }
+
+          store.dispatch({
+            type: 'UPDATE_LOGIN_FORM_LABEL',
+            data: {label : dat.status},
+          });
 
         });
 

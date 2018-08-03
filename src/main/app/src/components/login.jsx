@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Modal, ModalHeader, ModalBody, Form, FormGroup, Input, Button} from 'reactstrap';
+import { Modal, ModalHeader,FormText, ModalBody, Form, FormGroup, Input, Button} from 'reactstrap';
 import api from 'api.js';
 import $ from 'jquery';
 
@@ -8,7 +8,9 @@ function LoginForm(props){
   function update(ev) {
     let tgt = $(ev.target);
 
-    let data = {};
+    let data = {
+      label:200
+    };
     data[tgt.attr('name')] = tgt.val();
 
     props.props.dispatch({
@@ -19,11 +21,13 @@ function LoginForm(props){
   return(
     <Form>
       <FormGroup>
-        <Input type="text" name="username" id="username" placeholder="User Name" bsSize="sm" onChange={update} />
-      </FormGroup>
+        <Input type="text" name="username" id="username" value = {props.props.login.username} placeholder="User Name" bsSize="sm" onChange={update} />
+        <div className={"error "+ (props.props.login.label == 404? "show": "")}>No such username!</div>
+    </FormGroup>
       <FormGroup>
-        <Input type="password" name="password" id="examplePassword" placeholder="Password" bsSize="sm" onChange={update}/>
-      </FormGroup>
+        <Input type="password" name="password" id="examplePassword" value = {props.props.login.password} placeholder="Password" bsSize="sm" onChange={update}/>
+        <div className={"error "+ (props.props.login.label == 401? "show": "")}>Invalid Password!</div>
+    </FormGroup>
       <Button onClick={()=>{api.authenticateUser(props.props.login.username, props.props.login.password)} } className="btn-info btn-sm btn-block ">Login</Button>
     </Form>
   );

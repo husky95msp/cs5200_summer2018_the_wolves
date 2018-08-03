@@ -7,8 +7,7 @@ import org.springframework.data.repository.query.Param;
 import edu.northeastern.cs5200.models.User;
 
 public interface UserRepository  extends CrudRepository<User, Integer> {
-    @Query("SELECT d FROM User d WHERE d.username=:username AND d.password=:password")
-    public Iterable<User> findUserNameAndPassword(
-            @Param("username")String username,
-            @Param("password") String password);	
+    @Query("SELECT d FROM User d WHERE d.username=:username")
+    public Iterable<User> findByUserName(
+            @Param("username")String username);	
 }

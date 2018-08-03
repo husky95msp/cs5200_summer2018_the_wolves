@@ -75,12 +75,15 @@ function navBar(state=empty_navbar, action) {
 
 let empty_login={
   username: "",
-  password: ""
+  password: "",
+  label: 200,
 }
 function login(state=empty_login, action){
   switch(action.type) {
 
     case 'UPDATE_LOGIN_FORM' :
+    return Object.assign({}, state, action.data);
+    case 'UPDATE_LOGIN_FORM_LABEL' :
     return Object.assign({}, state, action.data);
     default:
     return state;
@@ -92,6 +95,8 @@ function tog(state=false, action) {
 
     case 'TOGGLE_LOGIN_POPPER' :
     return !state;
+    case 'LOGIN_SUCCESS':
+    return false;
     default:
     return state;
   }
