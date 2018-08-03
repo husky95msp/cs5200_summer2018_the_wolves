@@ -9,9 +9,8 @@ class TheServer {
    },
       method: 'post',
       body: JSON.stringify({'spotify_id': song.id, 'title': song.name, 'uri': song.uri, 'album_name': song.album.name})
-    })
-        .then(response => response.json())
-        .then(response => {return response});
+    });
+
 
   }
   getLikedSongs(user){
@@ -73,13 +72,16 @@ class TheServer {
       json: true
     };
     request.get(options, (error, response, body)=> {
+body.tracks.items.map((song, index) =>{
+      body.tracks.items[index]['like']= false;
+    });
       body.tracks.items.map((song, index) =>{
           session.likedTracks.map((mySong, i)=>{
             if(song.id===mySong.spotify_id){
               body.tracks.items[index]['like']= true;
-            return null;
+
           }
-          body.tracks.items[index]['like']= false;
+
           });
 
           return null;

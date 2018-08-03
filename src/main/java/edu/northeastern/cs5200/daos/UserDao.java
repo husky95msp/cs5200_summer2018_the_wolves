@@ -13,6 +13,8 @@ import edu.northeastern.cs5200.repositories.UserRepository;
 
 @Component
 public class UserDao {
+	@Autowired
+	TrackDao trackDao;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -75,8 +77,10 @@ public class UserDao {
     
     public User updateUser(int id, User u) {
     	User temp = null;
+    	
 		Optional<User> opt = userRepository.findById(id);
 		if(opt.isPresent())
+			
 			temp = opt.get();
 		temp.set(u);
 		return userRepository.save(temp);
@@ -86,6 +90,11 @@ public class UserDao {
     	Optional<User> opt = userRepository.findById(user_id);
     	if(opt.isPresent()) {
     		List<Track> user_tracks = opt.get().getLikedTracks();
+    		List<User> userlikes = t.getLikes();
+    		userlikes.add(opt.get());
+    		t.setLikes(userlikes);
+    		
+    		trackDao.createTrack(t);
     		user_tracks.add(t);
     		opt.get().setLikedTracks(user_tracks);
     		

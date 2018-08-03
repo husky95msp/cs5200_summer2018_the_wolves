@@ -71,13 +71,14 @@ public class UserService {
 	}
 	
 	@PostMapping("/api/user/{user_id}/addtrack")
-	public void addTracktoLikedTracks(@Param("user_id") int id,
+	public void addTracktoLikedTracks(@PathVariable("user_id") int id,
 			@RequestBody Track t) {
+		System.out.println(id);
 		userDao.addTrackToLikedTracks(id, t);
 	}
 	
 	@GetMapping("/api/user/{user_id}/likedtracks")
-	public List<Track> getLikedTracks(@Param("user_id") int id){
+	public List<Track> getLikedTracks(@PathVariable("user_id") int id){
 		return userDao.findLikedTracks(id);
 	}
 
