@@ -23,7 +23,7 @@ function songs(state = null, action) {
 
   switch(action.type) {
     case 'GET_SONGS':
-    // console.log([...action.data]);
+
     return action.data;
     case 'SEARCH_CLEAR' :
     return null;
@@ -31,8 +31,9 @@ function songs(state = null, action) {
     let tempState = JSON.parse(JSON.stringify(state));
     let likes = null;
     let key = null;
+
     state.tracks.items.map((song,index)=>{
-      if (song.id === action.data) {
+      if (song.id === action.data.id) {
         likes = song.like; key = index;
       }
       return null;
@@ -103,6 +104,8 @@ function tog(state=false, action) {
 }
 function session(state=null, action){
   switch (action.type) {
+    case 'GET_LIKED_SONGS':
+      return Object.assign({}, state, {likedtracks: action.data});
     case 'LOGIN_SUCCESS':
       return action.data;
       break;

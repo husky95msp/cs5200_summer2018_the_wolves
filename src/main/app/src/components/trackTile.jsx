@@ -4,12 +4,15 @@ import { connect } from 'react-redux';
 // import {Button} from 'reactstrap';
 // import Ratings from 'ratings';
 import {Link} from 'react-router-dom';
-
+import api from 'api.js';
 
 
 
 function Song(props){
-
+  let likeSong= ()=>{
+    props.dispatch({type: 'LIKE_SONG', data: props.song})
+    api.likeSong(props.session.id, props.song);
+  }
 
   return(
     <li className="show slide-fade list-group-item track-tile mb-1" key={props.song.id}>
@@ -26,7 +29,7 @@ function Song(props){
           <div className="track-album">Album: {props.song.album.name}</div>
         </div>
       </div>
-      <div onClick={()=>props.dispatch({type: 'LIKE_SONG', data: props.song.id})} className="like-btn">
+      <div onClick={likeSong} className="like-btn">
         {props.song.like?  <i className="material-icons like-active" >star</i> : <i className="material-icons " >star_border</i>}
       </div>
     </li>);

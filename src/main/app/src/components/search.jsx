@@ -17,17 +17,18 @@ class Home extends React.Component{
     this.search = this.search.bind(this);
 
   }
-  search(token, key){
+  search(token, key, session){
     if (key.length !== 0){
 
-      api.getSongsByArtist(token, key);
+      api.getSongsByArtist(token, key, session);
+
     }
   }
   update(ev) {
     let tgt = $(ev.target);
     tgt.keypress((handler)=>{
       if (handler.which === 13){
-        this.search(this.props.token, this.props.test.key)
+        this.search(this.props.token, this.props.test.key, this.props.session)
       }
     })
     ;
@@ -52,7 +53,7 @@ class Home extends React.Component{
             <input className="form-control"  id= "search-bar" type="search" placeholder="Enter Artist/Band" name="key" aria-label="Search" onChange={this.update} />
 
             <div className="input-group-append">
-              <button onClick={()=>{ document.getElementById('search-bar').value = ''; this.search(this.props.token, this.props.test.key);}} className="btn btn-info pb-0"><div className="material-icons md-36">search</div></button>
+              <button onClick={()=>{ document.getElementById('search-bar').value = ''; this.search(this.props.token, this.props.test.key, this.props.session);}} className="btn btn-info pb-0"><div className="material-icons md-36">search</div></button>
             </div>
           </div>
         </div>
