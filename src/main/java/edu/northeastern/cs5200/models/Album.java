@@ -18,8 +18,14 @@ public class Album {
 	private int id;
 	
 	private String name;
-	
 	private int popularity;
+	private String albumArt;
+	
+	@ManyToOne
+	private Artist artist;
+	
+	@OneToMany(mappedBy="album", fetch = FetchType.LAZY)
+	private List<Track> tracks;
 	
 	public Album() {
 		super();
@@ -81,14 +87,4 @@ public class Album {
 	public void setTracks(List<Track> tracks) {
 		this.tracks = tracks;
 	}
-
-	private String albumArt;
-	
-	@ManyToOne
-	private Artist artist;
-	
-	@OneToMany(mappedBy="album", fetch = FetchType.LAZY)
-	private List<Track> tracks;
-	
-	
 }

@@ -16,9 +16,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Track {
 	
-	
-//	private int id;
-	
 	@Id
 	private String spotify_id;
 	private String title;
@@ -61,12 +58,7 @@ public class Track {
 	public void setTrack_data(String track_data) {
 		this.track_data = track_data;
 	}
-	public Track(String spotify_id, String track_data) {
-		super();
 	
-		this.spotify_id = spotify_id;
-		this.track_data = track_data;
-	}
 	public Track() {
 		super();
 	}

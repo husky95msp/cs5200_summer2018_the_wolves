@@ -67,7 +67,9 @@ public class Playlist {
 		this.creator = creator;
 	}
 
-	
-	
-	 
+	public void set(Playlist p) {
+		this.setName(p.getName());
+		this.setCreator(p.getCreator());
+		this.setTracks(p.getTracks());
+	}
 }
