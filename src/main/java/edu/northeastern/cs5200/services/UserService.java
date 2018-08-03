@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.northeastern.cs5200.daos.UserDao;
+import edu.northeastern.cs5200.models.Artist;
+import edu.northeastern.cs5200.models.Reviewer;
 import edu.northeastern.cs5200.models.User;
 
 @RestController
@@ -39,12 +41,19 @@ public class UserService {
 	@PostMapping("/api/user/authenticate")
 	public Map<String, Object> AuthenticateUser(@RequestBody User user) {
 		Map<String, Object> response = new HashMap<>();
+		Object u;
 		List<User> users = (List<User>) userDao.findByUserName(user.getUsername());
-							
+		if (users.get(0) instanceof Artist) {
+			 u = (Artist)users.get(0);
+		}else if (users.get(0) instanceof Reviewer) {
+			 u = (Reviewer)users.get(0);
+		}else {
+			 u = users.get(0);
+		}
 			if (users.size() != 0) {
 				if (users.get(0).getPassword().equals(user.getPassword())) {
 					response.put("status", 200);
-					response.put("user", users.get(0));
+					response.put(u.getClass().getSimpleName(), u);
 					return response;
 				}
 				// Invalid password
