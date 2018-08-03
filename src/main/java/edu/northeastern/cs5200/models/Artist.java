@@ -18,6 +18,25 @@ public class Artist extends User{
 	private List<Track> tracks;
 	
 	
+	public Artist(String username, String password, String email, List<Playlist> playlists, List<User> follows,
+			List<User> followee, List<Track> likedTracks, String image, List<Album> albums, List<Track> tracks) {
+		super(username, password, email, playlists, follows, followee, likedTracks);
+		this.image = image;
+		this.albums = albums;
+		this.tracks = tracks;
+	}
+	public List<Album> getAlbums() {
+		return albums;
+	}
+	public void setAlbums(List<Album> albums) {
+		this.albums = albums;
+	}
+	public List<Track> getTracks() {
+		return tracks;
+	}
+	public void setTracks(List<Track> tracks) {
+		this.tracks = tracks;
+	}
 	public String getImage() {
 		return image;
 	}
@@ -27,6 +46,18 @@ public class Artist extends User{
 
 	public Artist() {
 		super();
+	}
+	
+	public void set(Artist a) {
+		this.setEmail(a.getEmail());
+		this.setFollowee(a.getFollowee());
+		this.setFollows(a.getFollows());
+		this.setPlaylists(a.getPlaylists());
+		this.setLikedTracks(a.getLikedTracks());
+		this.setUsername(a.getUsername());
+		this.setPassword(a.getPassword());
+		this.setAlbums(a.getAlbums());
+		this.setTracks(a.getTracks());
 	}
 	
 }

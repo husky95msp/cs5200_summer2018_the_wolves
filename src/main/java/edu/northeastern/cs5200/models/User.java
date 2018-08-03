@@ -1,6 +1,5 @@
 package edu.northeastern.cs5200.models;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
@@ -122,7 +121,15 @@ public class User {
 		super();
 	}
 	
-	
+	public void set(User u) {
+		this.setEmail(u.getEmail());
+		this.setFollowee(u.getFollowee());
+		this.setFollows(u.getFollows());
+		this.setPlaylists(u.getPlaylists());
+		this.setLikedTracks(u.getLikedTracks());
+		this.setUsername(u.getUsername());
+		this.setPassword(u.getPassword());
+	}
 	 
 	
 }
