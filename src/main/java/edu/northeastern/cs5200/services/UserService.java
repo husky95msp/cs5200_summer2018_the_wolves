@@ -73,13 +73,28 @@ public class UserService {
 	@PostMapping("/api/user/{user_id}/addtrack")
 	public void addTracktoLikedTracks(@PathVariable("user_id") int id,
 			@RequestBody Track t) {
-		System.out.println(id);
 		userDao.addTrackToLikedTracks(id, t);
 	}
 	
 	@GetMapping("/api/user/{user_id}/likedtracks")
 	public List<Track> getLikedTracks(@PathVariable("user_id") int id){
 		return userDao.findLikedTracks(id);
+	}
+	
+	@PostMapping("/api/user/{id1}/{id2}")
+	public void addFollowerFollowee(@PathVariable("id1") int id1,
+			@PathVariable("id2") int id2) {
+		userDao.addFollowerFollowee(id1, id2);
+	}
+	
+	@GetMapping("/api/user/{user_id}/followers")
+	public List<User> getFollowers(@PathVariable("user_id") int id){
+		return userDao.findFollowers(id);
+	}
+	
+	@GetMapping("/api/user/{user_id}/following")
+	public List<User> getFollowing(@PathVariable("user_id") int id){
+		return userDao.findFollowing(id);
 	}
 
 }
