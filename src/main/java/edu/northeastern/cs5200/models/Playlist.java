@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Playlist {
 	
@@ -19,9 +21,11 @@ public class Playlist {
 	private String name;
 	
 	@ManyToMany(mappedBy="playlist", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Track> tracks;
 	
 	@ManyToOne
+	@JsonIgnore
 	private User creator;
 
 	public Playlist(String name, List<Track> tracks, User creator) {

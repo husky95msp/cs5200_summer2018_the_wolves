@@ -26,5 +26,12 @@ public class TrackDao {
 		return trackRepository.findBySpotifyId(id);
 	}
 	
-	
+	public void updateTrack(String id, Track t) {
+		Optional<Track> opt = trackRepository.findBySpotifyId(id);
+		if(opt.isPresent()) {
+			Track temp = opt.get();
+			temp.set(t);
+			trackRepository.save(temp);
+		}
+	}
 }
