@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import edu.northeastern.cs5200.models.Review;
+import edu.northeastern.cs5200.models.Reviewer;
 import edu.northeastern.cs5200.models.Track;
 import edu.northeastern.cs5200.repositories.ReviewRepository;
 
@@ -46,9 +47,10 @@ public class ReviewDao {
 		return rr.save(temp);
 	}
 	
-	public void addReviewForTrack(int reviewer_id, Track t, Review r) {
+	public void addReviewForTrack(int reviewer_id, String track_id, Review r) {
 		if(rd.findReviewerById(reviewer_id).isPresent()) {
-			if(td.findBySpotifyId(t.getSpotify_id()).isPresent()) {
+			if(td.findBySpotifyId(track_id).isPresent()) {
+				Track t = td.findBySpotifyId(track_id).get();
 				t.getReviews().add(r);
 				td.updateTrack(t.getSpotify_id(), t);
 				rd.findReviewerById(reviewer_id).get().getReviews().add(r);
@@ -59,6 +61,9 @@ public class ReviewDao {
 				createReview(r);
 			}
 			else {
+				Track t = new Track();
+				t.setSpotify_id(track_id);
+				t.setName("My track");
 				td.createTrack(t);
 				t.getReviews().add(r);
 				td.updateTrack(t.getSpotify_id(), t);
@@ -70,5 +75,21 @@ public class ReviewDao {
 				createReview(r);
 			}
 		}
+	}
+	
+	public List<Review> getAllReviewsForTrack(String track_id) {
+		Optional<Track> t = td.findBySpotifyId(track_id);
+		if(t.isPresent()) {
+			return t.get().getReviews();
+		}
+		return null;
+	}
+	
+	public List<Review> getAllReviewsByReviewer(int reviewer_id) {
+		Optional<Reviewer> r = rd.findReviewerById(reviewer_id);
+		if(r.isPresent()) {
+			return r.get().getReviews();
+		}
+		return null;
 	}
 }
