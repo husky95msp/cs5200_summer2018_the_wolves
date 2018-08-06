@@ -105,10 +105,13 @@ function tog(state=false, action) {
 function session(state=null, action){
   switch (action.type) {
     case 'GET_LIKED_SONGS':
-      return Object.assign({}, state, {likedtracks: action.data});
+      return Object.assign({}, state, {likedTracks: action.data});
     case 'LOGIN_SUCCESS':
       return action.data;
       break;
+      case 'LOGOUT':
+        return null;
+        break;
     default:
       return state;
   }

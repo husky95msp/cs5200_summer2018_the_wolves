@@ -15,18 +15,18 @@ function Song(props){
   }
 
   return(
-    <li className="show slide-fade list-group-item track-tile mb-1" key={props.song.id}>
+    <li className="show slide-fade list-group-item track-tile mb-1" key={props.song.spotify_id}>
       <div className="d-flex justify-content-left flex-row flex-nowrap">
         <div className="track-poster ">
-          <img alt="cover" src={props.song.album.images[0].url} className="rounded-circle align-self-center"/>
+          <img alt="cover" src={props.song.album_art} className="rounded-circle align-self-center"/>
         </div>
 
         <div className="track-info">
-          <Link to={"/tracks/"+props.song.id}>
+          <Link to={"/tracks/"+props.song.spotify_id}>
         <h5 className="track-name">{props.song.name}</h5>
 </Link>
           <div className="track-popularity">Popularity: {props.song.popularity}</div>
-          <div className="track-album">Album: {props.song.album.name}</div>
+          <div className="track-album">Album: {props.song.album_name}</div>
         </div>
       </div>
       <div onClick={likeSong} className="like-btn">

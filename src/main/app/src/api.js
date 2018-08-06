@@ -5,8 +5,8 @@ class TheServer {
   likeSong(userId, song){
     fetch('/api/user/'+userId+'/addtrack',{
       headers: {
-     'Content-Type': 'application/json'
-   },
+        'Content-Type': 'application/json'
+      },
       method: 'post',
       body: JSON.stringify({'spotify_id': song.id, 'title': song.name, 'uri': song.uri, 'album_name': song.album.name})
     });
@@ -15,14 +15,14 @@ class TheServer {
   }
   getLikedSongs(user){
     fetch('/api/user/'+user.id+'/likedtracks')
-        .then(response => response.json())
-        .then(dat => {
-          store.dispatch({
-            type: 'GET_LIKED_SONGS',
-            data: dat,
-          });
+    .then(response => response.json())
+    .then(dat => {
+      store.dispatch({
+        type: 'GET_LIKED_SONGS',
+        data: dat,
+      });
 
-        });
+    });
   }
   initializeUserData(user){
     this.getLikedSongs(user);
@@ -31,27 +31,27 @@ class TheServer {
 
     fetch('/api/user/authenticate',{
       headers: {
-     'Content-Type': 'application/json'
-   },
+        'Content-Type': 'application/json'
+      },
       method: 'post',
       body: JSON.stringify({'username': username, 'password': password})
     })
-        .then(response => response.json())
-        .then(dat => {
-          if(dat.status === 200){
-            this.initializeUserData(dat.User)
-            store.dispatch({
-              type: 'LOGIN_SUCCESS',
-              data: dat.User,
-            });
-          }
-
-          store.dispatch({
-            type: 'UPDATE_LOGIN_FORM_LABEL',
-            data: {label : dat.status},
-          });
-
+    .then(response => response.json())
+    .then(dat => {
+      if(dat.status === 200){
+        this.initializeUserData(dat.User)
+        store.dispatch({
+          type: 'LOGIN_SUCCESS',
+          data: dat.User,
         });
+      }
+
+      store.dispatch({
+        type: 'UPDATE_LOGIN_FORM_LABEL',
+        data: {label : dat.status},
+      });
+
+    });
 
   }
 
@@ -63,7 +63,7 @@ class TheServer {
     //     }
     //   });
     // });
-    console.log(session);
+
     var options = {
       url: 'https://api.spotify.com/v1/search?q='+key+'&type=track',
       headers: {
@@ -72,19 +72,22 @@ class TheServer {
       json: true
     };
     request.get(options, (error, response, body)=> {
-body.tracks.items.map((song, index) =>{
-      body.tracks.items[index]['like']= false;
-    });
       body.tracks.items.map((song, index) =>{
-          session.likedTracks.map((mySong, i)=>{
-            if(song.id===mySong.spotify_id){
-              body.tracks.items[index]['like']= true;
+        body.tracks.items[index]['like']= false;
+        body.tracks.items[index]['spotify_id']= body.tracks.items[index].id;
+        body.tracks.items[index]['album_name']= body.tracks.items[index].album.name;
+        body.tracks.items[index]['album_art']= body.tracks.items[index].album.images[0].url;
+      });
+      body.tracks.items.map((song, index) =>{
+        session.likedTracks.map((mySong, i)=>{
+          if(song.id===mySong.spotify_id){
+            body.tracks.items[index]['like']= true;
 
           }
 
-          });
+        });
 
-          return null;
+        return null;
       });
       store.dispatch({
         type: 'GET_SONGS',
@@ -116,15 +119,15 @@ body.tracks.items.map((song, index) =>{
 
   authenticate(){
 
-  fetch('/api/authenticate')
-      .then(response => response.json())
-      .then(dat => {
-        store.dispatch({
-          type: 'TOKEN',
-          data: dat.access_token,
-        });
-
+    fetch('/api/authenticate')
+    .then(response => response.json())
+    .then(dat => {
+      store.dispatch({
+        type: 'TOKEN',
+        data: dat.access_token,
       });
+
+    });
   }
 }
 

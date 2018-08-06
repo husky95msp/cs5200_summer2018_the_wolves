@@ -14,8 +14,8 @@ function NavBar(props) {
 
   return (
     <div>
-      <Navbar color="dark" dark expand="md" fixed={`top`}>
-        <NavbarBrand href="/">  Spotify++</NavbarBrand>
+      <Navbar color="light" expand="md" fixed={`top`}>
+        <NavbarBrand href="/"> <i className="fas fa-music"></i> Spotify++</NavbarBrand>
         <NavbarToggler onClick={()=>props.dispatch({type: 'TOGGLE_NAV'})} />
         <Collapse isOpen={props.navBar.collapse} navbar>
           <Nav className="ml-auto" navbar>
@@ -28,8 +28,9 @@ function NavBar(props) {
             </NavItem>
 
             <NavItem>
-                {props.session?   <NavLink to="/profile" exact = {true} activeClassName="active" className="nav-link">
-                <div>Hi! {props.session.username}</div></NavLink>:
+                {props.session?  <NavLink to="/profile" exact = {true} activeClassName="active" className="nav-link">
+                Hi! {props.session.username} </NavLink>
+              :
                   <div>
                     <div id="Popover1" onClick={toggle_login_popper} className="nav-link pt-0 pb-0">
                    <i className="material-icons login-icon">account_circle</i>
@@ -40,6 +41,9 @@ function NavBar(props) {
             </div>
 }
             </NavItem>
+            {props.session? <NavItem onClick={()=> props.dispatch({type: 'LOGOUT'})}><div className="material-icons nav-link">
+exit_to_app
+</div></NavItem>:<div></div>}
           </Nav>
         </Collapse>
       </Navbar>
