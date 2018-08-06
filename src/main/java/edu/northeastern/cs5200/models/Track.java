@@ -19,10 +19,11 @@ public class Track {
 	
 	@Id
 	private String spotify_id;
-	private String title;
+	private String name;
 	private String album_name;
 	private String uri;
-	private String track_data;
+	private String album_art;
+	private int popularity;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "TrackPlaylist",
@@ -50,13 +51,13 @@ public class Track {
 	@JsonIgnore
 	private List<Review> reviews;
 	
-	 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
+	
 	public String getAlbum_name() {
 		return album_name;
 	}
@@ -105,14 +106,34 @@ public class Track {
 	public void setSpotify_id(String spotify_id) {
 		this.spotify_id = spotify_id;
 	}
-	public String getTrack_data() {
-		return track_data;
-	}
-	public void setTrack_data(String track_data) {
-		this.track_data = track_data;
-	}
 	
 	public Track() {
 		super();
+	}
+	
+	public String getAlbum_art() {
+		return album_art;
+	}
+	public void setAlbum_art(String album_art) {
+		this.album_art = album_art;
+	}
+	public int getPopularity() {
+		return popularity;
+	}
+	public void setPopularity(int popularity) {
+		this.popularity = popularity;
+	}
+	
+	public void set(Track t) {
+		this.setAlbum(t.getAlbum());
+		this.setAlbum_name(t.getAlbum_name());
+		this.setLikes(t.getLikes());
+		this.setReviews(t.getReviews());
+		this.setName(t.getName());
+		this.setUri(t.getUri());
+		this.setArtist(t.getArtist());
+		this.setAlbum_art(t.getAlbum_art());
+		this.setPopularity(t.getPopularity());
+		this.setPlaylist(t.getPlaylist());
 	}
 }
