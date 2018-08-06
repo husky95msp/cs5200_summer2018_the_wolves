@@ -15,7 +15,7 @@ function NavBar(props) {
   return (
     <div>
       <Navbar color="dark" dark expand="md" fixed={`top`}>
-        <NavbarBrand href="/">  MusicfreaK</NavbarBrand>
+        <NavbarBrand href="/">  Spotify++</NavbarBrand>
         <NavbarToggler onClick={()=>props.dispatch({type: 'TOGGLE_NAV'})} />
         <Collapse isOpen={props.navBar.collapse} navbar>
           <Nav className="ml-auto" navbar>
