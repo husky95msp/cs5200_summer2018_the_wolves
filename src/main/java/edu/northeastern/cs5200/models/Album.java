@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Album {
 	
@@ -22,9 +24,11 @@ public class Album {
 	private String albumArt;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Artist artist;
 	
 	@OneToMany(mappedBy="album", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Track> tracks;
 	
 	public Album() {

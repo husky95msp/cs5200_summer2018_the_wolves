@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Review {
 	@Id
@@ -69,9 +71,11 @@ public class Review {
 	private int rating;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Reviewer reviewer;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Track track;
 	
 	public void set(Review r) {

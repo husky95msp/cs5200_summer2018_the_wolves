@@ -39,12 +39,15 @@ public class Track {
 	private List<User> likes = new ArrayList<User>();
 	
 	@ManyToOne
+	@JsonIgnore
 	private Album album;
 	
 	@ManyToOne
+	@JsonIgnore
 	private Artist artist;
 	
 	@OneToMany(mappedBy = "track", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Review> reviews;
 	
 	 

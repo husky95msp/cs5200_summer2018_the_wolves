@@ -6,12 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Reviewer extends User{
 	
 	private String org;
 	
 	@OneToMany(mappedBy = "reviewer", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Review> reviews;
 	
 	public Reviewer(String username, String password, String email, List<Playlist> playlists, List<User> follows,

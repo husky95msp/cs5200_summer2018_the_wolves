@@ -18,9 +18,11 @@ public class User {
 	private String email;
 	
 	@OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Playlist> playlists;
 	
 	@ManyToMany(mappedBy = "followee", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<User> follows;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -31,6 +33,7 @@ public class User {
 	 private List<User> followee;
 	
 	@ManyToMany(mappedBy = "likes", fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Track> likedTracks;
 
 	public int getId() {

@@ -6,15 +6,19 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Artist extends User{
 	
 	private String image;
 
 	@OneToMany(mappedBy="artist", fetch=FetchType.LAZY)
+	@JsonIgnore
 	private List<Album> albums;
 	
 	@OneToMany(mappedBy="artist", fetch=FetchType.LAZY)
+	@JsonIgnore
 	private List<Track> tracks;
 	
 	
