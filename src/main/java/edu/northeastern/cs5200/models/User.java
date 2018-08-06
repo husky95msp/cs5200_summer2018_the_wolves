@@ -17,22 +17,22 @@ public class User {
 	private String password;
 	private String email;
 	
-	@OneToMany(mappedBy = "creator", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Playlist> playlists;
 	
-	@ManyToMany(mappedBy = "followee", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "followee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<User> follows;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "Follows",
 	joinColumns = @JoinColumn(name = "follower_id", referencedColumnName = "id" ),
 	inverseJoinColumns = @JoinColumn(name = "followee_id", referencedColumnName = "id"))
 	@JsonIgnore
 	 private List<User> followee;
 	
-	@ManyToMany(mappedBy = "likes", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "likes", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Track> likedTracks;
 

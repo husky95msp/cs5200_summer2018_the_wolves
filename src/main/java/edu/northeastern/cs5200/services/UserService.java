@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,6 +76,12 @@ public class UserService {
 		userDao.addTrackToLikedTracks(id, t);
 	}
 	
+	@DeleteMapping("/api/user/{user_id}/deletetrack")
+	public void unlikeTrack(@PathVariable("user_id") int id,
+			@RequestBody Track t) {
+		userDao.unlikeTrack(id, t);
+	}
+	
 	@GetMapping("/api/user/{user_id}/likedtracks")
 	public List<Track> getLikedTracks(@PathVariable("user_id") int id){
 		return userDao.findLikedTracks(id);
@@ -94,6 +101,12 @@ public class UserService {
 	@GetMapping("/api/user/{user_id}/following")
 	public List<User> getFollowing(@PathVariable("user_id") int id){
 		return userDao.findFollowing(id);
+	}
+	
+	@DeleteMapping("/api/user/{id1}/{id2}/delete")
+	public void unfollowUser(@PathVariable("id2") int id1,
+			@PathVariable("id2") int id2) {
+		userDao.unfollowUser(id1, id2);
 	}
 
 }
