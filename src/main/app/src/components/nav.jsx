@@ -42,9 +42,9 @@ function NavBar(props) {
                     <DropdownMenu>
 
 
-                      <DropdownItem><i className="material-icons">settings</i> Profile</DropdownItem>
+                      <DropdownItem><NavLink to="/profile" exact = {true} activeClassName="active"><i className="material-icons">settings</i> Profile</NavLink></DropdownItem>
                       <DropdownItem divider />
-                      <DropdownItem onClick={()=>props.dispatch({type:'LOGOUT'})}><Link to="/"><i className="material-icons">exit_to_app</i> Logout</Link> </DropdownItem>
+                      <DropdownItem onClick={()=>props.dispatch({type:'LOGOUT'})}><Link to="/"><i className="material-icons text-danger">exit_to_app</i> Logout</Link> </DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
 

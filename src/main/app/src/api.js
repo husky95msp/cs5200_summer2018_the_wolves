@@ -2,9 +2,65 @@ import store from './store';
 // import $ from 'jquery';
 import request from 'request'; // "Request" library
 class TheServer {
+  loadNextPage(next, token, session){
+    var options = {
+      url: next,
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      json: true
+    };
+    request.get(options, (error, response, body)=> {
+      body.tracks.items.map((song, index) =>{
+        body.tracks.items[index]['like']= false;
+        body.tracks.items[index]['spotify_id']= body.tracks.items[index].id;
+        body.tracks.items[index]['album_name']= body.tracks.items[index].album.name;
+        body.tracks.items[index]['album_art']= body.tracks.items[index].album.images[0].url;
+      });
+      if (session){
+      body.tracks.items.map((song, index) =>{
+        session.likedTracks.map((mySong, i)=>{
+          if(song.id===mySong.spotify_id){
+            body.tracks.items[index]['like']= true;
 
+          }
+
+        });
+
+        return null;
+      });
+    }
+      store.dispatch({
+        type: 'APPEND_SONGS',
+        data: body,
+      });
+    });
+  }
+  getUsersByName(name){
+    fetch('/api/user/key/'+name)
+    .then(response => response.json())
+    .then(dat => {
+      store.dispatch({
+        type: 'USER_SEARCH_RESULTS',
+        data: dat,
+      });
+
+    });
+  }
   unlikeSong(userId, song){
-    console.log("unliked");
+    fetch('/api/user/'+userId+'/deletetrack',{
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'delete',
+      body: JSON.stringify(song)
+    })
+    // .then(()=> {
+    //   store.dispatch({
+    //     type:'UPDATE_LIKED_SONGS',
+    //     data: song,
+    //   });
+    // })
   }
   likeSong(userId, song){
 
@@ -41,9 +97,21 @@ class TheServer {
 
     });
   }
+  getFollowers(user){
+    fetch('/api/user/'+user.id+'/followers')
+    .then(response => response.json())
+    .then(dat => {
+
+      store.dispatch({
+        type: 'GET_FOLLOWERS',
+        data: dat,
+      });
+
+    });
+  }
   initializeUserData(user){
     this.getLikedSongs(user);
-
+    this.getFollowers(user);
   }
   authenticateUser(username, password){
 
@@ -57,10 +125,10 @@ class TheServer {
     .then(response => response.json())
     .then(dat => {
       if(dat.status === 200){
-        this.initializeUserData(dat.User)
+        this.initializeUserData(dat.user)
         store.dispatch({
           type: 'LOGIN_SUCCESS',
-          data: dat.User,
+          data: dat.user,
         });
       }
 
@@ -73,7 +141,7 @@ class TheServer {
 
   }
 
-  getSongsByArtist(token, key, session){
+  getSongsByArtist(token, kf, session){
     // props.songs.map((song,index)=>{
     //   props.session.likedtracks.map((mysong)={
     //     if (mysong.spotify_id === song.id){
@@ -83,7 +151,7 @@ class TheServer {
     // });
 
     var options = {
-      url: 'https://api.spotify.com/v1/search?q='+key+'&type=track',
+      url: 'https://api.spotify.com/v1/search?q='+kf.key+'&type=track',
       headers: {
         'Authorization': 'Bearer ' + token
       },

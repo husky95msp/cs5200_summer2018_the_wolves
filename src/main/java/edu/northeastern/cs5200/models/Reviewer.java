@@ -18,8 +18,8 @@ public class Reviewer extends User{
 	private List<Review> reviews;
 	
 	public Reviewer(String username, String password, String email, List<Playlist> playlists, List<User> follows,
-			List<User> followee, List<Track> likedTracks, String org, List<Review> reviews) {
-		super(username, password, email, playlists, follows, followee, likedTracks);
+			List<User> follower, List<Track> likedTracks, String org, List<Review> reviews) {
+		super(username, password, email, playlists, follows, follower, likedTracks);
 		this.org = org;
 		this.reviews = reviews;
 	}
@@ -41,7 +41,7 @@ public class Reviewer extends User{
 	
 	public void set(Reviewer r) {
 		this.setEmail(r.getEmail());
-		this.setFollowee(r.getFollowee());
+		this.setFollower(r.getFollower());
 		this.setFollows(r.getFollows());
 		this.setPlaylists(r.getPlaylists());
 		this.setLikedTracks(r.getLikedTracks());

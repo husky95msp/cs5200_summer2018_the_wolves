@@ -7,7 +7,6 @@ import Song from 'trackTile';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 function SongList(props){
-  if (props.songList != null){
 
     return(
       <div className = "container">
@@ -26,8 +25,8 @@ function SongList(props){
         </ul>
       </div>);
     }
-    return null;
-  }
+
+
 
 
   export default connect((state)=>state)(SongList);

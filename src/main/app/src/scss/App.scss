@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster|Oxygen');
 @import 'bootstrap/dist/css/bootstrap';
+.content-wrapper{
+	margin-top: 17px;
+}
 body{
 	overflow-y: scroll !important;
 	padding-top: 77px;
@@ -222,28 +225,25 @@ a{
 		width: auto;
 
 	}
-	.form-control{
+	#search-bar{
 		// background-color: inherit;
+		border-top: 1px solid grey;
+		border-bottom: 1px solid grey;
 
 		border-radius: 0px;
 	}
-	.btn{
-		// border: 1px solid white;
-		border-radius: 0px;
+.btn{
+	box-shadow: 0px 0px teal !important;
 
-	}
-	.btn:focus{
-
-
-		box-shadow: 0px 0px white;
-		border-radius: 0px;
-
-	}
-	.form-control:focus{
+}
+.btn-outline-secondary{
+	box-shadow:0px 0px teal !important;
+}
+	#search-bar:focus{
 		// background-color: inherit;
 		box-shadow: 0px 0px red;
 
-		// border: 1px solid white;
+		border: 1px solid green;
 
 		border-radius: 0px;
 	}
@@ -289,3 +289,33 @@ a{
 	.search-bar-icon{
 		font-size: 36px;
 	}
+
+	.badge{
+		margin-left: 7px;
+		margin-bottom: 7px;
+		padding: 7px;
+		background-color: transparent;
+		color: black;
+		border:1px solid lightgray;
+		border-radius: 15px;
+		cursor:pointer;
+		// transform: translateX(0px);
+		transition: all 0.3s ease;
+
+	}
+	.badge-active{
+		// transform: translateX(300px);
+		background-color: black;
+		color: white;
+		transition: all 0.3s ease;
+
+	}
+
+.load{
+	background-color: transparent;
+	color: black;
+	justify-content: center;
+	border-radius: 0px;
+	border: 1px solid #ccc!important;
+	margin: 0 auto;
+}

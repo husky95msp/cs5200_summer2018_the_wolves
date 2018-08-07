@@ -13,24 +13,42 @@ public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	private String firstName;
+	private String lastName;
 	private String username;
 	private String password;
 	private String email;
 	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
 	@OneToMany(mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Playlist> playlists;
 	
-	@ManyToMany(mappedBy = "followee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "follows", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<User> follows;
+	private List<User> follower;
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "Follows",
 	joinColumns = @JoinColumn(name = "follower_id", referencedColumnName = "id" ),
 	inverseJoinColumns = @JoinColumn(name = "followee_id", referencedColumnName = "id"))
 	@JsonIgnore
-	 private List<User> followee;
+	 private List<User> follows;
 	
 	@ManyToMany(mappedBy = "likes", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -86,12 +104,12 @@ public class User {
 		this.follows = follows;
 	}
 
-	public List<User> getFollowee() {
-		return followee;
+	public List<User> getFollower() {
+		return follower;
 	}
 
-	public void setFollowee(List<User> followee) {
-		this.followee = followee;
+	public void setFollower(List<User> followee) {
+		this.follower = followee;
 	}
 
 	public List<Track> getLikedTracks() {
@@ -106,7 +124,7 @@ public class User {
 		return bCryptPasswordEncoder.matches(password, this.getPassword());
 	}
 	public User( String username, String password, String email, List<Playlist> playlists, List<User> follows,
-			List<User> followee, List<Track> likedTracks) {
+			List<User> follower, List<Track> likedTracks) {
 		super();
 //		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 //		String encryptedPass = bCryptPasswordEncoder.encode(password);
@@ -116,7 +134,7 @@ public class User {
 		this.email = email;
 		this.playlists = playlists;
 		this.follows = follows;
-		this.followee = followee;
+		this.follower = follower;
 		this.likedTracks = likedTracks;
 	}
 
@@ -126,7 +144,7 @@ public class User {
 	
 	public void set(User u) {
 		this.setEmail(u.getEmail());
-		this.setFollowee(u.getFollowee());
+		this.setFollower(u.getFollower());
 		this.setFollows(u.getFollows());
 		this.setPlaylists(u.getPlaylists());
 		this.setLikedTracks(u.getLikedTracks());

@@ -42,6 +42,10 @@ public class UserDao {
     	return userRepository.findByUserName(username);
     }
     
+    public Iterable<User> findByKey(String key){
+    	return userRepository.findByKey(key);
+    }
+    
     public List<Track> findLikedTracks(int id){
     	Optional<User> opt = userRepository.findById(id);
     	if(opt.isPresent())
@@ -59,14 +63,14 @@ public class UserDao {
     public List<User> findFollowers(int id){
     	Optional<User> opt = userRepository.findById(id);
     	if(opt.isPresent())
-    		return opt.get().getFollows();
+    		return opt.get().getFollower();
     	return null;
     }
     
     public List<User> findFollowing(int id){
     	Optional<User> opt = userRepository.findById(id);
     	if(opt.isPresent())
-    		return opt.get().getFollowee();
+    		return opt.get().getFollows();
     	return null;
     }
     
@@ -107,15 +111,16 @@ public class UserDao {
     
     public void unlikeTrack(int user_id, Track t) {
     	Optional<User> opt = userRepository.findById(user_id);
+    	Optional<Track> optTrack = trackDao.findBySpotifyId(t.getSpotify_id());
     	if(opt.isPresent()) {
     		List<Track> user_tracks = opt.get().getLikedTracks();
-    		List<User> userlikes = t.getLikes();
+    		List<User> userlikes = optTrack.get().getLikes();
     		userlikes.remove(opt.get());
-    		t.setLikes(userlikes);
+    		optTrack.get().setLikes(userlikes);
     		
-    		user_tracks.remove(t);
+    		user_tracks.remove(optTrack.get());
     		opt.get().setLikedTracks(user_tracks);
-    		
+    		trackDao.updateTrack(t.getSpotify_id(), optTrack.get());
     		updateUser(user_id, opt.get());
     	}
     }
@@ -130,9 +135,9 @@ public class UserDao {
     		u1.get().setFollows(u1_follows);
     		updateUser(id1, u1.get());
     		
-    		List<User> u2_followee = u2.get().getFollowee();
+    		List<User> u2_followee = u2.get().getFollower();
     		u2_followee.add(u1.get());
-    		u2.get().setFollowee(u2_followee);
+    		u2.get().setFollower(u2_followee);
     		updateUser(id2, u2.get());
     	}
     }
@@ -142,18 +147,22 @@ public class UserDao {
     	Optional<User> u2 = userRepository.findById(id2);
     	
     	if(u1.isPresent() && u2.isPresent()) {
+    	
     		List<User> u1_follows = u1.get().getFollows();
     		if(u1_follows.contains(u2.get())) {
     			u1_follows.remove(u2.get());
     			u1.get().setFollows(u1_follows);
         		updateUser(id1, u1.get());
+        	
+        	
     		}
     		
-    		List<User> u2_followee = u2.get().getFollowee();
+    		List<User> u2_followee = u2.get().getFollower();
     		if(u2_followee.contains(u1.get())) {
     			u2_followee.remove(u1.get());
-        		u2.get().setFollowee(u2_followee);
+        		u2.get().setFollower(u2_followee);
         		updateUser(id2, u2.get());
+        		
     		}
     	}
     }

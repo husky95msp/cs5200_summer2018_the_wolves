@@ -7,7 +7,8 @@ const persistedState = loadState();
 
 
 let empty_search = {
-  key: ""
+  key: "",
+  filter: "song",
 };
 function token(state = null, action) {
 
@@ -22,6 +23,21 @@ function token(state = null, action) {
 function songs(state = null, action) {
 
   switch(action.type) {
+    case 'APPEND_SONGS':
+    return Object.assign({},
+      state,
+      { tracks:
+        {
+          items: [...state.tracks.items, ...action.data.tracks.items],
+          href:action.data.tracks.href,
+          limit:action.data.tracks.limit,
+          next:action.data.tracks.next,
+          previous:action.data.tracks.previous,
+          total:action.data.tracks.total,
+        }
+      }
+    );
+
     case 'GET_SONGS':
 
     return action.data;
@@ -54,6 +70,8 @@ function test(state=empty_search, action) {
 
   switch(action.type) {
 
+    case 'SEARCH_FILTER':
+    return Object.assign({}, state, {filter: action.data});
     case 'UPDATE_SEARCH_FORM' :
     return Object.assign({}, state, action.data);
     case 'SEARCH_CLEAR' :
@@ -116,6 +134,9 @@ function tog(state=false, action) {
 function session(state=null, action){
 
   switch (action.type) {
+
+    case 'GET_FOLLOWERS':
+    return Object.assign({}, state, {followers: [...action.data]});
     case 'LIKE_SONG':
 
     return Object.assign({}, state, {likedTracks: state.likedTracks.filter((value)=> !(value.spotify_id === action.data.spotify_id))});
@@ -144,8 +165,18 @@ function profileDropper(state=false, action){
       return state;
   }
 }
+function userSearch(state=[], action){
+  switch (action.type) {
+    case 'USER_SEARCH_RESULTS':
+      return [...action.data];
+    case 'SEARCH_CLEAR' :
+      return [];
+    default:
+      return state;
+  }
+}
   function root_reducer(state0 = persistedState, action) {
-    let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper});
+    let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch});
     let state1 = reducer(state0, action);
     console.log("ReduxState", state1);
     return deepFreeze(state1);

@@ -27,10 +27,11 @@ class Routes extends React.Component{
       <Router>
         <div>
           <NavBar/>
+          <div className="content-wrapper">
           <Route exact path="/" render={()=> <Home/>}/>
           <Route path="/tracks/:id" render={(match)=> <TrackView songId={match.match.params.id}/>}/>
           <Route exact path="/favorites" render={()=> <Favorites/>}/>
-
+          </div>
         </div>
       </Router>
     );

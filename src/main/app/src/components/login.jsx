@@ -40,7 +40,7 @@ function Login(props){
   return(
 
     <div>
-        <Modal isOpen={props.tog} className="" backdrop={false}>
+        <Modal isOpen={props.tog} className="" modalTransition={{ timeout: 0 }} backdropTransition={{ timeout: 700 }}>
           <ModalHeader toggle={toggle_login_popper} >Login</ModalHeader>
           <ModalBody>
             <LoginForm props = {props}/>

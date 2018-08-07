@@ -23,8 +23,8 @@ public class Artist extends User{
 	
 	
 	public Artist(String username, String password, String email, List<Playlist> playlists, List<User> follows,
-			List<User> followee, List<Track> likedTracks, String image, List<Album> albums, List<Track> tracks) {
-		super(username, password, email, playlists, follows, followee, likedTracks);
+			List<User> follower, List<Track> likedTracks, String image, List<Album> albums, List<Track> tracks) {
+		super(username, password, email, playlists, follows, follower, likedTracks);
 		this.image = image;
 		this.albums = albums;
 		this.tracks = tracks;
@@ -54,7 +54,7 @@ public class Artist extends User{
 	
 	public void set(Artist a) {
 		this.setEmail(a.getEmail());
-		this.setFollowee(a.getFollowee());
+		this.setFollower(a.getFollower());
 		this.setFollows(a.getFollows());
 		this.setPlaylists(a.getPlaylists());
 		this.setLikedTracks(a.getLikedTracks());

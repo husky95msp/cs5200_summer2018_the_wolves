@@ -39,23 +39,31 @@ public class UserService {
 	public Optional<User> findUserById(@PathVariable("user_id") int id){
 		return userDao.findUserById(id);
 	}
+	@GetMapping("/api/user/key/{key}")
+	public Iterable<User> findUsersByKey(@PathVariable("key") String key){
+		return userDao.findByKey(key);
+	}
 
 	@PostMapping("/api/user/authenticate")
 	public Map<String, Object> AuthenticateUser(@RequestBody User user) {
 		Map<String, Object> response = new HashMap<>();
 		Object u;
 		List<User> users = (List<User>) userDao.findByUserName(user.getUsername());
-		if (users.get(0) instanceof Artist) {
-			 u = (Artist)users.get(0);
-		}else if (users.get(0) instanceof Reviewer) {
-			 u = (Reviewer)users.get(0);
-		}else {
-			 u = users.get(0);
-		}
+		
+		
 			if (users.size() != 0) {
+				User ui = users.get(0);
+				if (ui instanceof Artist) {
+					 u = (Artist)ui;
+				}else if (ui instanceof Reviewer) {
+					 u = (Reviewer)ui;
+				}else {
+					 u = (User)ui;
+				}
 				if (users.get(0).getPassword().equals(user.getPassword())) {
 					response.put("status", 200);
-					response.put(u.getClass().getSimpleName(), u);
+					response.put("user", ui);
+					response.put("type", u.getClass().getSimpleName());
 					return response;
 				}
 				// Invalid password
@@ -103,8 +111,8 @@ public class UserService {
 		return userDao.findFollowing(id);
 	}
 	
-	@DeleteMapping("/api/user/{id1}/{id2}/delete")
-	public void unfollowUser(@PathVariable("id2") int id1,
+	@GetMapping("/api/user/{id1}/{id2}/unfollow")
+	public void unfollowUser(@PathVariable("id1") int id1,
 			@PathVariable("id2") int id2) {
 		userDao.unfollowUser(id1, id2);
 	}
