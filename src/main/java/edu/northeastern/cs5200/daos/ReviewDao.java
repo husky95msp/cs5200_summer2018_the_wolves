@@ -92,4 +92,24 @@ public class ReviewDao {
 		}
 		return null;
 	}
+	
+	public void deleteReview(int id) {
+		Optional<Review> r = rr.findById(id);
+		if(r.isPresent()) {
+			Track t = r.get().getTrack();
+			Reviewer rev = r.get().getReviewer();
+			
+			List<Review> revs = t.getReviews();
+			revs.remove(r);
+			t.setReviews(revs);
+			td.updateTrack(t.getSpotify_id(), t);
+			
+			revs = rev.getReviews();
+			revs.remove(r);
+			rev.setReviews(revs);
+			rd.updateReviewer(rev.getId(), rev);
+			
+			rr.deleteById(id);
+		}
+	}
 }
