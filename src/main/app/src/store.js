@@ -48,19 +48,19 @@ function songs(state = null, action) {
     let likes = null;
     let key = null;
     if (state != null){
-    state.tracks.items.map((song,index)=>{
-      if (song.spotify_id === action.data.spotify_id) {
-        likes = song.like; key = index;
-        tempState.tracks.items[key].like = !likes
-      }
-      return null;
-    });
-  }
+      state.tracks.items.map((song,index)=>{
+        if (song.spotify_id === action.data.spotify_id) {
+          likes = song.like; key = index;
+          tempState.tracks.items[key].like = !likes
+        }
+        return null;
+      });
+    }
     return tempState;
     case 'LOGOUT':
-      return null;
-      case 'LOGIN_SUCCESS':
-      return null;
+    return null;
+    case 'LOGIN_SUCCESS':
+    return null;
     default:
     return state;
   }
@@ -77,7 +77,7 @@ function test(state=empty_search, action) {
     case 'SEARCH_CLEAR' :
     return empty_search;
     case 'LOGOUT':
-      return empty_search;
+    return empty_search;
     default:
     return state;
   }
@@ -112,7 +112,7 @@ function loginForm(state=empty_login, action){
     case 'UPDATE_LOGIN_FORM_LABEL' :
     return Object.assign({}, state, action.data);
     case 'LOGOUT':
-      return empty_login;
+    return empty_login;
     default:
     return state;
   }
@@ -126,7 +126,7 @@ function tog(state=false, action) {
     case 'LOGIN_SUCCESS':
     return false;
     case 'LOGOUT':
-      return false;
+    return false;
     default:
     return state;
   }
@@ -135,52 +135,78 @@ function session(state=null, action){
 
   switch (action.type) {
 
+    case 'FOLLOW_USER':
+    if(action.data.followee){
+      return Object.assign({}, state, {followees: state.followees.filter((value)=> !(value.id == action.data.id))});
+    }else{
+      let tempState = JSON.parse(JSON.stringify(action.data));
+      tempState.followee = true;
+      return Object.assign({}, state, {followees: [...state.followees, tempState]});
+
+    }
     case 'GET_FOLLOWERS':
     return Object.assign({}, state, {followers: [...action.data]});
+    case 'GET_FOLLOWEES':
+    return Object.assign({}, state, {followees: [...action.data]});
     case 'LIKE_SONG':
-
     return Object.assign({}, state, {likedTracks: state.likedTracks.filter((value)=> !(value.spotify_id === action.data.spotify_id))});
 
     case 'GET_LIKED_SONGS':
-      return Object.assign({}, state, {likedTracks: action.data});
-      case 'UPDATE_LIKED_SONGS':
-      let song = JSON.parse(JSON.stringify(action.data));
-      song.like=true;
-        return Object.assign({}, state, {likedTracks: [...state.likedTracks,song]});
+    return Object.assign({}, state, {likedTracks: action.data});
+    case 'UPDATE_LIKED_SONGS':
+    let song = JSON.parse(JSON.stringify(action.data));
+    song.like=true;
+    return Object.assign({}, state, {likedTracks: [...state.likedTracks,song]});
     case 'LOGIN_SUCCESS':
-      return action.data;
-      break;
-      case 'LOGOUT':
-        return null;
-        break;
+    return action.data;
+    break;
+    case 'LOGOUT':
+    return null;
+    break;
     default:
-      return state;
+    return state;
   }
 }
 function profileDropper(state=false, action){
   switch (action.type) {
     case 'toggle_profile_dropper':
-      return !state;
+    return !state;
     default:
-      return state;
+    return state;
   }
 }
 function userSearch(state=[], action){
   switch (action.type) {
+    case 'FOLLOW_USER':
+    let tempState = JSON.parse(JSON.stringify(state));
+    let followee = null;
+    let key = null;
+    if (state != null){
+      state.map((user,index)=>{
+        if (user.id === action.data.id) {
+          followee = user.followee ;
+          key = index;
+          tempState[key].followee = !followee
+        }
+        return null;
+      });
+    }
+    return tempState;
+    return
     case 'USER_SEARCH_RESULTS':
-      return [...action.data];
+    return [...action.data];
     case 'SEARCH_CLEAR' :
-      return [];
+    return [];
     default:
-      return state;
+    return state;
   }
 }
-  function root_reducer(state0 = persistedState, action) {
-    let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch});
-    let state1 = reducer(state0, action);
-    console.log("ReduxState", state1);
-    return deepFreeze(state1);
-  };
+function root_reducer(state0 = persistedState, action) {
+  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch});
+  let state1 = reducer(state0, action);
+  console.log("ReduxState", state1);
+  return deepFreeze(state1);
+};
 
-  let store = createStore(root_reducer);
-  export default store;
+let store = createStore(root_reducer);
+export default store;

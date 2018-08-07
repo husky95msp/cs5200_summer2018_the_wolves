@@ -8,20 +8,31 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Button} from 'reactstrap';
 function UserList(props) {
 
-  let User = (props) => {
-    let follow=()=>{
-      if(props.state.session){
-        props.dispatch({type: 'FOLLOW_USER', data: props.user})
+  let User = (prop) => {
+    let follow = () => {
+      if (prop.state.session) {
+        props.dispatch({type: 'FOLLOW_USER', data: prop.user});
+        if (prop.user.followee) {
+          api.unfollow(prop.state.session.id, prop.user.id);
+        } else {
+          api.follow(prop.state.session.id, prop.user.id);
 
+        }
       }
     }
     return (<div className="container mb-1 card card-body">
-      <h2>{props.user.firstName}
-        {props.user.lastName}</h2>
-      <div><Button onClick={follow}>Follow</Button></div>
+      <h2>{prop.user.firstName}
+        {prop.user.lastName}</h2>
+      <div>
+        <Button onClick={follow}>{
+            prop.user.followee
+              ? "UnFollow"
+              : "Follow"
+          }</Button>
+      </div>
 
-      <div>id : {props.user.id}</div>
-      <div>username : {props.user.username}</div>
+      <div>id : {prop.user.id}</div>
+      <div>username : {prop.user.username}</div>
     </div>);
   }
 

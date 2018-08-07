@@ -2,6 +2,12 @@ import store from './store';
 // import $ from 'jquery';
 import request from 'request'; // "Request" library
 class TheServer {
+  follow(u1, u2){
+    fetch('/api/user/'+u1+'/'+u2);
+  }
+  unfollow(u1, u2){
+    fetch('/api/user/'+u1+'/'+u2+'/unfollow');
+  }
   loadNextPage(next, token, session){
     var options = {
       url: next,
@@ -18,18 +24,18 @@ class TheServer {
         body.tracks.items[index]['album_art']= body.tracks.items[index].album.images[0].url;
       });
       if (session){
-      body.tracks.items.map((song, index) =>{
-        session.likedTracks.map((mySong, i)=>{
-          if(song.id===mySong.spotify_id){
-            body.tracks.items[index]['like']= true;
+        body.tracks.items.map((song, index) =>{
+          session.likedTracks.map((mySong, i)=>{
+            if(song.id===mySong.spotify_id){
+              body.tracks.items[index]['like']= true;
 
-          }
+            }
 
+          });
+
+          return null;
         });
-
-        return null;
-      });
-    }
+      }
       store.dispatch({
         type: 'APPEND_SONGS',
         data: body,
@@ -37,9 +43,24 @@ class TheServer {
     });
   }
   getUsersByName(name){
+    let state = store.getState();
     fetch('/api/user/key/'+name)
     .then(response => response.json())
     .then(dat => {
+      dat.map((user, i)=>{
+        dat[i]['follower']= false;
+        dat[i]['followee']= false;
+        state.session.followers.map((follower,j)=>{
+          if(follower.id == user.id){
+            dat[i]['follower']= true;
+          }
+        });
+        state.session.followees.map((followee,j)=>{
+          if(followee.id == user.id){
+            dat[i]['followee']= true;
+          }
+        });
+      });
       store.dispatch({
         type: 'USER_SEARCH_RESULTS',
         data: dat,
@@ -101,9 +122,21 @@ class TheServer {
     fetch('/api/user/'+user.id+'/followers')
     .then(response => response.json())
     .then(dat => {
-
+      dat.map((user, i)=>dat[i]['follower']= true);
       store.dispatch({
         type: 'GET_FOLLOWERS',
+        data: dat,
+      });
+
+    });
+  }
+  getFollows(user){
+    fetch('/api/user/'+user.id+'/following')
+    .then(response => response.json())
+    .then(dat => {
+      dat.map((user, i)=>dat[i]['followee']= true);
+      store.dispatch({
+        type: 'GET_FOLLOWEES',
         data: dat,
       });
 
@@ -112,6 +145,7 @@ class TheServer {
   initializeUserData(user){
     this.getLikedSongs(user);
     this.getFollowers(user);
+    this.getFollows(user);
   }
   authenticateUser(username, password){
 
@@ -165,18 +199,18 @@ class TheServer {
         body.tracks.items[index]['album_art']= body.tracks.items[index].album.images[0].url;
       });
       if (session){
-      body.tracks.items.map((song, index) =>{
-        session.likedTracks.map((mySong, i)=>{
-          if(song.id===mySong.spotify_id){
-            body.tracks.items[index]['like']= true;
+        body.tracks.items.map((song, index) =>{
+          session.likedTracks.map((mySong, i)=>{
+            if(song.id===mySong.spotify_id){
+              body.tracks.items[index]['like']= true;
 
-          }
+            }
 
+          });
+
+          return null;
         });
-
-        return null;
-      });
-    }
+      }
       store.dispatch({
         type: 'GET_SONGS',
         data: body,

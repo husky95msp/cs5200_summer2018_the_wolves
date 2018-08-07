@@ -10,7 +10,8 @@ import Home from 'components/search';
 import NavBar from 'components/nav';
 import TrackView from 'components/trackview';
 import Favorites from 'components/favorites';
-
+import Profile from 'components/profile';
+import UserList from 'user_list';
 
 
 export default function home_init(root, store){
@@ -28,13 +29,21 @@ class Routes extends React.Component{
         <div>
           <NavBar/>
           <div className="content-wrapper">
-          <Route exact path="/" render={()=> <Home/>}/>
-          <Route path="/tracks/:id" render={(match)=> <TrackView songId={match.match.params.id}/>}/>
-          <Route exact path="/favorites" render={()=> <Favorites/>}/>
+            <Route exact path="/" render={()=> <Home/>}/>
+            <Route path="/tracks/:id" render={(match)=> <TrackView songId={match.match.params.id}/>}/>
+            <Route exact path="/favorites" render={()=> <Favorites/>}/>
+            <Route  path={`/profile`} render={()=> <Profile/>}/>
+            <Route exact path='/profile/followers' component={()=> <div>
+                {this.props.session?<UserList userList = {this.props.session.followers} />:<div></div>}
+              </div>}/>
+              <Route exact path='/profile/followees' component={()=> <div>
+{this.props.session?<UserList userList = {this.props.session.followees} />:<div></div>}
+                  </div>}/>
+
+            </div>
           </div>
-        </div>
-      </Router>
-    );
+        </Router>
+      );
     }
   }
 
