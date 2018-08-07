@@ -17,6 +17,9 @@ public class UserDao {
 	TrackDao trackDao;
 	
 	@Autowired
+	PlaylistDao pd;
+	
+	@Autowired
 	UserRepository userRepository;
 	
     //CREATE
@@ -102,21 +105,65 @@ public class UserDao {
     	}
     }
     
+    public void unlikeTrack(int user_id, Track t) {
+    	Optional<User> opt = userRepository.findById(user_id);
+    	if(opt.isPresent()) {
+    		List<Track> user_tracks = opt.get().getLikedTracks();
+    		List<User> userlikes = t.getLikes();
+    		userlikes.remove(opt.get());
+    		t.setLikes(userlikes);
+    		
+    		user_tracks.remove(t);
+    		opt.get().setLikedTracks(user_tracks);
+    		
+    		updateUser(user_id, opt.get());
+    	}
+    }
+    
     public void addFollowerFollowee(int id1, int id2) {
     	Optional<User> u1 = userRepository.findById(id1);
     	Optional<User> u2 = userRepository.findById(id2);
     	
     	if(u1.isPresent() && u2.isPresent()) {
-    		List<User> u1_followees = u1.get().getFollowee();
-    		u1_followees.add(u2.get());
-    		u1.get().setFollowee(u1_followees);
-    		
-    		List<User> u2_followers = u2.get().getFollows();
-    		u2_followers.add(u1.get());
-    		u2.get().setFollows(u2_followers);
-    		
+    		List<User> u1_follows = u1.get().getFollows();
+    		u1_follows.add(u2.get());
+    		u1.get().setFollows(u1_follows);
     		updateUser(id1, u1.get());
+    		
+    		List<User> u2_followee = u2.get().getFollowee();
+    		u2_followee.add(u1.get());
+    		u2.get().setFollowee(u2_followee);
     		updateUser(id2, u2.get());
+    	}
+    }
+    
+    public void unfollowUser(int id1, int id2) {
+    	Optional<User> u1 = userRepository.findById(id1);
+    	Optional<User> u2 = userRepository.findById(id2);
+    	
+    	if(u1.isPresent() && u2.isPresent()) {
+    		List<User> u1_follows = u1.get().getFollows();
+    		if(u1_follows.contains(u2.get())) {
+    			u1_follows.remove(u2.get());
+    			u1.get().setFollows(u1_follows);
+        		updateUser(id1, u1.get());
+    		}
+    		
+    		List<User> u2_followee = u2.get().getFollowee();
+    		if(u2_followee.contains(u1.get())) {
+    			u2_followee.remove(u1.get());
+        		u2.get().setFollowee(u2_followee);
+        		updateUser(id2, u2.get());
+    		}
+    	}
+    }
+    
+    public void createPlaylist(int user_id, Playlist p) {
+    	Optional<User> opt = userRepository.findById(user_id);
+    	if(opt.isPresent()) {
+    		opt.get().getPlaylists().add(p);
+    		p.setCreator(opt.get());
+    		pd.createPlaylist(p);
     	}
     }
 }
