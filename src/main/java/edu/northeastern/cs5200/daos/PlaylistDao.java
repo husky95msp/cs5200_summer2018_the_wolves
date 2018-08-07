@@ -15,6 +15,9 @@ public class PlaylistDao {
 	@Autowired
 	PlaylistRepository pr;
 	
+	@Autowired
+	TrackDao td;
+	
 	public Playlist createPlaylist(Playlist p) {
 		return pr.save(p);
 	}
@@ -40,5 +43,27 @@ public class PlaylistDao {
 			opt.get().setTracks(pl_tracks);
 			updatePlaylist(id, opt.get());
 		}
+	}
+	
+	public void deleteTrackFromPlaylist(int id, Track t) {
+		Optional<Playlist> opt = pr.findById(id);
+		if(opt.isPresent()) {
+			List<Track> pl_tracks = opt.get().getTracks();
+			pl_tracks.remove(t);
+			opt.get().setTracks(pl_tracks);
+			updatePlaylist(id, opt.get());
+			
+			if(t.getPlaylist() != null) {
+				t.getPlaylist().remove(opt.get());
+				td.updateTrack(t.getSpotify_id(), t);
+			}
+		}
+	}
+	
+	public List<Track> getAllTracksInPlaylist(int id){
+		Optional<Playlist> p = pr.findById(id);
+		if(p.isPresent())
+			return p.get().getTracks();
+		return null;
 	}
 }

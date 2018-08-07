@@ -24,15 +24,11 @@ public class UserDao {
 	
     //CREATE
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public void createUser(User user) {
+        userRepository.save(user);
     }
 
     //READ
-
-    public Iterable<User> findAllUsers(){
-        return userRepository.findAll();
-    }
     
     public Optional<User> findUserById(int id){
     	return userRepository.findById(id);
@@ -72,14 +68,6 @@ public class UserDao {
     	if(opt.isPresent())
     		return opt.get().getFollows();
     	return null;
-    }
-    
-    public void deleteAllUsers() {
-    	userRepository.deleteAll();
-    }
-    
-    public void deleteUser(int id) {
-    	userRepository.deleteById(id);
     }
     
     public User updateUser(int id, User u) {
@@ -174,5 +162,12 @@ public class UserDao {
     		p.setCreator(opt.get());
     		pd.createPlaylist(p);
     	}
+    }
+    
+    public List<Playlist> findAllPlaylistsForUser(int id) {
+    	Optional<User> u = userRepository.findById(id);
+    	if(u.isPresent())
+    		return u.get().getPlaylists();
+    	return null;
     }
 }

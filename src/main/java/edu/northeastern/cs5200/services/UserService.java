@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.northeastern.cs5200.daos.UserDao;
 import edu.northeastern.cs5200.models.Artist;
+import edu.northeastern.cs5200.models.Playlist;
 import edu.northeastern.cs5200.models.Reviewer;
 import edu.northeastern.cs5200.models.Track;
 import edu.northeastern.cs5200.models.User;
@@ -24,15 +25,9 @@ public class UserService {
 	@Autowired
 	UserDao userDao;
 
-	@GetMapping("/api/user")
-	public Iterable<User> findAllUsers() {
-
-		return userDao.findAllUsers();
-	}
-
 	@PostMapping("/api/user")
-	public User createUser(@RequestBody User user) {
-		return userDao.createUser(user);
+	public void createUser(@RequestBody User user) {
+		userDao.createUser(user);
 	}
 	
 	@GetMapping("/api/user/{user_id}")
@@ -115,6 +110,17 @@ public class UserService {
 	public void unfollowUser(@PathVariable("id1") int id1,
 			@PathVariable("id2") int id2) {
 		userDao.unfollowUser(id1, id2);
+	}
+	
+	@PostMapping("/api/user/playlist/{id}")
+	public void createPlaylistForUser(@PathVariable("id") int id,
+			@RequestBody Playlist p) {
+		userDao.createPlaylist(id, p);
+	}
+	
+	@GetMapping("/api/user/all_playlists/{id}")
+	public List<Playlist> findAllPlaylistsForUser(@PathVariable("id") int id){
+		return userDao.findAllPlaylistsForUser(id);
 	}
 
 }

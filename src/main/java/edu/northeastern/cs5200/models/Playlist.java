@@ -7,6 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -20,7 +22,10 @@ public class Playlist {
 	private int id;
 	private String name;
 	
-	@ManyToMany(mappedBy="playlist", fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "TrackPlaylist",
+	joinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id" ),
+	inverseJoinColumns = @JoinColumn(name = "track_id", referencedColumnName = "spotify_id"))
 	@JsonIgnore
 	private List<Track> tracks;
 	

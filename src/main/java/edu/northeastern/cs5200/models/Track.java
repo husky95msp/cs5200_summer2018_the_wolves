@@ -25,10 +25,7 @@ public class Track {
 	private String album_art;
 	private int popularity;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "TrackPlaylist",
-	joinColumns = @JoinColumn(name = "track_id", referencedColumnName = "spotify_id" ),
-	inverseJoinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"))
+	@ManyToMany(mappedBy="tracks", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Playlist> playlist;
 	
