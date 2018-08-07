@@ -2,14 +2,25 @@ import store from './store';
 // import $ from 'jquery';
 import request from 'request'; // "Request" library
 class TheServer {
+
+  unlikeSong(userId, song){
+    console.log("unliked");
+  }
   likeSong(userId, song){
+
     fetch('/api/user/'+userId+'/addtrack',{
       headers: {
         'Content-Type': 'application/json'
       },
       method: 'post',
-      body: JSON.stringify({'spotify_id': song.id, 'title': song.name, 'uri': song.uri, 'album_name': song.album.name})
-    });
+      body: JSON.stringify(song)
+    })
+    .then(()=> {
+      store.dispatch({
+        type:'UPDATE_LIKED_SONGS',
+        data: song,
+      });
+    })
 
 
   }
@@ -17,6 +28,12 @@ class TheServer {
     fetch('/api/user/'+user.id+'/likedtracks')
     .then(response => response.json())
     .then(dat => {
+      dat.map((mySong, i)=>{
+
+        dat[i]['like']= true;
+
+
+      });
       store.dispatch({
         type: 'GET_LIKED_SONGS',
         data: dat,
@@ -26,6 +43,7 @@ class TheServer {
   }
   initializeUserData(user){
     this.getLikedSongs(user);
+
   }
   authenticateUser(username, password){
 
@@ -78,6 +96,7 @@ class TheServer {
         body.tracks.items[index]['album_name']= body.tracks.items[index].album.name;
         body.tracks.items[index]['album_art']= body.tracks.items[index].album.images[0].url;
       });
+      if (session){
       body.tracks.items.map((song, index) =>{
         session.likedTracks.map((mySong, i)=>{
           if(song.id===mySong.spotify_id){
@@ -89,6 +108,7 @@ class TheServer {
 
         return null;
       });
+    }
       store.dispatch({
         type: 'GET_SONGS',
         data: body,

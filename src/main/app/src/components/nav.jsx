@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom';
-import {Nav, NavItem, NavbarBrand, Navbar, Collapse, NavbarToggler } from 'reactstrap';
+import { NavLink, Link } from 'react-router-dom';
+import {Nav, NavItem, NavbarBrand, Navbar, Collapse, NavbarToggler, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { withRouter } from 'react-router-dom'
 // import $ from 'jquery';
 import Login from 'login';
@@ -10,12 +10,15 @@ function NavBar(props) {
 
     props.dispatch({type: 'TOGGLE_LOGIN_POPPER'});
   };
+  let toggle_profile_dropper = ()=>{
+    props.dispatch({type:'toggle_profile_dropper'})
 
+  };
 
   return (
     <div>
-      <Navbar color="light" expand="md" fixed={`top`}>
-        <NavbarBrand href="/"> <i className="fas fa-music"></i> Spotify++</NavbarBrand>
+      <Navbar color="light" light expand="md" fixed={`top`}>
+        <NavbarBrand href="/">  Spotify<span className="text-success">++</span></NavbarBrand>
         <NavbarToggler onClick={()=>props.dispatch({type: 'TOGGLE_NAV'})} />
         <Collapse isOpen={props.navBar.collapse} navbar>
           <Nav className="ml-auto" navbar>
@@ -23,38 +26,54 @@ function NavBar(props) {
             <NavItem>
               <NavLink to="/" exact = {true} activeClassName="active" className="nav-link"><i className="material-icons search-icon">search</i>Search</NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink to="/favorites" exact = {true} activeClassName="active" className="nav-link"><i className="material-icons search-icon">star</i>Favorites</NavLink>
-            </NavItem>
+            {props.session?
+              <NavItem>
+                <NavLink to="/favorites" exact = {true} activeClassName="active" className="nav-link"><i className="material-icons search-icon">star</i>Favorites</NavLink>
+              </NavItem>: <div></div>}
 
-            <NavItem>
-                {props.session?  <NavLink to="/profile" exact = {true} activeClassName="active" className="nav-link">
-                Hi! {props.session.username} </NavLink>
-              :
+              <NavItem>
+                {props.session? <div>
+                  <Dropdown isOpen={props.profileDropper} toggle={toggle_profile_dropper}>
+                    <DropdownToggle className="nav-link dropper">
+
+                        <i className="material-icons ">account_circle</i> Hi! {props.session.username}
+                        </DropdownToggle>
+
+                    <DropdownMenu>
+
+
+                      <DropdownItem><i className="material-icons">settings</i> Profile</DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem onClick={()=>props.dispatch({type:'LOGOUT'})}><Link to="/"><i className="material-icons">exit_to_app</i> Logout</Link> </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+
+
+                  </div>
+                  :
                   <div>
                     <div id="Popover1" onClick={toggle_login_popper} className="nav-link pt-0 pb-0">
-                   <i className="material-icons login-icon">account_circle</i>
-                   </div>
-                <div className="login-label"> Login</div>
-
-                <Login/>
-            </div>
-}
-            </NavItem>
-            {props.session? <NavItem onClick={()=> props.dispatch({type: 'LOGOUT'})}><div className="material-icons nav-link">
-exit_to_app
-</div></NavItem>:<div></div>}
-          </Nav>
-        </Collapse>
-      </Navbar>
-    </div>
-  );
-}
+                      <i className="material-icons login-icon">account_circle</i>
+                      <div className="login-label"> Login</div>
+                    </div>
 
 
+                    <Login/>
+                  </div>
+                }
+              </NavItem>
 
-// <NavLink to="/*" exact activeClassName="active" className="nav-link pt-0 pb-0">
-// <i onClick={()=>console.log("hello")}className="material-icons md-48">account_box</i>
-// </NavLink>
+            </Nav>
+          </Collapse>
+        </Navbar>
+      </div>
+    );
+  }
 
-export default withRouter(connect((state)=>state)(NavBar));
+
+
+  // <NavLink to="/*" exact activeClassName="active" className="nav-link pt-0 pb-0">
+  // <i onClick={()=>console.log("hello")}className="material-icons md-48">account_box</i>
+  // </NavLink>
+
+  export default withRouter(connect((state)=>state)(NavBar));

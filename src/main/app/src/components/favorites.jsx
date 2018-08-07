@@ -8,10 +8,11 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import SongList from 'song_list';
 
 function Favorites(props){
-  console.log(props.session.likedTracks);
+
     return(
+
       <div className = "container">
-      {<SongList songs = {props.session.likedTracks}/>}
+      {<SongList songList = {props.session.likedTracks}/>}
 
       </div>);
 

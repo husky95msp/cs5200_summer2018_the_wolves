@@ -10,8 +10,19 @@ import api from 'api.js';
 
 function Song(props){
   let likeSong= ()=>{
-    props.dispatch({type: 'LIKE_SONG', data: props.song})
+    if (props.session){
+    props.dispatch({type: 'LIKE_SONG', data: props.song});
+    if (!props.song.like){
     api.likeSong(props.session.id, props.song);
+  }else{
+    api.unlikeSong(props.session.id, props.song);
+  }
+    }
+  else{
+    props.dispatch({type: 'TOGGLE_LOGIN_POPPER', data: props.song});
+
+
+  }
   }
 
   return(
@@ -29,6 +40,7 @@ function Song(props){
           <div className="track-album">Album: {props.song.album_name}</div>
         </div>
       </div>
+
       <div onClick={likeSong} className="like-btn">
         {props.song.like?  <i className="material-icons like-active" >star</i> : <i className="material-icons " >star_border</i>}
       </div>

@@ -165,14 +165,21 @@ img {
 		cursor: pointer;
 	}
 	.login-icon{
+
 		font-size: 48px;
-		font-display: block;
+
 
 	}
 	.search-icon{
-		display: none;
+		font-size: 24px;
+		align-self:center;
+		vertical-align:text-bottom;
+		padding-right: 2px;
+		display: inline;
+		// display: none;
 	}
 	.login-label{
+
 		display: none;
 	}
 	@media screen and (max-width: 767px) {
@@ -240,6 +247,20 @@ a{
 
 		border-radius: 0px;
 	}
+	.dropper{
+		background-color: transparent;
+		border: 0px solid transparent;
+	}
+	.dropper:hover{
+		background-color: transparent;
+		border: 0px solid transparent;
+	}
+	.dropper:active{
+
+		background-color: transparent !important;
+		border: 0px solid transparent;
+		box-shadow: none !important;
+	}
 	.popover-header{
 		background-color: inherit;
 		color: white;
@@ -256,6 +277,15 @@ a{
 	}
 	.material-icons{
 
+
+			align-self:center;
+			vertical-align:text-bottom;
+			// padding-right: 2px;
+			display: inline;
+
 		transition: all 0.3s;
 
+	}
+	.search-bar-icon{
+		font-size: 36px;
 	}

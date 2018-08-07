@@ -7,7 +7,7 @@ import Song from 'trackTile';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 function SongList(props){
-  if (props.songs != null){
+  if (props.songList != null){
 
     return(
       <div className = "container">
@@ -17,7 +17,7 @@ function SongList(props){
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}>
 
-            {props.songs.tracks.items.map((song) =>
+            {props.songList.map((song) =>
 
               <Song key = {song.id} song = {song}/>
 

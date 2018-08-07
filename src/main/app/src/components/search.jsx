@@ -43,21 +43,21 @@ class Home extends React.Component{
   render(){
     return(
       <div>
-        <h1 className="text-center text-white">Search Songs</h1>
+        <h2 className="text-center">Search Songs</h2>
         <div className = "container">
 
           <div className="input-group mb-3">
             <div className="input-group-prepend">
-              <button onClick={()=>this.props.dispatch({type: 'SEARCH_CLEAR'})} className="btn btn-info pb-0"><div className="material-icons md-36">clear</div></button>
+              <button onClick={()=>this.props.dispatch({type: 'SEARCH_CLEAR'})} className="btn"><div className="material-icons search-bar-icon">clear</div></button>
             </div>
             <input className="form-control"  id= "search-bar" type="search" placeholder="Enter Artist/Band" name="key" aria-label="Search" onChange={this.update} />
 
             <div className="input-group-append">
-              <button onClick={()=>{ document.getElementById('search-bar').value = ''; this.search(this.props.token, this.props.test.key, this.props.session);}} className="btn btn-info pb-0"><div className="material-icons md-36">search</div></button>
+              <button onClick={()=>{ document.getElementById('search-bar').value = ''; this.search(this.props.token, this.props.test.key, this.props.session);}} className="btn"><div className="material-icons search-bar-icon">search</div></button>
             </div>
           </div>
         </div>
-        {<SongList songs = {this.props.songs} artist = {this.props.test.key}/>}
+        {<SongList songList = {this.props.songs?this.props.songs.tracks.items:null} artist = {this.props.test.key}/>}
       </div>)
     }
   }
