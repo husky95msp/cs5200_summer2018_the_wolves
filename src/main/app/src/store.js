@@ -252,9 +252,17 @@ function userSearch(state=[], action){
     return state;
   }
 }
+function create_account(state=false, action){
+  switch (action.type) {
+    case 'ACCOUNT_CREATED':
+    return true;
+    default:
+    return false;
+  }
+}
 
 function root_reducer(state0 = persistedState, action) {
-  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm});
+  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account});
   let state1 = reducer(state0, action);
   console.log("ReduxState", state1);
   return deepFreeze(state1);

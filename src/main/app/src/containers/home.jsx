@@ -13,6 +13,8 @@ import Favorites from 'components/favorites';
 import Profile from 'components/profile';
 import UserList from 'user_list';
 import PlayLists from 'components/playlists';
+import Register from 'components/register';
+
 
 export default function home_init(root, store){
   ReactDOM.render(<Provider store={store}><App state={store.getState()} /></Provider>, root);
@@ -29,6 +31,8 @@ class Routes extends React.Component{
         <div>
           <NavBar/>
           <div className="content-wrapper">
+            <Route exact path="/register" render={()=> <Register/>}/>
+
             <Route exact path="/" render={()=> <Home/>}/>
             <Route path="/tracks/:id" render={(match)=> <TrackView songId={match.match.params.id}/>}/>
             <Route exact path="/favorites" render={()=> <Favorites/>}/>

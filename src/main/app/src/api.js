@@ -2,6 +2,61 @@ import store from './store';
 // import $ from 'jquery';
 import request from 'request'; // "Request" library
 class TheServer {
+  createMember(data){
+    if (data.type === "User"){
+      this.createUser(data);
+    }else if(data.type === "Artist"){
+      this.createArtist(data);
+    }else{
+      this.createReviewer(data);
+    }
+
+  }
+  createUser(data){
+    fetch('/api/user/',{
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify(data)
+    })
+    .then(()=> {
+      store.dispatch({
+        type:'ACCOUNT_CREATED',
+
+      });
+    });
+  }
+  createArtist(data){
+    fetch('/api/artist/',{
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify(data)
+    })
+    .then(()=> {
+      store.dispatch({
+        type:'ACCOUNT_CREATED',
+
+      });
+    });
+  }
+  createReviewer(data){
+    fetch('/api/reviewer/',{
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify(data)
+    })
+    .then(()=> {
+      store.dispatch({
+        type:'ACCOUNT_CREATED',
+
+      });
+    });
+  }
   deleteReview(id){
     fetch('/api/review/'+id+'/delete',{
       headers: {

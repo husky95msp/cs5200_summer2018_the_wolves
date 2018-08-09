@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // import $ from 'jquery';
-// import {Button} from 'reactstrap';
+import {Button} from 'reactstrap';
 // import Ratings from 'ratings';
 import {Link} from 'react-router-dom';
 import api from 'api.js';
@@ -25,6 +25,8 @@ function Song(props){
   }
   }
 
+  let preview = new Audio(props.song.preview_url);
+
   return(
     <li className="show slide-fade list-group-item track-tile mb-1" key={props.song.spotify_id}>
       <div className="d-flex justify-content-left flex-row flex-nowrap">
@@ -41,9 +43,12 @@ function Song(props){
 
         </div>
       </div>
-
+      {props.song.preview_url?<div><div className="like-btn" onClick={()=> preview.play()}> play</div>
+      <div className="like-btn" onClick={()=> preview.pause()}> pause</div>
+      </div>: <div></div>}
       <div onClick={likeSong} className="like-btn">
         {props.song.like?  <i className="material-icons like-active" >star</i> : <i className="material-icons " >star_border</i>}
+
       </div>
     </li>);
 

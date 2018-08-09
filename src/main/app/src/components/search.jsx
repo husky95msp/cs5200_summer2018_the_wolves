@@ -71,7 +71,7 @@ class Home extends React.Component {
           <i>Search for:
           </i>
           <span className="badge song badge-secondary" onClick={() => this.badge("song")}>Songs</span>
-          <span className="badge artist badge-secondary" onClick={() => this.badge("artist")}>Artists</span>
+
           <span className="badge user badge-secondary" onClick={() => this.badge("user")}>Users</span>
         </div>
 

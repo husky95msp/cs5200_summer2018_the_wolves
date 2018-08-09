@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Modal, ModalHeader,FormText, ModalBody, Form, FormGroup, Input, Button} from 'reactstrap';
 import api from 'api.js';
 import $ from 'jquery';
 
 function LoginForm(props){
+  let toggle_login_popper = ()=>{props.props.dispatch({type: 'TOGGLE_LOGIN_POPPER'})};
   function update(ev) {
     let tgt = $(ev.target);
 
@@ -18,7 +20,7 @@ function LoginForm(props){
       data: data,
     });
   }
-  return(
+  return(<div>
     <Form>
       <FormGroup>
         <Input type="text" name="username" id="username" value = {props.props.loginForm.username} placeholder="User Name" bsSize="sm" onChange={update} />
@@ -29,7 +31,9 @@ function LoginForm(props){
         <div className={"error "+ (props.props.loginForm.label == 401? "show": "")}>Invalid Password!</div>
     </FormGroup>
       <Button onClick={()=>{api.authenticateUser(props.props.loginForm.username, props.props.loginForm.password)} } className="btn-info btn-sm btn-block ">Login</Button>
-    </Form>
+  </Form>
+  <div className="text-center">No account? | <Link to="/register" onClick={toggle_login_popper} className="text-primary">Register</Link></div>
+  </div>
   );
 }
 
