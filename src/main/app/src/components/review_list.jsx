@@ -9,7 +9,10 @@ import {Button} from 'reactstrap';
 function ReviewList(props) {
 
   let Review = (prop) => {
+    let deleteReview= ()=>{
+        api.deleteReview(prop.review.id);
 
+    }
     return (<div className="container mb-1 card card-body track-tile">
     <div className="d-flex justify-content-left flex-row flex-nowrap">
       <div className="track-info">
@@ -19,6 +22,8 @@ function ReviewList(props) {
 
       {prop.review.review}
       </div>
+
+      {props.session.id === prop.review.reviewer.id?<i onClick={deleteReview} className="align-self-start material-icons">delete</i> : <i></i>}
       </div>
     </div>);
   }

@@ -2,7 +2,21 @@ import store from './store';
 // import $ from 'jquery';
 import request from 'request'; // "Request" library
 class TheServer {
-
+  deleteReview(id){
+    fetch('/api/review/'+id+'/delete',{
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'delete',
+      body: null,
+    })
+    .then(()=> {
+      store.dispatch({
+        type:'REMOVE_FROM_REVIEW_LIST',
+        data: id,
+      });
+    })
+  }
   submitReview(review, reviewer_id, track_id){
     fetch('/api/review/'+reviewer_id+'/'+track_id,{
       headers: {
@@ -11,12 +25,13 @@ class TheServer {
       method: 'post',
       body: JSON.stringify(review)
     })
-    // .then(()=> {
-    //   store.dispatch({
-    //     type:'UPDATE_LIKED_SONGS',
-    //     data: song,
-    //   });
-    // })
+    .then(response => response.json())
+    .then((resp)=> {
+      store.dispatch({
+        type:'UPDATE_REVIEW_LIST',
+        data: resp,
+      });
+    })
   }
 
   follow(u1, u2){
@@ -248,18 +263,18 @@ class TheServer {
     };
     request.get(options, (error, response, body)=> {
       if(parseInt(response.statusCode) === 200){
-          body['like']= false;
-          body['spotify_id']= body.id;
-          body['album_name']= body.album.name;
-          body['album_art']= body.album.images[0].url;
+        body['like']= false;
+        body['spotify_id']= body.id;
+        body['album_name']= body.album.name;
+        body['album_art']= body.album.images[0].url;
         if(session){
-            session.likedTracks.map((mySong, i)=>{
-              if(body.id===mySong.spotify_id){
-                body['like']= true;
-              }
-            });
+          session.likedTracks.map((mySong, i)=>{
+            if(body.id===mySong.spotify_id){
+              body['like']= true;
+            }
+          });
         }
-          return this.getReviewsByTrackId(body);
+        return this.getReviewsByTrackId(body);
       }
     });
 

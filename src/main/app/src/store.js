@@ -188,9 +188,15 @@ function user_type(state=null, action){
 function trackView(state=null, action){
   switch (action.type) {
     case 'LIKE_SONG':
-    return Object.assign({}, state, {like : !action.data.like});
+    if ( state != null){
+      return Object.assign({}, state, {like : !action.data.like});
+    }else{
+      return state;
+    }
     case 'GET_A_SONG':
     return action.data;
+    case 'REMOVE_FROM_REVIEW_LIST':
+    return Object.assign({}, state, {reviews: state.reviews.filter((value)=> !(value.id === action.data))});
     case 'UPDATE_REVIEW_LIST':
     return Object.assign({}, state, {reviews: [action.data, ...state.reviews]});
     case 'LOGOUT':
@@ -200,9 +206,9 @@ function trackView(state=null, action){
   }
 }
 let empty_reviewForm={
-    review: "",
-    error: "",
-    toggle: false,
+  review: "",
+  error: "",
+  toggle: false,
 }
 function reviewForm(state=empty_reviewForm, action){
   switch (action.type) {

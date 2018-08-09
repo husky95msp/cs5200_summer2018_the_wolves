@@ -25,13 +25,13 @@ function ReviewForm(props){
       props.dispatch({
         type: 'SUBMIT_REVIEW'
       });
-      props.dispatch({
-        type: 'UPDATE_REVIEW_LIST',
-        data: {
-          "id" : props.session.id,
-          "review": props.reviewForm.review
-        },
-      });
+      // props.dispatch({
+      //   type: 'UPDATE_REVIEW_LIST',
+      //   data: {
+      //     "reviewer" : props.session,
+      //     "review": props.reviewForm.review
+      //   },
+      // });
       api.submitReview({"review" : props.reviewForm.review}, props.session.id, props.songId);
     }
     else{
