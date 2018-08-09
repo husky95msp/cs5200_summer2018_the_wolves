@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import edu.northeastern.cs5200.models.Album;
+import edu.northeastern.cs5200.models.Track;
 import edu.northeastern.cs5200.repositories.AlbumRepository;
 
 @Component
@@ -28,5 +29,41 @@ public class AlbumDao {
 	
 	public void deleteAlbum(int id) {
 		ar.deleteById(id);
+	}
+	
+	public void updateAlbum(int id, Album a) {
+		Optional<Album> opt = ar.findById(id);
+		if(opt.isPresent()) {
+			opt.get().set(a);
+			ar.save(opt.get());
+		}
+	}
+	
+	public void addTrackToAlbum(int id, Track t) {
+		Optional<Album> a = ar.findById(id);
+		if(a.isPresent()) {
+			List<Track>  tracks = a.get().getTracks();
+			tracks.add(t);
+			a.get().setTracks(tracks);
+			updateAlbum(id, a.get());
+		}
+	}
+	
+	public void removeTrackFromAlbum(int id, Track t) {
+		Optional<Album> a = ar.findById(id);
+		if(a.isPresent()) {
+			List<Track>  tracks = a.get().getTracks();
+			if(tracks.contains(t))
+				tracks.remove(t);
+			a.get().setTracks(tracks);
+			updateAlbum(id, a.get());
+		}
+	}
+	
+	public List<Track> getAllTracksInAlbum(int id){
+		Optional<Album> a = ar.findById(id);
+		if(a.isPresent())
+			return a.get().getTracks();
+		return null;
 	}
 }

@@ -91,4 +91,12 @@ public class Album {
 	public void setTracks(List<Track> tracks) {
 		this.tracks = tracks;
 	}
+	
+	public void set(Album a) {
+		this.setAlbumArt(a.getAlbumArt());
+		this.setArtist(a.getArtist());
+		this.setName(a.getName());
+		this.setPopularity(a.getPopularity());
+		this.setTracks(a.getTracks());
+	}
 }
