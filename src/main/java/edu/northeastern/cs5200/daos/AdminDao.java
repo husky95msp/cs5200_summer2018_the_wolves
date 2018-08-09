@@ -1,5 +1,7 @@
 package edu.northeastern.cs5200.daos;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +27,12 @@ public class AdminDao {
     }
     
     public void deleteUser(int id) {
-    	ur.deleteById(id);
+    	Optional<User> opt = ur.findById(id);
+    	if(opt.isPresent()) {
+    		System.out.println(opt.get().getClass().getSimpleName());
+    		if(!opt.get().getClass().getSimpleName().equals(Admin.class.getSimpleName()))
+    			ur.deleteById(id);
+    	}
     }
     
     public void createAdmin(Admin a) {
