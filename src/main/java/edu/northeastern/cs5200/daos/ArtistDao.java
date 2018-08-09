@@ -16,6 +16,9 @@ public class ArtistDao {
 	@Autowired
 	ArtistRepository ar;
 	
+	@Autowired
+	AlbumDao ad;
+	
 	public Artist createArtist(Artist a) {
 		return ar.save(a);
 	}
@@ -49,6 +52,8 @@ public class ArtistDao {
 		Optional<Artist> art = ar.findById(id);
 		if(art.isPresent()) {
 			List<Album>  albums = art.get().getAlbums();
+			ad.createAlbum(a);
+			a.setArtist(art.get());
 			albums.add(a);
 			art.get().setAlbums(albums);
 			updateArtist(id, art.get());
@@ -58,6 +63,7 @@ public class ArtistDao {
 	public void removeAlbumForArtist(int id, Album a) {
 		Optional<Artist> art = ar.findById(id);
 		if(art.isPresent()) {
+			ad.deleteAlbum(a.getId());
 			List<Album>  albums = art.get().getAlbums();
 			if(albums.contains(a))
 				albums.remove(a);

@@ -34,4 +34,8 @@ public class TrackDao {
 			trackRepository.save(temp);
 		}
 	}
+	
+	public void deleteTrack(String id) {
+		trackRepository.deleteBySpotifyId(id);
+	}
 }

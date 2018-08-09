@@ -2,6 +2,7 @@ package edu.northeastern.cs5200.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class Album {
 	@JsonIgnore
 	private Artist artist;
 	
-	@OneToMany(mappedBy="album", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="album", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Track> tracks;
 	

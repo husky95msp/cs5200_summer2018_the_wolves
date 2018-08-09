@@ -48,7 +48,7 @@ public class ReviewDao {
 		return rr.save(temp);
 	}
 	
-	public void addReviewForTrack(int reviewer_id, String track_id, Review r) {
+	public Review addReviewForTrack(int reviewer_id, String track_id, Review r) {
 		if(rd.findReviewerById(reviewer_id).isPresent()) {
 			if(td.findBySpotifyId(track_id).isPresent()) {
 				Track t = td.findBySpotifyId(track_id).get();
@@ -59,7 +59,7 @@ public class ReviewDao {
 						rd.findReviewerById(reviewer_id).get());
 				r.setTrack(t);
 				r.setReviewer(rd.findReviewerById(reviewer_id).get());
-				createReview(r);
+				return createReview(r);
 			}
 			else {
 				Track t = new Track();
@@ -73,9 +73,10 @@ public class ReviewDao {
 						rd.findReviewerById(reviewer_id).get());
 				r.setTrack(t);
 				r.setReviewer(rd.findReviewerById(reviewer_id).get());
-				createReview(r);
+				return createReview(r);
 			}
 		}
+		return null;
 	}
 	
 	public List<Review> getAllReviewsForTrack(String track_id) {

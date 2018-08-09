@@ -15,6 +15,9 @@ public class AlbumDao {
 	@Autowired
 	AlbumRepository ar;
 	
+	@Autowired
+	TrackDao td;
+	
 	public Album createAlbum(Album a) {
 		return ar.save(a);
 	}
@@ -43,6 +46,8 @@ public class AlbumDao {
 		Optional<Album> a = ar.findById(id);
 		if(a.isPresent()) {
 			List<Track>  tracks = a.get().getTracks();
+			t.setAlbum(a.get());
+			td.createTrack(t);
 			tracks.add(t);
 			a.get().setTracks(tracks);
 			updateAlbum(id, a.get());
@@ -52,6 +57,9 @@ public class AlbumDao {
 	public void removeTrackFromAlbum(int id, Track t) {
 		Optional<Album> a = ar.findById(id);
 		if(a.isPresent()) {
+			t.setAlbum(null);
+			td.updateTrack(t.getSpotify_id(), t);
+			td.deleteTrack(t.getSpotify_id());
 			List<Track>  tracks = a.get().getTracks();
 			if(tracks.contains(t))
 				tracks.remove(t);
