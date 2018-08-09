@@ -17,29 +17,18 @@ public class Artist extends User{
 	@JsonIgnore
 	private List<Album> albums;
 	
-	@OneToMany(mappedBy="artist", fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<Track> tracks;
-	
 	
 	public Artist(String username, String password, String email, List<Playlist> playlists, List<User> follows,
-			List<User> follower, List<Track> likedTracks, String image, List<Album> albums, List<Track> tracks) {
+			List<User> follower, List<Track> likedTracks, String image, List<Album> albums) {
 		super(username, password, email, playlists, follows, follower, likedTracks);
 		this.image = image;
 		this.albums = albums;
-		this.tracks = tracks;
 	}
 	public List<Album> getAlbums() {
 		return albums;
 	}
 	public void setAlbums(List<Album> albums) {
 		this.albums = albums;
-	}
-	public List<Track> getTracks() {
-		return tracks;
-	}
-	public void setTracks(List<Track> tracks) {
-		this.tracks = tracks;
 	}
 	public String getImage() {
 		return image;
@@ -61,7 +50,6 @@ public class Artist extends User{
 		this.setUsername(a.getUsername());
 		this.setPassword(a.getPassword());
 		this.setAlbums(a.getAlbums());
-		this.setTracks(a.getTracks());
 	}
 	
 }

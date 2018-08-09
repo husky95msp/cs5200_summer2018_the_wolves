@@ -40,10 +40,6 @@ public class Track {
 	@JsonIgnore
 	private Album album;
 	
-	@ManyToOne
-	@JsonIgnore
-	private Artist artist;
-	
 	@OneToMany(mappedBy = "track", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Review> reviews;
@@ -85,12 +81,6 @@ public class Track {
 	public void setAlbum(Album album) {
 		this.album = album;
 	}
-	public Artist getArtist() {
-		return artist;
-	}
-	public void setArtist(Artist artist) {
-		this.artist = artist;
-	}
 	public List<Review> getReviews() {
 		return reviews;
 	}
@@ -128,7 +118,6 @@ public class Track {
 		this.setReviews(t.getReviews());
 		this.setName(t.getName());
 		this.setUri(t.getUri());
-		this.setArtist(t.getArtist());
 		this.setAlbum_art(t.getAlbum_art());
 		this.setPopularity(t.getPopularity());
 		this.setPlaylist(t.getPlaylist());

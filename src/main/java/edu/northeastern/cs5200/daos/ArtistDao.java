@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import edu.northeastern.cs5200.models.Album;
 import edu.northeastern.cs5200.models.Artist;
-import edu.northeastern.cs5200.models.Track;
 import edu.northeastern.cs5200.repositories.ArtistRepository;
 
 @Component
@@ -29,20 +28,6 @@ public class ArtistDao {
 		return ar.findById(id);
 	}
 	
-	public List<Track> getTracksByArtist(int id){
-		Optional<Artist> opt = ar.findById(id);
-		if(opt.isPresent())
-			return opt.get().getTracks();
-		return null;
-	}
-	
-	public List<Album> getAlbumsByArtist(int id){
-		Optional<Artist> opt = ar.findById(id);
-		if(opt.isPresent())
-			return opt.get().getAlbums();
-		return null;
-	}
-	
 	public void deleteAllArtists() {
 		ar.deleteAll();
 	}
@@ -58,6 +43,34 @@ public class ArtistDao {
 			temp = opt.get();
 		temp.set(a);
 		return ar.save(temp);
+	}
+	
+	public void createAlbumForArtist(int id, Album a) {
+		Optional<Artist> art = ar.findById(id);
+		if(art.isPresent()) {
+			List<Album>  albums = art.get().getAlbums();
+			albums.add(a);
+			art.get().setAlbums(albums);
+			updateArtist(id, art.get());
+		}
+	}
+	
+	public void removeAlbumForArtist(int id, Album a) {
+		Optional<Artist> art = ar.findById(id);
+		if(art.isPresent()) {
+			List<Album>  albums = art.get().getAlbums();
+			if(albums.contains(a))
+				albums.remove(a);
+			art.get().setAlbums(albums);
+			updateArtist(id, art.get());
+		}
+	}
+	
+	public List<Album> getAllAlbumsByArtist(int id){
+		Optional<Artist> opt = ar.findById(id);
+		if(opt.isPresent())
+			return opt.get().getAlbums();
+		return null;
 	}
 
 }

@@ -71,7 +71,7 @@ public class Review {
 	private int rating;
 	
 	@ManyToOne
-	@JsonIgnore
+	//@JsonIgnore
 	private Reviewer reviewer;
 	
 	@ManyToOne

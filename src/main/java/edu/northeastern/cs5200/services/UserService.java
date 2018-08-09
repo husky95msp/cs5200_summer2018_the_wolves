@@ -90,7 +90,7 @@ public class UserService {
 		return userDao.findLikedTracks(id);
 	}
 	
-	@PostMapping("/api/user/{id1}/{id2}")
+	@GetMapping("/api/user/{id1}/{id2}")
 	public void addFollowerFollowee(@PathVariable("id1") int id1,
 			@PathVariable("id2") int id2) {
 		userDao.addFollowerFollowee(id1, id2);

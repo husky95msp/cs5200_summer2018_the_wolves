@@ -1,5 +1,6 @@
 package edu.northeastern.cs5200.daos;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,7 +83,7 @@ public class ReviewDao {
 		if(t.isPresent()) {
 			return t.get().getReviews();
 		}
-		return null;
+		return new ArrayList<>();
 	}
 	
 	public List<Review> getAllReviewsByReviewer(int reviewer_id) {
@@ -100,12 +101,12 @@ public class ReviewDao {
 			Reviewer rev = r.get().getReviewer();
 			
 			List<Review> revs = t.getReviews();
-			revs.remove(r);
+			revs.remove(r.get());
 			t.setReviews(revs);
 			td.updateTrack(t.getSpotify_id(), t);
 			
 			revs = rev.getReviews();
-			revs.remove(r);
+			revs.remove(r.get());
 			rev.setReviews(revs);
 			rd.updateReviewer(rev.getId(), rev);
 			
