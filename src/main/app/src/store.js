@@ -175,6 +175,51 @@ function profileDropper(state=false, action){
     return state;
   }
 }
+function user_type(state=null, action){
+  switch (action.type) {
+    case 'USER_TYPE':
+    return action.data;
+    case 'LOGOUT':
+    return null;
+    default:
+    return state;
+  }
+}
+function trackView(state=null, action){
+  switch (action.type) {
+    case 'LIKE_SONG':
+    return Object.assign({}, state, {like : !action.data.like});
+    case 'GET_A_SONG':
+    return action.data;
+    case 'UPDATE_REVIEW_LIST':
+    return Object.assign({}, state, {reviews: [action.data, ...state.reviews]});
+    case 'LOGOUT':
+    return null;
+    default:
+    return state;
+  }
+}
+let empty_reviewForm={
+    review: "",
+    error: "",
+    toggle: false,
+}
+function reviewForm(state=empty_reviewForm, action){
+  switch (action.type) {
+    case 'TOGGLE_REVIEW_COLLAPSE':
+    return Object.assign({}, state,{toggle: !state.toggle});
+    case 'UPDATE_REVIEW':
+    return Object.assign({}, state,action.data);
+    case 'REVIEW_FORM_ERROR':
+    return Object.assign({}, state,action.data);
+    case 'SUBMIT_REVIEW':
+    return empty_reviewForm;
+    case 'LOGOUT':
+    return empty_reviewForm;
+    default:
+    return state;
+  }
+}
 function userSearch(state=[], action){
   switch (action.type) {
     case 'FOLLOW_USER':
@@ -201,8 +246,9 @@ function userSearch(state=[], action){
     return state;
   }
 }
+
 function root_reducer(state0 = persistedState, action) {
-  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch});
+  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm});
   let state1 = reducer(state0, action);
   console.log("ReduxState", state1);
   return deepFreeze(state1);

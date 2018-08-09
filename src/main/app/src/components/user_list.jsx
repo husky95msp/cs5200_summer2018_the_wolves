@@ -20,30 +20,32 @@ function UserList(props) {
         }
       }
     }
-    return (<div className="container mb-1 card card-body">
-      <h2>{prop.user.firstName}
-        {prop.user.lastName}</h2>
-      <div>
-        <Button onClick={follow}>{
-            prop.user.followee
-              ? "UnFollow"
-              : "Follow"
-          }</Button>
-      </div>
+    return (<div className="container mb-1 card card-body track-tile">
+    <div className="d-flex justify-content-left flex-row flex-nowrap">
+      <div className="track-info">
+        <h2>{prop.user.firstName} {prop.user.lastName}</h2>
 
-      <div>id : {prop.user.id}</div>
-      <div>username : {prop.user.username}</div>
+
+        <div>id : {prop.user.id}</div>
+        <div>username : {prop.user.username}</div>
+      </div>
+      <Button onClick={follow} className="follow-btn">{
+          prop.user.followee
+          ? "UnFollow"
+          : "Follow"
+        }</Button>
+      </div>
     </div>);
   }
 
   return (<div className="container">
-    <ul className="list-group">
-      <ReactCSSTransitionGroup transitionName="fade" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+  <ul className="list-group">
+    <ReactCSSTransitionGroup transitionName="fade" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
 
-        {props.userList.map((user, index) => <User key={index} user={user} state={props}/>)}
-      </ReactCSSTransitionGroup>
-    </ul>
-  </div>);
+      {props.userList.map((user, index) => <User key={index} user={user} state={props}/>)}
+    </ReactCSSTransitionGroup>
+  </ul>
+</div>);
 
 }
 

@@ -30,23 +30,27 @@ function NavBar(props) {
               <NavItem>
                 <NavLink to="/favorites" exact = {true} activeClassName="active" className="nav-link"><i className="material-icons search-icon">star</i>Favorites</NavLink>
               </NavItem>: <div></div>}
+              {props.session?
+                <NavItem>
+                  <NavLink to="/playlist" exact = {true} activeClassName="active" className="nav-link"><i className="material-icons search-icon">playlist_play</i>Playlists</NavLink>
+                </NavItem>: <div></div>}
 
               <NavItem>
                 {props.session? <div>
                   <Dropdown isOpen={props.profileDropper} toggle={toggle_profile_dropper}>
                     <DropdownToggle className="nav-link dropper">
 
-                        <i className="material-icons ">account_circle</i> Hi! {props.session.username}
-                        </DropdownToggle>
+                      <i className="material-icons ">account_circle</i> Hi! {props.session.username}
+                      </DropdownToggle>
 
-                    <DropdownMenu>
+                      <DropdownMenu>
 
 
-                      <DropdownItem><NavLink to="/profile"  activeClassName="active"><i className="material-icons">settings</i> Profile</NavLink></DropdownItem>
-                      <DropdownItem divider />
-                      <DropdownItem onClick={()=>props.dispatch({type:'LOGOUT'})}><Link to="/"><i className="material-icons text-danger">exit_to_app</i> Logout</Link> </DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
+                        <DropdownItem><NavLink to="/profile"  activeClassName="active"><i className="material-icons">settings</i> Profile</NavLink></DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem onClick={()=>props.dispatch({type:'LOGOUT'})}><Link to="/"><i className="material-icons text-danger">exit_to_app</i> Logout</Link> </DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
 
 
                   </div>

@@ -319,3 +319,13 @@ a{
 	border: 1px solid #ccc!important;
 	margin: 0 auto;
 }
+.follow-btn{
+	background-color: transparent;
+	color: black;
+	// justify-content: center;
+	display: flex;
+	align-self: flex-start;
+	border-radius: 1px;
+	border: 1px solid #ccc!important;
+	// margin: 0 auto;
+}

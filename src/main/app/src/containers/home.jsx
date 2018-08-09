@@ -12,7 +12,7 @@ import TrackView from 'components/trackview';
 import Favorites from 'components/favorites';
 import Profile from 'components/profile';
 import UserList from 'user_list';
-
+import PlayLists from 'components/playlists';
 
 export default function home_init(root, store){
   ReactDOM.render(<Provider store={store}><App state={store.getState()} /></Provider>, root);
@@ -33,6 +33,7 @@ class Routes extends React.Component{
             <Route path="/tracks/:id" render={(match)=> <TrackView songId={match.match.params.id}/>}/>
             <Route exact path="/favorites" render={()=> <Favorites/>}/>
             <Route  path={`/profile`} render={()=> <Profile/>}/>
+              <Route  path={`/playlist`} render={()=> <PlayLists/>}/>
             <Route exact path='/profile/followers' component={()=> <div>
                 {this.props.session?<UserList userList = {this.props.session.followers} />:<div></div>}
               </div>}/>

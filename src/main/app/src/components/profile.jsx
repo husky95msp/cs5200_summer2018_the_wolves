@@ -12,8 +12,8 @@ class Profile extends React.Component {
   render(){
     return(
       <div>
-        <div className="container card card-body mb-2">
-          <div className="d-flex justify-content-around">
+        <div className="card rounded-0 border-right-0 border-left-0 p-2 mb-2">
+          <div className=" container d-flex justify-content-around">
 
             <NavLink to='/profile/followers'  exact = {true} activeClassName="active">People who Follow you</NavLink>
             <NavLink to="/profile/followees"  exact = {true} activeClassName="active">People who you Follow</NavLink>

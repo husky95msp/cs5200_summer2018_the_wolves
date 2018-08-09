@@ -1,44 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import $ from 'jquery';
-// import {Button} from 'reactstrap';
+import { Route, withRouter } from 'react-router-dom';
+import $ from 'jquery';
+import {Button, NavLink} from 'reactstrap';
 // import Ratings from 'ratings';
+import ReviewForm from 'review_form';
 import api from 'api.js';
-
+import ReviewList from 'review_list';
+import Song from 'trackTile';
 
 
 function TrackView(props){
-  let song= {};
-  if (props.songs){
-    song = props.songs.tracks.items.find((element)=>{
-      return (element.id == props.songId);
-    });
-
+  if ( props.trackView === null){
+    api.getSongById(props.token, props.songId, props.session);
+  } else if(props.songId !== props.trackView.spotify_id){
+    api.getSongById(props.token, props.songId, props.session);
   }
+
   return(
-    <div className="container card card-body">
+    <div>
+      {props.trackView?<div className="container">
+          <Song  song = {props.trackView}/>
+        {props.user_type === "Reviewer"? <NavLink onClick={()=>props.dispatch({type: 'TOGGLE_REVIEW_COLLAPSE'})} className="badge ">Add Review</NavLink>: <div></div>}
 
-      <div className="d-flex" key={song.id}>
-        <div className="d-flex justify-content-left flex-row flex-nowrap">
-          <div className="track-poster">
-            <img alt="cover" src={song.album.images[0].url} className="rounded-circle align-self-center"/>
-          </div>
+        <ReviewForm songId={props.trackView.spotify_id}/>
+        <hr></hr>
+        <h3>Reviews</h3>
 
-          <div className="track-info">
-              <h5 className="track-name">{song.name}</h5>
-
-            <div className="track-popularity">Popularity: {song.popularity}</div>
-            <div className="track-album">Album: {song.album.name}</div>
-          </div>
-        </div>
-        <div onClick={()=>props.dispatch({type: 'LIKE_SONG', data: song.id})} className="like-btn">
-          {song.like?  <i className="material-icons like-active" >star</i> : <i className="material-icons " >star_border</i>}
-        </div>
+      <ReviewList reviews = {props.trackView.reviews}/>
       </div>
-
+      : <div></div>}
     </div>
   );
 
-  }
+}
 
-  export default connect((state)=> state)(TrackView);
+export default connect((state)=> state)(TrackView);

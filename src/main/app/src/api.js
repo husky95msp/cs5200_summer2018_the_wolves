@@ -2,6 +2,23 @@ import store from './store';
 // import $ from 'jquery';
 import request from 'request'; // "Request" library
 class TheServer {
+
+  submitReview(review, reviewer_id, track_id){
+    fetch('/api/review/'+reviewer_id+'/'+track_id,{
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify(review)
+    })
+    // .then(()=> {
+    //   store.dispatch({
+    //     type:'UPDATE_LIKED_SONGS',
+    //     data: song,
+    //   });
+    // })
+  }
+
   follow(u1, u2){
     fetch('/api/user/'+u1+'/'+u2);
   }
@@ -164,6 +181,10 @@ class TheServer {
           type: 'LOGIN_SUCCESS',
           data: dat.user,
         });
+        store.dispatch({
+          type: 'USER_TYPE',
+          data: dat.type,
+        });
       }
 
       store.dispatch({
@@ -203,11 +224,8 @@ class TheServer {
           session.likedTracks.map((mySong, i)=>{
             if(song.id===mySong.spotify_id){
               body.tracks.items[index]['like']= true;
-
             }
-
           });
-
           return null;
         });
       }
@@ -219,8 +237,8 @@ class TheServer {
   }
 
 
-  getSongById(token, key){
-
+  getSongById(token, key, session){
+    let track = null;
     var options = {
       url: 'https://api.spotify.com/v1/tracks/'+key,
       headers: {
@@ -228,16 +246,40 @@ class TheServer {
       },
       json: true
     };
-    request.get(options, function(error, response, body) {
+    request.get(options, (error, response, body)=> {
       if(parseInt(response.statusCode) === 200){
-
-        return body;
-      }
-      else{
-        return null;
+          body['like']= false;
+          body['spotify_id']= body.id;
+          body['album_name']= body.album.name;
+          body['album_art']= body.album.images[0].url;
+        if(session){
+            session.likedTracks.map((mySong, i)=>{
+              if(body.id===mySong.spotify_id){
+                body['like']= true;
+              }
+            });
+        }
+          return this.getReviewsByTrackId(body);
       }
     });
+
+
   }
+
+
+  getReviewsByTrackId(track){
+    fetch('/api/review/track/'+track.spotify_id)
+    .then(response => (response? response.json(): null))
+    .then(dat => {
+      track['reviews'] = dat;
+      store.dispatch({
+        type: 'GET_A_SONG',
+        data: track,
+      });
+    });
+    return track;
+  }
+
 
   authenticate(){
 

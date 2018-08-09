@@ -38,6 +38,7 @@ function Song(props){
 </Link>
           <div className="track-popularity">Popularity: {props.song.popularity}</div>
           <div className="track-album">Album: {props.song.album_name}</div>
+
         </div>
       </div>
 
