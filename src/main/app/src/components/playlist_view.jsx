@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import 'scss/App.css';
 import $ from 'jquery';
 import api from 'api.js';
-import Song from 'trackTile';
+import Song from 'playlistile';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 function PlaylistView(props){
 
     return(
       <div className = "container">
-        <h2>{props.playlistForm.name}</h2>
+        <h2>{props.playlistForm.playlist.name}</h2>
         <ul className="list-group">
           <ReactCSSTransitionGroup
             transitionName="fade"

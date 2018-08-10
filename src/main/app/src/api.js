@@ -20,7 +20,13 @@ class TheServer {
     //   }
     // });
   }
-
+  deleteTrackFromPlaylist(pid, track){
+    fetch('/api/playlist/delete_track/'+pid,{
+      headers:{'Content-Type': 'application/json'},
+      method: 'POST',
+      body: JSON.stringify(track)
+    });
+  }
   getTracksForPlaylist(p, session){
     fetch('/api/playlist/tracks/'+p.id)
     .then(response => response.json())
@@ -42,7 +48,7 @@ class TheServer {
       });
       store.dispatch({
         type: 'CURRENT_PLAYLIST_TITLE',
-        data: {name: p.name},
+        data: p,
       });
     });
   }
@@ -132,7 +138,16 @@ class TheServer {
       });
     })
   }
-  submitReview(review, reviewer_id, track_id){
+  submitReview(review, reviewer_id, track_id, track){
+    fetch('/api/track',{
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: JSON.stringify(track)
+    })
+    .then((response)=>response.json())
+    .then((track)=>{
     fetch('/api/review/'+reviewer_id+'/'+track_id,{
       headers: {
         'Content-Type': 'application/json'
@@ -146,7 +161,7 @@ class TheServer {
         type:'UPDATE_REVIEW_LIST',
         data: resp,
       });
-    })
+    })});
   }
 
   follow(u1, u2){

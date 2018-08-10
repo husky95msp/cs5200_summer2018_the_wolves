@@ -23,7 +23,7 @@ function TrackView(props){
           <Song  song = {props.trackView}/>
         {props.user_type === "Reviewer"? <NavLink onClick={()=>props.dispatch({type: 'TOGGLE_REVIEW_COLLAPSE'})} className="badge ">Add Review</NavLink>: <div></div>}
 
-        <ReviewForm songId={props.trackView.spotify_id}/>
+        <ReviewForm songId={props.trackView.spotify_id} track={props.trackView}/>
         <hr></hr>
         <h3>Reviews</h3>
 

@@ -262,7 +262,10 @@ function create_account(state=false, action){
 }
 let empty_playlistForm = {
 toggle: false,
-name: "",
+playlist:{
+  name:"",
+  id:0,
+},
 }
 
 function playlistForm(state=empty_playlistForm, action){
@@ -272,7 +275,7 @@ function playlistForm(state=empty_playlistForm, action){
     case 'ADD_NEW_PLAYLIST':
     return Object.assign({}, state, {toggle: !state.toggle});
     case 'CURRENT_PLAYLIST_TITLE':
-    return Object.assign({}, state, action.data);
+    return Object.assign({}, state, {playlist: action.data});
     default:
     return state;
   }
@@ -292,6 +295,8 @@ function playlistView(state=[], action){
   switch (action.type) {
     case 'CURRENT_PLAYLIST_VIEW':
     return action.data;
+    case 'DELETE_SONG_FROM_PLAYLIST':
+    return state.filter((song)=> song.spotify_id !== action.data.spotify_id);
     default:
     return state;
   }

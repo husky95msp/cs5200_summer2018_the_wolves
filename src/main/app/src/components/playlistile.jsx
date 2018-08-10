@@ -33,7 +33,11 @@ class Song extends React.Component {
 
       }
     }
+    let deleteSong=()=>{
+      api.deleteTrackFromPlaylist(this.props.playlistForm.playlist.id, this.props.song)
+      this.props.dispatch({type: 'DELETE_SONG_FROM_PLAYLIST', data: this.props.song});
 
+    }
     let preview = new Audio(this.props.song.preview_url);
     // let trigger = false;
     let play = ()=>{
@@ -98,7 +102,9 @@ class Song extends React.Component {
           <div onClick={likeSong} className="like">
             {this.props.song.like?  <i className="material-icons like-btn like-active" >star</i> : <i className="material-icons like-btn " >star_border</i>}
           </div>
-
+          <div onClick={deleteSong} className="delete">
+            <i className="material-icons like-btn " >delete</i>
+          </div>
         </div>
       </li>);
     }

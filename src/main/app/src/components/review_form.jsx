@@ -32,7 +32,7 @@ function ReviewForm(props){
       //     "review": props.reviewForm.review
       //   },
       // });
-      api.submitReview({"review" : props.reviewForm.review}, props.session.id, props.songId);
+      api.submitReview({"review" : props.reviewForm.review}, props.session.id, props.songId, props.track);
     }
     else{
       props.dispatch({
