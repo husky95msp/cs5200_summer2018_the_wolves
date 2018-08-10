@@ -37,25 +37,44 @@ public class PlaylistDao {
 	
 	public void addTrackToPlaylist(int id, Track t) {
 		Optional<Playlist> opt = pr.findById(id);
+		Optional<Track> track = td.findBySpotifyId(t.getSpotify_id());
+		if(!track.isPresent()) {
+			t.setPlaylist(t.getPlaylist());
+			td.createTrack(t);
+		}
 		if(opt.isPresent()) {
 			List<Track> pl_tracks = opt.get().getTracks();
-			pl_tracks.add(t);
-			opt.get().setTracks(pl_tracks);
-			updatePlaylist(id, opt.get());
+			boolean flag = true;
+			for(Track tr:pl_tracks)
+				if(tr.getSpotify_id().equals(t.getSpotify_id())) {
+					flag = false;
+					break;
+				}
+			
+			if(flag) {
+				pl_tracks.add(t);
+				opt.get().setTracks(pl_tracks);
+				updatePlaylist(id, opt.get());
+				
+				t.getPlaylist().add(opt.get());
+				td.updateTrack(t.getSpotify_id(), t);
+			}
 		}
 	}
 	
 	public void deleteTrackFromPlaylist(int id, Track t) {
 		Optional<Playlist> opt = pr.findById(id);
-		if(opt.isPresent()) {
+		Optional<Track> track = td.findBySpotifyId(t.getSpotify_id());
+		if(opt.isPresent() && track.isPresent()) {
 			List<Track> pl_tracks = opt.get().getTracks();
-			pl_tracks.remove(t);
+			pl_tracks.remove(track.get());
 			opt.get().setTracks(pl_tracks);
 			updatePlaylist(id, opt.get());
 			
-			if(t.getPlaylist() != null) {
+			if(track.get().getPlaylist().size() != 0) {
+				System.out.println(track.get().getPlaylist());
 				t.getPlaylist().remove(opt.get());
-				td.updateTrack(t.getSpotify_id(), t);
+				td.updateTrack(track.get().getSpotify_id(), track.get());
 			}
 		}
 	}

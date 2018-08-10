@@ -1,5 +1,6 @@
 package edu.northeastern.cs5200.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class Playlist {
 	joinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id" ),
 	inverseJoinColumns = @JoinColumn(name = "track_id", referencedColumnName = "spotify_id"))
 	@JsonIgnore
-	private List<Track> tracks;
+	private List<Track> tracks = new ArrayList<Track>();
 	
 	@ManyToOne
 	@JsonIgnore

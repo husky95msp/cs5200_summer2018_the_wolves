@@ -24,10 +24,11 @@ public class Track {
 	private String uri;
 	private String album_art;
 	private int popularity;
+	private String preview_url;
 	
 	@ManyToMany(mappedBy="tracks", fetch = FetchType.LAZY)
 	@JsonIgnore
-	private List<Playlist> playlist;
+	private List<Playlist> playlist = new ArrayList<Playlist>();
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "likes",
@@ -121,5 +122,12 @@ public class Track {
 		this.setAlbum_art(t.getAlbum_art());
 		this.setPopularity(t.getPopularity());
 		this.setPlaylist(t.getPlaylist());
+		this.setPreview_url(t.getPreview_url());
+	}
+	public String getPreview_url() {
+		return preview_url;
+	}
+	public void setPreview_url(String preview_url) {
+		this.preview_url = preview_url;
 	}
 }
