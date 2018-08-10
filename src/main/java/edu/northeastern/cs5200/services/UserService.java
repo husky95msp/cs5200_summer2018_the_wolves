@@ -113,9 +113,9 @@ public class UserService {
 	}
 	
 	@PostMapping("/api/user/playlist/{id}")
-	public void createPlaylistForUser(@PathVariable("id") int id,
+	public Playlist createPlaylistForUser(@PathVariable("id") int id,
 			@RequestBody Playlist p) {
-		userDao.createPlaylist(id, p);
+		return userDao.createPlaylist(id, p);
 	}
 	
 	@GetMapping("/api/user/all_playlists/{id}")

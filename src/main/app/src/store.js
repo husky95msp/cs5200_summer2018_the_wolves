@@ -260,9 +260,45 @@ function create_account(state=false, action){
     return false;
   }
 }
+let empty_playlistForm = {
+toggle: false,
+name: "",
+}
+
+function playlistForm(state=empty_playlistForm, action){
+  switch (action.type) {
+    case 'TOGGLE_CREATE_PLAYLIST':
+    return Object.assign({}, state, {toggle: !state.toggle});
+    case 'ADD_NEW_PLAYLIST':
+    return Object.assign({}, state, {toggle: !state.toggle});
+    case 'CURRENT_PLAYLIST_TITLE':
+    return Object.assign({}, state, action.data);
+    default:
+    return state;
+  }
+}
+function playlists(state=[], action){
+  switch (action.type) {
+    case 'GET_ALL_PLAYLISTS':
+    return action.data;
+    case 'ADD_NEW_PLAYLIST':
+    return [...state, action.data];
+    default:
+    return state;
+  }
+}
+
+function playlistView(state=[], action){
+  switch (action.type) {
+    case 'CURRENT_PLAYLIST_VIEW':
+    return action.data;
+    default:
+    return state;
+  }
+}
 
 function root_reducer(state0 = persistedState, action) {
-  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account});
+  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account, playlistForm, playlists, playlistView});
   let state1 = reducer(state0, action);
   console.log("ReduxState", state1);
   return deepFreeze(state1);

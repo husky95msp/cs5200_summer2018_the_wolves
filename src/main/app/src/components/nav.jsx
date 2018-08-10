@@ -56,7 +56,7 @@ function NavBar(props) {
                   </div>
                   :
                   <div>
-                    <div id="Popover1" onClick={toggle_login_popper} className="nav-link pt-0 pb-0">
+                    <div  onClick={toggle_login_popper} className="nav-link pt-0 pb-0">
                       <i className="material-icons login-icon">account_circle</i>
                       <div className="login-label"> Login</div>
                     </div>

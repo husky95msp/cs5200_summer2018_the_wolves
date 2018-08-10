@@ -155,13 +155,14 @@ public class UserDao {
     	}
     }
     
-    public void createPlaylist(int user_id, Playlist p) {
+    public Playlist createPlaylist(int user_id, Playlist p) {
     	Optional<User> opt = userRepository.findById(user_id);
     	if(opt.isPresent()) {
     		opt.get().getPlaylists().add(p);
     		p.setCreator(opt.get());
-    		pd.createPlaylist(p);
+    		return pd.createPlaylist(p);
     	}
+    	return null;
     }
     
     public List<Playlist> findAllPlaylistsForUser(int id) {

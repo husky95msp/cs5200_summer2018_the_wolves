@@ -20,8 +20,14 @@ function LoginForm(props){
       data: data,
     });
   }
+  let onKeyPress = (event)=> {
+    if (event.which === 13 /* Enter */) {
+      event.preventDefault();
+      api.authenticateUser(props.props.loginForm.username, props.props.loginForm.password);
+    }
+  }
   return(<div>
-    <Form>
+    <Form onKeyPress={onKeyPress}>
       <FormGroup>
         <Input type="text" name="username" id="username" value = {props.props.loginForm.username} placeholder="User Name" bsSize="sm" onChange={update} />
         <div className={"error "+ (props.props.loginForm.label == 404? "show": "")}>No such username!</div>
@@ -30,7 +36,7 @@ function LoginForm(props){
         <Input type="password" name="password" id="examplePassword" value = {props.props.loginForm.password} placeholder="Password" bsSize="sm" onChange={update}/>
         <div className={"error "+ (props.props.loginForm.label == 401? "show": "")}>Invalid Password!</div>
     </FormGroup>
-      <Button onClick={()=>{api.authenticateUser(props.props.loginForm.username, props.props.loginForm.password)} } className="btn-info btn-sm btn-block ">Login</Button>
+      <Button  onClick={()=>{api.authenticateUser(props.props.loginForm.username, props.props.loginForm.password)} } className="btn-info btn-sm btn-block ">Login</Button>
   </Form>
   <div className="text-center">No account? | <Link to="/register" onClick={toggle_login_popper} className="text-primary">Register</Link></div>
   </div>

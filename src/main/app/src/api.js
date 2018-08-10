@@ -2,6 +2,67 @@ import store from './store';
 // import $ from 'jquery';
 import request from 'request'; // "Request" library
 class TheServer {
+
+  addTrackToPlaylist(id, track){
+    fetch('/api/playlist/addtrack/'+id,{
+      headers:{'Content-Type': 'application/json'},
+      method: 'POST',
+      body: JSON.stringify(track)
+    });
+    // .then(response => response.json());
+    // .then((response)=>{
+    //   if (response){
+    //
+    //     store.dispatch({
+    //       type: 'ADD_NEW_PLAYLIST',
+    //       data: response,
+    //     });
+    //   }
+    // });
+  }
+
+  getTracksForPlaylist(p, session){
+    fetch('/api/playlist/tracks/'+p.id)
+    .then(response => response.json())
+    .then(dat => {
+      if(session){
+      session.likedTracks.map((mySong, i)=>{
+          if(dat.spotify_id===mySong.spotify_id){
+            dat['like']= true;
+          }
+          else{
+            dat['like']= false;
+
+          }
+        });
+      }
+      store.dispatch({
+        type: 'CURRENT_PLAYLIST_VIEW',
+        data: dat,
+      });
+      store.dispatch({
+        type: 'CURRENT_PLAYLIST_TITLE',
+        data: {name: p.name},
+      });
+    });
+  }
+  createPlaylist(data, id){
+    fetch('/api/user/playlist/'+id,{
+      headers:{'Content-Type': 'application/json'},
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then((response)=>{
+      if (response){
+
+        store.dispatch({
+          type: 'ADD_NEW_PLAYLIST',
+          data: response,
+        });
+      }
+    });
+  }
   createMember(data){
     if (data.type === "User"){
       this.createUser(data);
@@ -10,7 +71,6 @@ class TheServer {
     }else{
       this.createReviewer(data);
     }
-
   }
   createUser(data){
     fetch('/api/user/',{
@@ -229,10 +289,23 @@ class TheServer {
 
     });
   }
+  getPlaylists(user){
+    fetch('/api/user/all_playlists/'+user.id)
+    .then(response => response.json())
+    .then(dat => {
+
+      store.dispatch({
+        type: 'GET_ALL_PLAYLISTS',
+        data: dat,
+      });
+
+    });
+  }
   initializeUserData(user){
     this.getLikedSongs(user);
     this.getFollowers(user);
     this.getFollows(user);
+    this.getPlaylists(user);
   }
   authenticateUser(username, password){
 
