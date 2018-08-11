@@ -1,5 +1,6 @@
 package edu.northeastern.cs5200.daos;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,6 @@ public class AdminDao {
 	
 	@Autowired
 	AdminRepository ar;
-	
-    public Iterable<User> findAllUsers(){
-        return ur.findAll();
-    }
     
     public void deleteAllUsers() {
     	ur.deleteAll();
@@ -36,7 +33,12 @@ public class AdminDao {
     }
     
     public void createAdmin(Admin a) {
+    	a.setType();
     	ar.save(a);
+    }
+    
+    public List<User> findAllUsers(){
+    	return (List<User>) ar.findAllUsers();
     }
     
 }

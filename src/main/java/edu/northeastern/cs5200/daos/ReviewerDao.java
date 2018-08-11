@@ -16,6 +16,7 @@ public class ReviewerDao {
 	ReviewerRepository rr;
 	
 	public Reviewer createReviewer(Reviewer r) {
+		r.setType();
 		return rr.save(r);
 	}
 	

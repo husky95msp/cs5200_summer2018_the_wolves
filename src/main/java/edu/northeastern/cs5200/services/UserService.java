@@ -122,5 +122,10 @@ public class UserService {
 	public List<Playlist> findAllPlaylistsForUser(@PathVariable("id") int id){
 		return userDao.findAllPlaylistsForUser(id);
 	}
+	
+	@GetMapping("/api/user")
+	public List<User> findAllUsers(){
+        return userDao.findAllUser();
+    }
 
 }
