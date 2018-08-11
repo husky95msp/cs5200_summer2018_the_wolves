@@ -20,6 +20,7 @@ public class ArtistDao {
 	AlbumDao ad;
 	
 	public Artist createArtist(Artist a) {
+		a.setType();
 		return ar.save(a);
 	}
 	

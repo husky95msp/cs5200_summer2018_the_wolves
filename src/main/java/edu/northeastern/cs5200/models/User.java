@@ -18,6 +18,7 @@ public class User {
 	private String username;
 	private String password;
 	private String email;
+	private String type;
 	
 	public String getFirstName() {
 		return firstName;
@@ -36,7 +37,7 @@ public class User {
 	}
 
 	@OneToMany(mappedBy = "creator", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnore
+	//@JsonIgnore
 	private List<Playlist> playlists;
 	
 	@ManyToMany(mappedBy = "follows", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -51,7 +52,7 @@ public class User {
 	 private List<User> follows;
 	
 	@ManyToMany(mappedBy = "likes", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnore
+	//@JsonIgnore
 	private List<Track> likedTracks;
 
 	public int getId() {
@@ -150,6 +151,14 @@ public class User {
 		this.setLikedTracks(u.getLikedTracks());
 		this.setUsername(u.getUsername());
 		this.setPassword(u.getPassword());
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType() {
+		this.type = this.getClass().getSimpleName();
 	}
 	 
 	

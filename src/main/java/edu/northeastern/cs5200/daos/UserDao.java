@@ -25,6 +25,7 @@ public class UserDao {
     //CREATE
 
     public void createUser(User user) {
+    	user.setType();
         userRepository.save(user);
     }
 
@@ -171,4 +172,9 @@ public class UserDao {
     		return u.get().getPlaylists();
     	return null;
     }
+
+	public List<User> findAllUser() {
+		// TODO Auto-generated method stub
+		return (List<User>) userRepository.findAll();
+	}
 }
