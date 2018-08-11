@@ -16,9 +16,9 @@ function SongList(props){
             transitionEnterTimeout={500}
             transitionLeaveTimeout={300}>
 
-            {props.songList.map((song) =>
+            {props.songList.map((song, index) =>
 
-              <Song key = {song.id} song = {song}/>
+              <Song key = {index} song = {song}/>
 
             )}
           </ReactCSSTransitionGroup>

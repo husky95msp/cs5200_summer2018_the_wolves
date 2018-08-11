@@ -8,6 +8,7 @@ import {Button, NavLink} from 'reactstrap';
 import api from 'api.js';
 // import ReviewList from 'review_list';
 import User from 'user_tile';
+import SongList from 'song_list';
 
 
 class UserView extends React.Component{
@@ -22,6 +23,11 @@ class UserView extends React.Component{
     console.log(this.state.user);
     return(<div>{this.state.user?<div>
         <User user={this.state.user}/>
+        <div className = "container">
+          <hr></hr>
+        <h2>Songs Liked by {this.state.user.firstName}</h2>
+        <SongList songList = {this.state.user.likedTracks}/>
+        </div>
     </div>:<div></div>}
       </div>
     );
