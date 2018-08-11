@@ -17,11 +17,16 @@ function NavBar(props) {
 
   return (
     <div>
+
       <Navbar color="light" light expand="md" fixed={`top`}>
         <NavbarBrand href="/">  Spotify<span className="text-success">++</span></NavbarBrand>
         <NavbarToggler onClick={()=>props.dispatch({type: 'TOGGLE_NAV'})} />
         <Collapse isOpen={props.navBar.collapse} navbar>
           <Nav className="ml-auto" navbar>
+          {(props.session && props.user_type === "Admin")?<NavItem>
+            <NavLink to="/panel" exact = {true} activeClassName="active" className="active nav-link"><i className="material-icons search-icon">build</i>Admin Panel</NavLink>
+          </NavItem>: <div></div>}
+
 
             <NavItem>
               <NavLink to="/" exact = {true} activeClassName="active" className="nav-link"><i className="material-icons search-icon">search</i>Search</NavLink>
@@ -35,49 +40,49 @@ function NavBar(props) {
                   <NavLink to="/playlist" exact = {true} activeClassName="active" className="nav-link"><i className="material-icons search-icon">playlist_play</i>Playlists</NavLink>
                 </NavItem>: <div></div>}
 
-              <NavItem>
-                {props.session? <div>
-                  <Dropdown isOpen={props.profileDropper} toggle={toggle_profile_dropper}>
-                    <DropdownToggle className="nav-link dropper">
+                <NavItem>
+                  {props.session? <div>
+                    <Dropdown isOpen={props.profileDropper} toggle={toggle_profile_dropper}>
+                      <DropdownToggle className="nav-link dropper">
 
-                      <i className="material-icons ">account_circle</i> Hi! {props.session.username}
-                      </DropdownToggle>
+                        <i className="material-icons ">account_circle</i> Hi! {props.session.username}
+                        </DropdownToggle>
 
-                      <DropdownMenu>
-
-
-                        <DropdownItem><NavLink to="/profile"  activeClassName="active"><i className="material-icons">settings</i> Profile</NavLink></DropdownItem>
-                        <DropdownItem divider />
-                        <DropdownItem onClick={()=>props.dispatch({type:'LOGOUT'})}><Link to="/"><i className="material-icons text-danger">exit_to_app</i> Logout</Link> </DropdownItem>
-                      </DropdownMenu>
-                    </Dropdown>
+                        <DropdownMenu>
 
 
-                  </div>
-                  :
-                  <div>
-                    <div  onClick={toggle_login_popper} className="nav-link pt-0 pb-0">
-                      <i className="material-icons login-icon">account_circle</i>
-                      <div className="login-label"> Login</div>
+                          <DropdownItem><NavLink to="/profile"  activeClassName="active"><i className="material-icons">settings</i> Profile</NavLink></DropdownItem>
+                          <DropdownItem divider />
+                          <DropdownItem onClick={()=>props.dispatch({type:'LOGOUT'})}><Link to="/"><i className="material-icons text-danger">exit_to_app</i> Logout</Link> </DropdownItem>
+                        </DropdownMenu>
+                      </Dropdown>
+
+
                     </div>
+                    :
+                    <div>
+                      <div  onClick={toggle_login_popper} className="nav-link pt-0 pb-0">
+                        <i className="material-icons login-icon">account_circle</i>
+                        <div className="login-label"> Login</div>
+                      </div>
 
 
-                    <Login/>
-                  </div>
-                }
-              </NavItem>
+                      <Login/>
+                    </div>
+                  }
+                </NavItem>
 
-            </Nav>
-          </Collapse>
-        </Navbar>
-      </div>
-    );
-  }
+              </Nav>
+            </Collapse>
+          </Navbar>
+        </div>
+      );
+    }
 
 
 
-  // <NavLink to="/*" exact activeClassName="active" className="nav-link pt-0 pb-0">
-  // <i onClick={()=>console.log("hello")}className="material-icons md-48">account_box</i>
-  // </NavLink>
+    // <NavLink to="/*" exact activeClassName="active" className="nav-link pt-0 pb-0">
+    // <i onClick={()=>console.log("hello")}className="material-icons md-48">account_box</i>
+    // </NavLink>
 
-  export default withRouter(connect((state)=>state)(NavBar));
+    export default withRouter(connect((state)=>state)(NavBar));

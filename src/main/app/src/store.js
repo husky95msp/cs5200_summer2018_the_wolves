@@ -301,9 +301,20 @@ function playlistView(state=[], action){
     return state;
   }
 }
-
+function allUsers(state=[], action){
+  switch (action.type) {
+    case 'GET_ALL_USERS':
+    return action.data;
+    case 'DELETE_USER':
+    return state.filter((user)=> user.id !== action.data.id);
+    case 'LOGOUT':
+    return null;
+    default:
+    return state;
+  }
+}
 function root_reducer(state0 = persistedState, action) {
-  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account, playlistForm, playlists, playlistView});
+  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account, playlistForm, playlists, playlistView, allUsers});
   let state1 = reducer(state0, action);
   console.log("ReduxState", state1);
   return deepFreeze(state1);

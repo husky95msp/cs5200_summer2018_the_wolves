@@ -1,8 +1,22 @@
 import store from './store';
 // import $ from 'jquery';
 import request from 'request'; // "Request" library
-class TheServer {
 
+class TheServer {
+  deleteMember(member){
+    fetch('/api/user/'+member.id,{
+      headers:{'Content-Type': 'application/json'},
+      method: 'DELETE',
+      body: JSON.stringify(member)
+    })
+    // .then(response => response.json());
+    .then(()=>{
+        store.dispatch({
+          type: 'DELETE_USER',
+          data: member,
+        });
+    });
+  }
   addTrackToPlaylist(id, track){
     fetch('/api/playlist/addtrack/'+id,{
       headers:{'Content-Type': 'application/json'},
@@ -23,7 +37,7 @@ class TheServer {
   deleteTrackFromPlaylist(pid, track){
     fetch('/api/playlist/delete_track/'+pid,{
       headers:{'Content-Type': 'application/json'},
-      method: 'POST',
+      method: 'delete',
       body: JSON.stringify(track)
     });
   }
@@ -322,6 +336,30 @@ class TheServer {
     this.getFollows(user);
     this.getPlaylists(user);
   }
+  getAllUsers(){
+    return fetch('/api/user').then((response)=> response.json());
+  }
+  getUserById(id, session){
+
+    return fetch('/api/user/'+id)
+    .then((response)=> response.json())
+    .then((dat)=>{
+      dat['follower']= false;
+      dat['followee']= false;
+      session.followers.map((follower,j)=>{
+        if(follower.id == dat.id){
+          dat['follower']= true;
+        }
+      });
+      session.followees.map((followee,j)=>{
+        if(followee.id == dat.id){
+          dat['followee']= true;
+        }
+      });
+      return dat;
+    })
+
+  }
   authenticateUser(username, password){
 
     fetch('/api/user/authenticate',{
@@ -343,6 +381,16 @@ class TheServer {
           type: 'USER_TYPE',
           data: dat.type,
         });
+        if(dat.type === "Admin"){
+          this.getAllUsers()
+          .then((response)=>{
+            store.dispatch({
+              type: 'GET_ALL_USERS',
+              data: response,
+            });
+          });
+
+        }
       }
 
       store.dispatch({

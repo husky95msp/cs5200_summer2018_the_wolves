@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import 'scss/App.css';
 import $ from 'jquery';
@@ -6,6 +7,8 @@ import api from 'api.js';
 import Song from 'trackTile';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Button} from 'reactstrap';
+// import User from 'user_list';
+
 function UserList(props) {
 
   let User = (prop) => {
@@ -23,8 +26,10 @@ function UserList(props) {
     return (<div className="container mb-1 card card-body track-tile">
     <div className="d-flex justify-content-left flex-row flex-nowrap">
       <div className="track-info">
-        <h2>{prop.user.firstName} {prop.user.lastName}</h2>
+        <Link to={"/user/"+prop.user.id}>
+          <h2>{prop.user.firstName} {prop.user.lastName}</h2>
 
+        </Link>
 
         <div>id : {prop.user.id}</div>
         <div>username : {prop.user.username}</div>
