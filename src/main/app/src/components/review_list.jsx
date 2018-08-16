@@ -23,7 +23,7 @@ function ReviewList(props) {
       {prop.review.review}
       </div>
 
-      {props.session.id === prop.review.reviewer.id?<i onClick={deleteReview} className="align-self-start material-icons">delete</i> : <i></i>}
+      {(props.session && props.session.id === prop.review.reviewer.id)?<i onClick={deleteReview} className="align-self-start material-icons">delete</i> : <i></i>}
       </div>
     </div>);
   }

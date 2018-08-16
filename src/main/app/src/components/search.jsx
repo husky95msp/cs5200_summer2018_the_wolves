@@ -72,7 +72,7 @@ class Home extends React.Component {
           </i>
           <span className="badge song badge-secondary" onClick={() => this.badge("song")}>Songs</span>
 
-          <span className="badge user badge-secondary" onClick={() => this.badge("user")}>Users</span>
+          {this.props.session?<span className="badge user badge-secondary" onClick={() => this.badge("user")}>Users</span>:<span></span>}
         </div>
 
         {

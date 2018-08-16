@@ -21,7 +21,7 @@ class Song extends React.Component {
     let likeSong= ()=>{
       if (this.props.session){
         this.props.dispatch({type: 'LIKE_SONG', data: this.props.song});
-        if (!this.props.song.like){
+        if (!(this.props.session.likedTracks.filter((like)=>this.props.song.spotify_id===like.spotify_id)).length){
           api.likeSong(this.props.session.id, this.props.song);
         }else{
           api.unlikeSong(this.props.session.id, this.props.song);
@@ -96,7 +96,7 @@ class Song extends React.Component {
           </div>: <div></div>}
 
           <div onClick={likeSong} className="like">
-            {this.props.song.like?  <i className="material-icons like-btn like-active" >star</i> : <i className="material-icons like-btn " >star_border</i>}
+            {(this.props.session.likedTracks.filter((like)=>this.props.song.spotify_id===like.spotify_id)).length?  <i className="material-icons like-btn like-active" >star</i> : <i className="material-icons like-btn " >star_border</i>}
           </div>
 
         </div>

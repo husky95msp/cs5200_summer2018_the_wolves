@@ -14,19 +14,16 @@ import SongList from 'song_list';
 class UserView extends React.Component{
   constructor(props){
     super(props);
-    this.state={
-      user : null,
-    };
-    api.getUserById(props.id, props.session).then(resp => this.setState({user: resp}));
+
+    api.getUserById(props.id, props.session).then(resp => this.props.dispatch({type:'POPULATE_USER_VIEW', data: resp}));
   }
   render(){
-    console.log(this.state.user);
-    return(<div>{this.state.user?<div>
-        <User user={this.state.user}/>
+    return(<div>{this.props.userView?<div>
+        <User user={this.props.userView}/>
         <div className = "container">
           <hr></hr>
-        <h2>Songs Liked by {this.state.user.firstName}</h2>
-        <SongList songList = {this.state.user.likedTracks}/>
+        <h2>Songs Liked by {this.props.userView.firstName}</h2>
+        <SongList songList = {this.props.userView.likedTracks}/>
         </div>
     </div>:<div></div>}
       </div>

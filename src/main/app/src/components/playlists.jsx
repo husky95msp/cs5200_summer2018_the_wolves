@@ -42,7 +42,7 @@ class PlayLists extends React.Component {
     </div>
     <Collapse isOpen={this.props.playlistForm.toggle}>
 
-      <Card>
+      <Card className="border-0">
         <CardBody>
           <Form className="create-playlist-form" onKeyPress={onKeyPress}>
             <div className="d-flex container  justify-content-around  align-items-center">
@@ -63,11 +63,14 @@ class PlayLists extends React.Component {
           <ReactCSSTransitionGroup
             transitionName="fade"
             transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}>
+            transitionLeaveTimeout={300}
+            transitionAppear={true}
+            transitionAppearTimeout={500}
+            >
             {this.props.playlists.map((playlist)=>{ return(
               <NavItem key={playlist.id}>
 
-                <NavLink to={'/playlist/'+playlist.id} exact={true} activeClassName="active" onClick={()=>api.getTracksForPlaylist(playlist)} className="nav-link"><i className="material-icons">playlist_play</i> {playlist.name}</NavLink>
+                <NavLink to={'/playlist/'+playlist.id} exact={true} activeClassName="active" onClick={()=>api.getTracksForPlaylist(playlist, this.props.session)} className="nav-link"><i className="material-icons">playlist_play</i> {playlist.name}</NavLink>
               </NavItem>
             )})}
           </ReactCSSTransitionGroup>

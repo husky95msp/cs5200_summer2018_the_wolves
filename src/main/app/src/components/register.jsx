@@ -25,7 +25,7 @@ function Register(props){
   }
   return(
     <div className = "container">
-      <h1>Join us,</h1>
+      <h1>Enter credentials,</h1>
       {(!props.create_account)?<Form className="register_form">
         <FormGroup>
           <Label for="firstName">First Name</Label>

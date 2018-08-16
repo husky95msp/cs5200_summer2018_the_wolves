@@ -15,7 +15,7 @@ function UserList(props) {
     let follow = () => {
       if (prop.state.session) {
         props.dispatch({type: 'FOLLOW_USER', data: prop.user});
-        if (prop.user.followee) {
+        if ((props.session.followees.filter((fdata)=>prop.user.id===fdata.id)).length) {
           api.unfollow(prop.state.session.id, prop.user.id);
         } else {
           api.follow(prop.state.session.id, prop.user.id);
@@ -35,8 +35,8 @@ function UserList(props) {
         <div>username : {prop.user.username}</div>
       </div>
       <Button onClick={follow} className="follow-btn">{
-          prop.user.followee
-          ? "UnFollow"
+          (props.session.followees.filter((fdata)=>prop.user.id===fdata.id)).length?
+           "UnFollow"
           : "Follow"
         }</Button>
       </div>

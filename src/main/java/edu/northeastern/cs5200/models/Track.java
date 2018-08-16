@@ -3,6 +3,7 @@ package edu.northeastern.cs5200.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -30,10 +31,11 @@ public class Track {
 	@JsonIgnore
 	private List<Playlist> playlist = new ArrayList<Playlist>();
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "likes",
-	joinColumns = @JoinColumn(name = "track_id", referencedColumnName = "spotify_id" ),
-	inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+//	@ManyToMany(fetch = FetchType.LAZY)
+//	@JoinTable(name = "likes",
+//	joinColumns = @JoinColumn(name = "track_id", referencedColumnName = "spotify_id" ),
+//	inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+	@ManyToMany(mappedBy = "likedTracks", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<User> likes = new ArrayList<User>();
 	

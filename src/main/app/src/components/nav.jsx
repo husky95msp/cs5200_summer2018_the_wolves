@@ -24,9 +24,11 @@ function NavBar(props) {
         <Collapse isOpen={props.navBar.collapse} navbar>
           <Nav className="ml-auto" navbar>
           {(props.session && props.user_type === "Admin")?<NavItem>
-            <NavLink to="/panel" exact = {true} activeClassName="active" className="active nav-link"><i className="material-icons search-icon">build</i>Admin Panel</NavLink>
+            <NavLink to="/panel" exact = {true} activeClassName="active" className="= nav-link"><i className="material-icons search-icon">build</i>Admin Panel</NavLink>
           </NavItem>: <div></div>}
-
+          {(props.session && props.user_type === "Admin")?<NavItem>
+            <NavLink to="/register" exact = {true} activeClassName="active" className=" nav-link"><i className="material-icons search-icon">add</i>Create User</NavLink>
+          </NavItem>: <div></div>}
 
             <NavItem>
               <NavLink to="/" exact = {true} activeClassName="active" className="nav-link"><i className="material-icons search-icon">search</i>Search</NavLink>

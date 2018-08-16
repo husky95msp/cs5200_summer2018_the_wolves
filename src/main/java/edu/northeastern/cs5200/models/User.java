@@ -51,8 +51,12 @@ public class User {
 	@JsonIgnore
 	 private List<User> follows;
 	
-	@ManyToMany(mappedBy = "likes", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	@ManyToMany(mappedBy = "likes", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	//@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "likes",
+	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id" ),
+	inverseJoinColumns = @JoinColumn(name = "track_id", referencedColumnName = "spotify_id"))
 	private List<Track> likedTracks;
 
 	public int getId() {

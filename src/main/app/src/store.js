@@ -136,14 +136,26 @@ function session(state=null, action){
   switch (action.type) {
 
     case 'FOLLOW_USER':
-    if(action.data.followee){
-      return Object.assign({}, state, {followees: state.followees.filter((value)=> !(value.id == action.data.id))});
-    }else{
-      let tempState = JSON.parse(JSON.stringify(action.data));
-      tempState.followee = true;
-      return Object.assign({}, state, {followees: [...state.followees, tempState]});
-
+    let tempState = JSON.parse(JSON.stringify(state));
+    let followee = null;
+    let key = null;
+    tempState = Object.assign({}, tempState, {followees: [...state.followees, action.data]});
+    if (state != null){
+      state.followees.map((user,index)=>{
+        if (user.id === action.data.id) {
+            tempState = Object.assign({}, state, {followees: state.followees.filter((value)=> !(value.id == action.data.id))});
+        }
+      });
     }
+      return tempState;
+    // if(action.data.followee){
+    //   return Object.assign({}, state, {followees: state.followees.filter((value)=> !(value.id == action.data.id))});
+    // }else{
+    //   let tempState = JSON.parse(JSON.stringify(action.data));
+    //   tempState.followee = true;
+    //   return Object.assign({}, state, {followees: [...state.followees, tempState]});
+    //
+    // }
     case 'GET_FOLLOWERS':
     return Object.assign({}, state, {followers: [...action.data]});
     case 'GET_FOLLOWEES':
@@ -293,6 +305,20 @@ function playlists(state=[], action){
 
 function playlistView(state=[], action){
   switch (action.type) {
+    case 'LIKE_SONG':
+    let tempState = JSON.parse(JSON.stringify(state));
+    let likes = null;
+    let key = null;
+    if (state != null){
+      state.map((song,index)=>{
+        if (song.spotify_id === action.data.spotify_id) {
+          likes = song.like; key = index;
+          tempState[key].like = !likes
+        }
+        return null;
+      });
+    }
+    return tempState;
     case 'CURRENT_PLAYLIST_VIEW':
     return action.data;
     case 'DELETE_SONG_FROM_PLAYLIST':
@@ -313,8 +339,18 @@ function allUsers(state=[], action){
     return state;
   }
 }
+function userView(state=null, action){
+  switch (action.type) {
+    case 'POPULATE_USER_VIEW':
+    return action.data;
+    case 'LOGOUT':
+    return null;
+    default:
+    return state;
+  }
+}
 function root_reducer(state0 = persistedState, action) {
-  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account, playlistForm, playlists, playlistView, allUsers});
+  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account, playlistForm, playlists, playlistView, allUsers, userView});
   let state1 = reducer(state0, action);
   console.log("ReduxState", state1);
   return deepFreeze(state1);

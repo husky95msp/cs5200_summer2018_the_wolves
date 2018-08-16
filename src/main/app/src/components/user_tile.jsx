@@ -14,7 +14,7 @@ class User extends React.Component {
     let follow = () => {
       if (this.props.session) {
         this.props.dispatch({type: 'FOLLOW_USER', data: this.props.user});
-        if (this.props.user.followee) {
+        if ((this.props.session.followees.filter((fdata)=>this.props.user.id===fdata.id)).length) {
           api.unfollow(this.props.session.id, this.props.user.id);
         } else {
           api.follow(this.props.session.id, this.props.user.id);
@@ -33,8 +33,9 @@ class User extends React.Component {
         <div>username : {this.props.user.username}</div>
       </div>
       <Button onClick={follow} className="follow-btn">{
-          this.props.user.followee
-          ? "UnFollow"
+          (this.props.session.followees.filter((fdata)=>this.props.user.id===fdata.id)).length?
+
+           "UnFollow"
           : "Follow"
         }</Button>
       </div>
