@@ -151,6 +151,8 @@ public class User {
 		this.setEmail(u.getEmail());
 		this.setFirstName(u.getFirstName());
 		this.setLastName(u.getLastName());
+		this.setUsername(u.getUsername());
+		this.setPassword(u.getPassword());
 	}
 
 	public String getType() {
