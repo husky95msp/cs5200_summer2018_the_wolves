@@ -149,12 +149,8 @@ public class User {
 	
 	public void set(User u) {
 		this.setEmail(u.getEmail());
-		this.setFollower(u.getFollower());
-		this.setFollows(u.getFollows());
-		this.setPlaylists(u.getPlaylists());
-		this.setLikedTracks(u.getLikedTracks());
-		this.setUsername(u.getUsername());
-		this.setPassword(u.getPassword());
+		this.setFirstName(u.getFirstName());
+		this.setLastName(u.getLastName());
 	}
 
 	public String getType() {
