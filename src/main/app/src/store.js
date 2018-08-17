@@ -292,6 +292,41 @@ function playlistForm(state=empty_playlistForm, action){
     return state;
   }
 }
+
+let empty_albumForm = {
+newTrackToggle: false,
+toggle: false,
+album:{
+  name:"",
+  id:0,
+},
+}
+function albumForm(state=empty_albumForm, action){
+  switch (action.type) {
+    case 'TOGGLE_CREATE_TRACK_FOR_ALBUM':
+    return Object.assign({}, state, {newTrackToggle: !state.newTrackToggle});
+    case 'TOGGLE_CREATE_ALBUM':
+    return Object.assign({}, state, {toggle: !state.toggle});
+    case 'ADD_NEW_ALBUM':
+    return Object.assign({}, state, {toggle: !state.toggle});
+    case 'CURRENT_ALBUM_TITLE':
+    return Object.assign({}, state, {album: action.data});
+    default:
+    return state;
+  }
+}
+
+function albums(state=[], action){
+  switch (action.type) {
+    case 'GET_ALL_ALBUMS':
+    return action.data;
+    case 'ADD_NEW_ALBUM':
+    return [...state, action.data];
+    default:
+    return state;
+  }
+}
+
 function playlists(state=[], action){
   switch (action.type) {
     case 'GET_ALL_PLAYLISTS':
@@ -302,7 +337,30 @@ function playlists(state=[], action){
     return state;
   }
 }
-
+function albumView(state=[], action){
+  switch (action.type) {
+    case 'LIKE_SONG':
+    let tempState = JSON.parse(JSON.stringify(state));
+    let likes = null;
+    let key = null;
+    if (state != null){
+      state.map((song,index)=>{
+        if (song.spotify_id === action.data.spotify_id) {
+          likes = song.like; key = index;
+          tempState[key].like = !likes
+        }
+        return null;
+      });
+    }
+    return tempState;
+    case 'CURRENT_ALBUM_VIEW':
+    return action.data;
+    case 'DELETE_SONG_FROM_ALBUM':
+    return state.filter((song)=> song.spotify_id !== action.data.spotify_id);
+    default:
+    return state;
+  }
+}
 function playlistView(state=[], action){
   switch (action.type) {
     case 'LIKE_SONG':
@@ -349,8 +407,10 @@ function userView(state=null, action){
     return state;
   }
 }
+
+
 function root_reducer(state0 = persistedState, action) {
-  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account, playlistForm, playlists, playlistView, allUsers, userView});
+  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account, playlistForm, playlists, playlistView, albumForm, albums, albumView,allUsers, userView});
   let state1 = reducer(state0, action);
   console.log("ReduxState", state1);
   return deepFreeze(state1);

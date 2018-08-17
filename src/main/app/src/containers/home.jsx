@@ -14,6 +14,7 @@ import Favorites from 'components/favorites';
 import Profile from 'components/profile';
 import UserList from 'user_list';
 import PlayLists from 'components/playlists';
+import Albums from 'components/albums';
 import Register from 'components/register';
 import Panel from 'components/panel';
 
@@ -41,6 +42,7 @@ class Routes extends React.Component{
             <Route exact path="/favorites" render={()=> <Favorites/>}/>
             <Route  path={`/profile`} render={()=> <Profile/>}/>
             <Route  path={`/playlist`} render={()=> <PlayLists/>}/>
+            <Route  path={`/album`} render={()=> <Albums/>}/>
             <Route exact path='/profile/followers' component={()=> <div>
                 {this.props.session?<UserList userList = {this.props.session.followers} />:<div></div>}
               </div>}/>

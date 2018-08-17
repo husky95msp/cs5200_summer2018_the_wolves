@@ -17,22 +17,73 @@ class TheServer {
       });
     });
   }
+  ///////////////////////////////////////////////////////////////
+  // Album
+
+  addTrackToAlbum(id, track){
+    fetch('/api/album/'+id+'/add_track/',{
+      headers:{'Content-Type': 'application/json'},
+      method: 'POST',
+      body: JSON.stringify(track)
+    });
+  }
+
+  deleteTrackFromAlbum(aid, track){
+    fetch('/api/album/'+aid+'/delete_track/',{
+      headers:{'Content-Type': 'application/json'},
+      method: 'delete',
+      body: JSON.stringify(track)
+    });
+  }
+  getTracksForAlbum(p, session){
+    fetch('/api/album/'+p.id+'/get_tracks')
+    .then(response => response.json())
+    .then(dat => {
+      if(session){
+        dat.map((pSong, i)=>pSong['like']= false);
+        session.likedTracks.map((mySong, j)=>{
+          dat.map((pSong, i)=>{
+            if(pSong.spotify_id===mySong.spotify_id){
+              pSong['like']= true;
+            }
+          });
+        });
+      }
+      store.dispatch({
+        type: 'CURRENT_ALBUM_VIEW',
+        data: dat,
+      });
+      store.dispatch({
+        type: 'CURRENT_ALBUM_TITLE',
+        data: p,
+      });
+    });
+  }
+  createAlbum(data, id){
+    fetch('/api/artist/'+id+'/create_album',{
+      headers:{'Content-Type': 'application/json'},
+      method: 'POST',
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then((response)=>{
+      if (response){
+
+        store.dispatch({
+          type: 'ADD_NEW_ALBUM',
+          data: response,
+        });
+      }
+    });
+  }
+  ///////////////////////////////////////////////////////////////
+
   addTrackToPlaylist(id, track){
     fetch('/api/playlist/addtrack/'+id,{
       headers:{'Content-Type': 'application/json'},
       method: 'POST',
       body: JSON.stringify(track)
     });
-    // .then(response => response.json());
-    // .then((response)=>{
-    //   if (response){
-    //
-    //     store.dispatch({
-    //       type: 'ADD_NEW_PLAYLIST',
-    //       data: response,
-    //     });
-    //   }
-    // });
   }
   deleteTrackFromPlaylist(pid, track){
     fetch('/api/playlist/delete_track/'+pid,{
@@ -330,11 +381,26 @@ class TheServer {
 
       });
     }
+    getAlbums(user){
+      fetch('/api/artist/'+user.id+'/get_albums')
+      .then(response => response.json())
+      .then(dat => {
+
+        store.dispatch({
+          type: 'GET_ALL_ALBUMS',
+          data: dat,
+        });
+
+      });
+    }
     initializeUserData(user){
+
       this.getLikedSongs(user);
       this.getFollowers(user);
       this.getFollows(user);
       this.getPlaylists(user);
+      if(user.type === 'Artist') this.getAlbums(user);
+
     }
     getAllUsers(){
       return fetch('/api/admin/all_users').then((response)=> response.json());
