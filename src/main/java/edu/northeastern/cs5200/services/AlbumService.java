@@ -19,9 +19,9 @@ public class AlbumService {
 	AlbumDao ad;
 	
 	@PostMapping("/api/album/{id}/add_track")
-	public void addTrackToAlbum(@PathVariable("id") int id,
+	public Track addTrackToAlbum(@PathVariable("id") int id,
 			@RequestBody Track t) {
-		ad.addTrackToAlbum(id, t);
+		return ad.addTrackToAlbum(id, t);
 	}
 	
 	@DeleteMapping("/api/album/{id}/delete_track")

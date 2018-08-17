@@ -31,9 +31,9 @@ public class ArtistService {
 	}
 	
 	@PostMapping("/api/artist/{id}/create_album")
-	public void createAlbumForArtist(@PathVariable("id") int id,
+	public Album createAlbumForArtist(@PathVariable("id") int id,
 			@RequestBody Album a) {
-		artistDao.createAlbumForArtist(id, a);
+		return artistDao.createAlbumForArtist(id, a);
 	}
 	
 	@GetMapping("/api/artist/{id}/get_albums")

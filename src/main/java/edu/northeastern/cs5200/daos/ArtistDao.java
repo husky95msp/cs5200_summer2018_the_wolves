@@ -49,16 +49,17 @@ public class ArtistDao {
 		return ar.save(temp);
 	}
 	
-	public void createAlbumForArtist(int id, Album a) {
+	public Album createAlbumForArtist(int id, Album a) {
 		Optional<Artist> art = ar.findById(id);
 		if(art.isPresent()) {
 			List<Album>  albums = art.get().getAlbums();
-			ad.createAlbum(a);
 			a.setArtist(art.get());
 			albums.add(a);
 			art.get().setAlbums(albums);
 			updateArtist(id, art.get());
+			return ad.createAlbum(a);
 		}
+		return null;
 	}
 	
 	public void removeAlbumForArtist(int id, Album a) {
