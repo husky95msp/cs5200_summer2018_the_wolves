@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import { Link } from 'react-router-dom';
 import 'scss/App.css';
 import $ from 'jquery';
 import api from 'api.js';
@@ -28,9 +29,8 @@ function Panel(props) {
         <div>id : {prop.user.id}</div>
         <div>username : {prop.user.username}</div>
       </div>
-      <Button onClick={view} className="mr-1 panel-btn btn-sm btn-outline-info">View</Button>
-      <Button onClick={edit} className="mr-1 panel-btn btn-sm btn-outline-warning "><i className="material-icons search-icon">edit</i>Edit</Button>
-      <Button onClick={deleteUser} className="panel-btn btn-sm btn-outline-danger "><i className="material-icons search-icon">delete</i>Delete</Button>
+      <Button className="mr-1 panel-btn btn-sm btn-outline-warning "><Link to={"/panel/user/"+prop.user.id} onClick={()=>props.dispatch({type: 'EDIT_USER', data: prop.user})} ><i className="material-icons search-icon">edit</i>Edit</Link></Button>
+      <Button  onClick={deleteUser} className="panel-btn btn-sm btn-outline-danger "><i className="material-icons search-icon">delete</i>Delete</Button>
       </div>
     </div>);
   }

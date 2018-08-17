@@ -17,6 +17,7 @@ import PlayLists from 'components/playlists';
 import Albums from 'components/albums';
 import Register from 'components/register';
 import Panel from 'components/panel';
+import Editor from 'components/edit_user';
 
 
 export default function home_init(root, store){
@@ -39,7 +40,10 @@ class Routes extends React.Component{
             <Route exact path="/" render={()=> <Home/>}/>
             <Route path="/tracks/:id" render={(match)=> <TrackView songId={match.match.params.id}/>}/>
             <Route path="/user/:id" render={(match)=> <UserView id={match.match.params.id}/>}/>
-            <Route exact path="/favorites" render={()=> <Favorites/>}/>
+            <Route path="/panel/user/:id" render={(match)=> <Editor uid={match.match.params.id} type='PANEL'/>}/>
+            <Route path="/edit/:id" render={(match)=> <Editor uid={match.match.params.id} type='PROFILE'/>}/>
+
+          <Route exact path="/favorites" render={()=> <Favorites/>}/>
             <Route  path={`/profile`} render={()=> <Profile/>}/>
             <Route  path={`/playlist`} render={()=> <PlayLists/>}/>
             <Route  path={`/album`} render={()=> <Albums/>}/>
@@ -49,6 +53,7 @@ class Routes extends React.Component{
               <Route exact path='/profile/followees' component={()=> <div>
                   {this.props.session?<UserList userList = {this.props.session.followees} />:<div></div>}
                 </div>}/>
+
 
               </div>
             </div>
