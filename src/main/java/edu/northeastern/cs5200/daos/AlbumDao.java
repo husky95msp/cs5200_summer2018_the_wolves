@@ -69,6 +69,7 @@ public class AlbumDao {
 			if(!td.findBySpotifyId(t_id).isPresent()) {
 				t.setSpotify_id(t_id);
 				t.setAlbum(a.get());
+				t.setAlbum_art("https://media.giphy.com/media/4oMoIbIQrvCjm/giphy.gif");
 				t.setAlbum_name(a.get().getName());
 				t.setPopularity(getRandInt(1, 100));
 				tracks.add(t);
