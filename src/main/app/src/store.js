@@ -156,6 +156,9 @@ function session(state=null, action){
     //   return Object.assign({}, state, {followees: [...state.followees, tempState]});
     //
     // }
+    case 'UPDATE_SESSION_USER':
+
+    return Object.assign({}, state, action.data);
     case 'GET_FOLLOWERS':
     return Object.assign({}, state, {followers: [...action.data]});
     case 'GET_FOLLOWEES':
@@ -339,6 +342,8 @@ function playlists(state=[], action){
 }
 function albumView(state=[], action){
   switch (action.type) {
+    case 'UPDATE_ALBUM_TRACK':
+    return [...state, action.data];
     case 'LIKE_SONG':
     let tempState = JSON.parse(JSON.stringify(state));
     let likes = null;
@@ -389,6 +394,8 @@ function allUsers(state=[], action){
   switch (action.type) {
     case 'GET_ALL_USERS':
     return action.data;
+    case 'UPDATE_ALL_USERS':
+    return action.data;
     case 'DELETE_USER':
     return state.filter((user)=> user.id !== action.data.id);
     case 'LOGOUT':
@@ -407,10 +414,27 @@ function userView(state=null, action){
     return state;
   }
 }
+let empty_user={
+  username: "",
+  password: "",
+  firstName: "",
+  lastName:"",
+  email:"",
+}
+function editUserForm(state=empty_user, action){
+  switch (action.type) {
+    case 'EDIT_USER':
+    return Object.assign({}, state, action.data);
+    case 'LOGOUT':
+    return empty_user;
+    default:
+    return state;
+  }
+}
 
 
 function root_reducer(state0 = persistedState, action) {
-  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account, playlistForm, playlists, playlistView, albumForm, albums, albumView,allUsers, userView});
+  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account, playlistForm, playlists, playlistView, albumForm, albums, albumView,allUsers, userView, editUserForm});
   let state1 = reducer(state0, action);
   console.log("ReduxState", state1);
   return deepFreeze(state1);

@@ -42,7 +42,7 @@ class Albums extends React.Component {
     </div>
     <Collapse isOpen={this.props.albumForm.toggle}>
 
-      <Card className="border-0">
+      <Card className="">
         <CardBody>
           <Form className="create-album-form" onKeyPress={onKeyPress}>
             <div className="d-flex container  justify-content-around  align-items-center">

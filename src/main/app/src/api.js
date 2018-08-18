@@ -3,6 +3,13 @@ import store from './store';
 import request from 'request'; // "Request" library
 
 class TheServer {
+  updateMember(user){
+    fetch('/api/user/'+user.id,{
+      headers:{'Content-Type': 'application/json'},
+      method: 'PUT',
+      body: JSON.stringify(user)
+    })
+  }
   deleteMember(member){
     fetch('/api/user/'+member.id,{
       headers:{'Content-Type': 'application/json'},
@@ -25,7 +32,17 @@ class TheServer {
       headers:{'Content-Type': 'application/json'},
       method: 'POST',
       body: JSON.stringify(track)
-    });
+    })
+    .then((track)=>track.json())
+    .then((track)=>{
+      store.dispatch({
+        type: 'TOGGLE_CREATE_TRACK_FOR_ALBUM'
+      });
+      store.dispatch({
+        type: 'UPDATE_ALBUM_TRACK',
+        data: track
+      });
+    })
   }
 
   deleteTrackFromAlbum(aid, track){

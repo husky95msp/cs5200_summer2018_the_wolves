@@ -90,7 +90,8 @@ public class UserDao {
     		userlikes.add(opt.get());
     		t.setLikes(userlikes);
     		
-    		trackDao.createTrack(t);
+    		if(!trackDao.findBySpotifyId(t.getSpotify_id()).isPresent())
+    			trackDao.createTrack(t);
     		user_tracks.add(t);
     		opt.get().setLikedTracks(user_tracks);
     		
@@ -101,6 +102,7 @@ public class UserDao {
     public void unlikeTrack(int user_id, Track t) {
     	Optional<User> opt = userRepository.findById(user_id);
     	Optional<Track> optTrack = trackDao.findBySpotifyId(t.getSpotify_id());
+    	
     	if(opt.isPresent()) {
     		List<Track> user_tracks = opt.get().getLikedTracks();
     		List<User> userlikes = optTrack.get().getLikes();
