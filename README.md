@@ -8,7 +8,7 @@ Project is deployed on the following url : [project](http://cs5200-summer-wolves
 YouTube video Url : [video]()
 
 To run on local host follow these steps:
-  1. Clone repsoitory in any folder.
+  1. Clone the 'localhost' branch of this repsoitory in any folder.
   2. Open the project in STS or Eclipse.
   3. Run "SpotifyApplication.java" as a Spring boot app. Spring boot service shoul start.
   4. Go back to file explorer. Make sure you have installed Node and npm on your system.
