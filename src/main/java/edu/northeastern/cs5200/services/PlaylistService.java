@@ -3,6 +3,7 @@ package edu.northeastern.cs5200.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,23 +21,27 @@ public class PlaylistService {
 	PlaylistDao pd;
 	
 	@PostMapping("")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public Playlist createPlaylist(Playlist p) {
 		return pd.createPlaylist(p);
 	}
 	
 	
 	@GetMapping("/api/playlist/tracks/{id}")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public List<Track> findAllTracksInPlaylist(@PathVariable("id") int id){
 		return pd.getAllTracksInPlaylist(id);
 	}
 	
 	@PostMapping("/api/playlist/addtrack/{id}")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public void addTrackToPlaylist(@PathVariable("id") int id,
 			@RequestBody Track t) {
 		pd.addTrackToPlaylist(id, t);
 	}
 	
 	@DeleteMapping("/api/playlist/delete_track/{id}")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public void deleteTrackFromPlaylist(@PathVariable("id") int id,
 			@RequestBody Track t) {
 		pd.deleteTrackFromPlaylist(id, t);

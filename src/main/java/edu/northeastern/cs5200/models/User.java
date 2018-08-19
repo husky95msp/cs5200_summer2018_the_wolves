@@ -1,7 +1,7 @@
 package edu.northeastern.cs5200.models;
 
 import java.util.List;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -124,10 +124,7 @@ public class User {
 	public void setLikedTracks(List<Track> likedTracks) {
 		this.likedTracks = likedTracks;
 	}
-	public Boolean checkPassword(String password) {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		return bCryptPasswordEncoder.matches(password, this.getPassword());
-	}
+
 	public User( String username, String password, String email, List<Playlist> playlists, List<User> follows,
 			List<User> follower, List<Track> likedTracks) {
 		super();

@@ -3,6 +3,7 @@ package edu.northeastern.cs5200.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,18 +20,21 @@ public class AlbumService {
 	AlbumDao ad;
 	
 	@PostMapping("/api/album/{id}/add_track")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public Track addTrackToAlbum(@PathVariable("id") int id,
 			@RequestBody Track t) {
 		return ad.addTrackToAlbum(id, t);
 	}
 	
 	@DeleteMapping("/api/album/{id}/delete_track")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public void deleteTrackFromAlbum(@PathVariable("id") int id,
 			@RequestBody Track t) {
 		ad.removeTrackFromAlbum(id, t);
 	}
 	
 	@GetMapping("/api/album/{id}/get_tracks")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public List<Track> getAllTracksInAlbum(@PathVariable("id") int id){
 		return ad.getAllTracksInAlbum(id);
 	}

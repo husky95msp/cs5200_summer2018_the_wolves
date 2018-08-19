@@ -14,8 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,15 +24,9 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class AuthService {
-
-	@GetMapping("/")
-	public String helloWorld() {
-		return "Hello World";
-	}
-	
 	
 	@GetMapping("api/authenticate")
-//	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public String authenticate() throws UnsupportedEncodingException{
 		
 //		Variables;

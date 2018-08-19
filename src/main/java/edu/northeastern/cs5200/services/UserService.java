@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,26 +28,31 @@ public class UserService {
 	UserDao userDao;
 
 	@PostMapping("/api/user")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public void createUser(@RequestBody User user) {
 		userDao.createUser(user);
 	}
 	
 	@GetMapping("/api/user/{user_id}")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public Optional<User> findUserById(@PathVariable("user_id") int id){
 		return userDao.findUserById(id);
 	}
 	@GetMapping("/api/user/key/{key}")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public Iterable<User> findUsersByKey(@PathVariable("key") String key){
 		return userDao.findByKey(key);
 	}
 	
 	@PutMapping("/api/user/{id}")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public User updateUser(@PathVariable("id") int id,
 			@RequestBody User u) {
 		return userDao.updateUser(id, u);
 	}
 
 	@PostMapping("/api/user/authenticate")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public Map<String, Object> AuthenticateUser(@RequestBody User user) {
 		Map<String, Object> response = new HashMap<>();
 		Object u;
@@ -81,56 +87,66 @@ public class UserService {
 	}
 	
 	@PostMapping("/api/user/{user_id}/addtrack")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public void addTracktoLikedTracks(@PathVariable("user_id") int id,
 			@RequestBody Track t) {
 		userDao.addTrackToLikedTracks(id, t);
 	}
 	
 	@DeleteMapping("/api/user/{user_id}/deletetrack")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public void unlikeTrack(@PathVariable("user_id") int id,
 			@RequestBody Track t) {
 		userDao.unlikeTrack(id, t);
 	}
 	
 	@GetMapping("/api/user/{user_id}/likedtracks")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public List<Track> getLikedTracks(@PathVariable("user_id") int id){
 		return userDao.findLikedTracks(id);
 	}
 	
 	@GetMapping("/api/user/{id1}/{id2}")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public void addFollowerFollowee(@PathVariable("id1") int id1,
 			@PathVariable("id2") int id2) {
 		userDao.addFollowerFollowee(id1, id2);
 	}
 	
 	@GetMapping("/api/user/{user_id}/followers")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public List<User> getFollowers(@PathVariable("user_id") int id){
 		return userDao.findFollowers(id);
 	}
 	
 	@GetMapping("/api/user/{user_id}/following")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public List<User> getFollowing(@PathVariable("user_id") int id){
 		return userDao.findFollowing(id);
 	}
 	
 	@GetMapping("/api/user/{id1}/{id2}/unfollow")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public void unfollowUser(@PathVariable("id1") int id1,
 			@PathVariable("id2") int id2) {
 		userDao.unfollowUser(id1, id2);
 	}
 	
 	@PostMapping("/api/user/playlist/{id}")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public Playlist createPlaylistForUser(@PathVariable("id") int id,
 			@RequestBody Playlist p) {
 		return userDao.createPlaylist(id, p);
 	}
 	
 	@GetMapping("/api/user/all_playlists/{id}")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public List<Playlist> findAllPlaylistsForUser(@PathVariable("id") int id){
 		return userDao.findAllPlaylistsForUser(id);
 	}
 	
 	@GetMapping("/api/user")
+	@CrossOrigin(origins = "http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com")
 	public List<User> findAllUsers(){
         return userDao.findAllUser();
     }
