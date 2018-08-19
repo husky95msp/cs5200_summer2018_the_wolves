@@ -6,7 +6,7 @@ Please read the wiki for project details and design model.
 Project is deployed on the following url : [project](http://cs5200-summer-wolves-spp.s3-website-us-east-1.amazonaws.com/)
 NOTE: Use chrome or Edge to to test the app online.
 
-YouTube video Url : [video]()
+YouTube video Url : [video](https://youtu.be/tkke2TVmarU)
 
 To run on local host follow these steps:
   1. Clone the 'localhost' branch of this repository in any folder.
