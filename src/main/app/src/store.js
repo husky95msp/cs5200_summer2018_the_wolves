@@ -432,11 +432,19 @@ function editUserForm(state=empty_user, action){
   }
 }
 
+function newReleases(state=[], action){
+  switch (action.type) {
+    case 'POPULATE_NEW_RELEASES':
+    return action.data;
+    default:
+    return state;
+  }
+}
 
 function root_reducer(state0 = persistedState, action) {
-  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account, playlistForm, playlists, playlistView, albumForm, albums, albumView,allUsers, userView, editUserForm});
+  let reducer = combineReducers({test, songs, token, navBar, tog, loginForm, session, profileDropper, userSearch, user_type, trackView, reviewForm, create_account, playlistForm, playlists, playlistView, albumForm, albums, albumView,allUsers, userView, editUserForm, newReleases});
   let state1 = reducer(state0, action);
-  console.log("ReduxState", state1);
+  // console.log("ReduxState", state1);
   return deepFreeze(state1);
 };
 

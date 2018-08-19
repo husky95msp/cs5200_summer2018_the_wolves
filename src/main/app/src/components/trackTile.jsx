@@ -96,7 +96,7 @@ class Song extends React.Component {
           </div>: <div></div>}
 
           <div onClick={likeSong} className="like">
-            {(this.props.session.likedTracks.filter((like)=>this.props.song.spotify_id===like.spotify_id)).length?  <i className="material-icons like-btn like-active" >star</i> : <i className="material-icons like-btn " >star_border</i>}
+            {this.props.session && (this.props.session.likedTracks.filter((like)=>this.props.song.spotify_id===like.spotify_id)).length?  <i className="material-icons like-btn like-active" >star</i> : <i className="material-icons like-btn " >star_border</i>}
           </div>
 
         </div>

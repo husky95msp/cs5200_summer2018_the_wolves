@@ -24,10 +24,11 @@ function Editor(props){
       }
     });
 
-    api.updateMember(data);
+    api.updateMember(data).then(()=>{
     if(props.type==='PANEL')api.getAllUsers().then((users)=> props.dispatch({type:'UPDATE_ALL_USERS', data: users}));
     else api.getUserById(props.uid, props.session).then((user)=> props.dispatch({type:'UPDATE_SESSION_USER', data: data}));
-  }
+});
+}
   return(
     <div className = "container">
       <h1>Edit This User,</h1>

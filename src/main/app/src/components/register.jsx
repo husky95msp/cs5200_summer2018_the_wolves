@@ -20,8 +20,10 @@ function Register(props){
 
       }
     });
-    console.log(data);
-    api.createMember(data);
+
+    api.createMember(data).then(()=>{
+      if(props.user_type ==="Admin")api.getAllUsers().then((users)=> props.dispatch({type:'UPDATE_ALL_USERS', data: users}));
+    });
   }
   return(
     <div className = "container">

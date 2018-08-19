@@ -7,7 +7,7 @@ import Song from 'trackTile';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import SongList from 'song_list';
 import UserList from 'user_list';
-import {Button} from 'reactstrap';
+import {Button, NavbarBrand} from 'reactstrap';
 
 class Home extends React.Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class Home extends React.Component {
     this.update = this.update.bind(this);
     this.search = this.search.bind(this);
     this.badge = this.badge.bind(this);
+
 
   }
 
@@ -46,17 +47,21 @@ class Home extends React.Component {
   }
   render() {
     return (<div>
-      <h2 className="text-center">Search
-      </h2>
-      <div className="container">
 
+      <div className={this.props.songs?"banner":"banner show-banner"}>
+        <h1> Spotify<span className="text-success">++</span></h1>
+
+Find millions of popular songs, check what your friends listen to, create playlists, write reviews and more..</div>
+
+      <div className="container search-content">
+<br></br>
         <div className="input-group mb-3">
           <div className="input-group-prepend">
             <button onClick={() => this.props.dispatch({type: 'SEARCH_CLEAR'})} className="btn btn-outline-secondary">
               <div className="material-icons search-bar-icon">clear</div>
             </button>
           </div>
-          <input className="form-control" id="search-bar" type="search" placeholder={"Enter " + this.props.test.filter} name="key" aria-label="Search" onChange={this.update}/>
+          <input className="form-control" id="search-bar" type="search" value= {this.props.test.key} placeholder={"Type the " + this.props.test.filter+"'s name to search"} name="key" aria-label="Search" onChange={this.update}/>
 
           <div className="input-group-append">
             <button onClick={() => {
@@ -79,10 +84,11 @@ class Home extends React.Component {
           this.props.test.filter === 'song'
             ? <div><SongList songList={this.props.songs
                   ? this.props.songs.tracks.items
-                  : []} artist={this.props.test.key}/>
+                  : []} />
                 <div className="d-flex justify-content-center pb-1">
-                {this.props.songs?  <Button className="load" onClick={() => api.loadNextPage(this.props.songs.tracks.next, this.props.token, this.props.session)}>Load More</Button>:<div></div>}
+                {this.props.songs && this.props.songs.tracks.next !== null?  <Button className="load" onClick={() => api.loadNextPage(this.props.songs.tracks.next, this.props.token, this.props.session)}>Load More</Button>:<div>{(this.props.songs && !this.props.songs.tracks.items.length)? <h2 className="text-muted">Sorry No Songs Match your search !</h2>:<div></div>}</div>}
                 </div>
+                <div>{!this.props.songs?<div><h2 className="trending">Trending</h2><SongList songList= {this.props.newReleases} /></div>: <div></div>}</div>
               </div>
             : <div></div>
         }
