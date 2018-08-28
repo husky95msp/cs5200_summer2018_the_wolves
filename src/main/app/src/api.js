@@ -2,8 +2,8 @@ import store from './store';
 // import $ from 'jquery';
 import request from 'request'; // "Request" library
 
-let API_PATH = "http://cs5200-project-spp.us-east-1.elasticbeanstalk.com"
-// let API_PATH = ""
+// let API_PATH = "//cs5200-project-spp.us-east-1.elasticbeanstalk.com"
+let API_PATH = ""
 class TheServer {
   getNewReleases(token){
 
