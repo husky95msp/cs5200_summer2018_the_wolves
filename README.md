@@ -8,7 +8,7 @@ YouTube video Url : [video](https://youtu.be/tkke2TVmarU)
 To run on local host follow these steps:
   1. Clone the 'localhost' branch of this repository in any folder.
   2. Open the project in STS or Eclipse.
-  3. Run "SpotifyApplication.java" as a Spring boot app. Spring boot service shoul start.
+  3. Run "SpotifyApplication.java" as a Spring boot app. Spring boot service should start.
   4. Go back to file explorer. Make sure you have installed Node and npm on your system.
   5. Navigate to src/main/app
   6. Run 'npm install' in terminal or command prompt.
