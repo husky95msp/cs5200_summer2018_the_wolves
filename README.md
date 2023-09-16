@@ -1,8 +1,6 @@
 
 Please read the wiki for project details and design model.
 
-Project is deployed on the following url : [project](http://spp.manishpatil.net/)
-
 YouTube video Url : [video](https://youtu.be/tkke2TVmarU)
 
 To run on local host follow these steps:
